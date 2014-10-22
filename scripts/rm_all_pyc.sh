@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # this removes all pyc file under this location - recursively
 
-export ATMOSPHERE_HOME=/opt/dev/atmosphere # For dalloway, arturo
+export TROPOSPHERE_HOME=/opt/dev/troposphere # For dalloway, arturo
 
-find ${ATMOSPHERE_HOME} -name "*.pyc" -exec rm '{}' ';'
+find ${TROPOSPHERE_HOME} -name "*.pyc" -exec rm '{}' ';'

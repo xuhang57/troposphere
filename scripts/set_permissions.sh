@@ -4,19 +4,10 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-export ATMOSPHERE_HOME=/opt/dev/atmosphere
+export TROPOSPHERE_HOME=/opt/dev/troposphere
 
-chmod -R g+w ${ATMOSPHERE_HOME}
+chmod -R g+w ${TROPOSPHERE_HOME}
 
-chmod -R 644 ${ATMOSPHERE_HOME}/extras/ssh
+chown -R www-data:core-services ${TROPOSPHERE_HOME}
 
-chmod 755 ${ATMOSPHERE_HOME}/extras/ssh
-
-chmod -R 600 ${ATMOSPHERE_HOME}/extras/ssh/id_rsa
-
-chown -R www-data:core-services ${ATMOSPHERE_HOME}
-
-chown -R www-data:core-services ${ATMOSPHERE_HOME}/extras/apache
-
-chown -R root:root ${ATMOSPHERE_HOME}/extras/ssh
-
+chown -R www-data:core-services ${TROPOSPHERE_HOME}/extras/troposphere.conf
