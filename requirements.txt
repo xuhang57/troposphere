@@ -1,6 +1,12 @@
-pip==1.4.1
 python-dateutil==2.2
 requests==2.2.1
 django==1.6.2
 django-jenkins==0.15.0
 caslib.py==2.1.0
+# Dev requirements
+newrelic==2.34.0.29 # newrelic investigation.
+ipython
+ipdb
+flake8
+pep8
+wheel
