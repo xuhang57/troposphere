@@ -22,7 +22,7 @@ sys.path.insert(1, root_dir)
 
 import newrelic.agent
 newrelic.agent.initialize(
-  os.path.join(root_dir, "etc/troposphere_newrelic.ini"),
+  os.path.join(root_dir, "extras/newrelic/troposphere_newrelic.ini"),
   "development")
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "troposphere.settings"

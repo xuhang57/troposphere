@@ -76,3 +76,4 @@ troposphere/static/bower_components
 !troposphere/static/js/lib
 
 etc/
+extras/newrelic
