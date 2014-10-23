@@ -10,9 +10,6 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 import os
 import sys
 
-import newrelic.agent
-newrelic.agent.initialize("/opt/dev/troposphere/etc/newrelic.ini")
-
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 if os.environ.has_key("VIRTUAL_ENV_PATH"):
@@ -22,20 +19,16 @@ else:
 
 sys.path.insert(0, virtual_env_path)
 sys.path.insert(1, root_dir)
+
+import newrelic.agent
+newrelic.agent.initialize(
+  os.path.join(root_dir, "etc/troposphere_newrelic.ini"),
+  "development")
+
 os.environ["DJANGO_SETTINGS_MODULE"] = "troposphere.settings"
 
-#def application(environ, start_response):
-#    os.environ['DJANGO_SETTINGS_MODULE'] = "troposphere.settings"
-#    from django.core.wsgi import get_wsgi_application
-#    try:
-#        _application = get_wsgi_application()
-#    except Exception, e:
-#        e.msg = os.path.dirname(__file__)
-#        raise e
-#    return _application(environ, start_response)
 from django.core.wsgi import get_wsgi_application
 try:
     application = get_wsgi_application()
 except Exception, e:
-    e.msg = os.path.dirname(__file__)
     raise e
