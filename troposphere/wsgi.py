@@ -20,10 +20,14 @@ else:
 sys.path.insert(0, virtual_env_path)
 sys.path.insert(1, root_dir)
 
-import newrelic.agent
-newrelic.agent.initialize(
-  os.path.join(root_dir, "extras/newrelic/troposphere_newrelic.ini"),
-  "development")
+try:
+    import newrelic.agent
+    newrelic.agent.initialize(
+      os.path.join(root_dir, "extras/newrelic/troposphere_newrelic.ini"),
+      "development")
+except ImportError:
+    logger.warn("New Relic not installed. To monitor this server, pip install newrelic")
+    pass
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "troposphere.settings"
 
