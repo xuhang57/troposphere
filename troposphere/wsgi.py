@@ -24,7 +24,7 @@ try:
     import newrelic.agent
     newrelic.agent.initialize(
       os.path.join(root_dir, "extras/newrelic/troposphere_newrelic.ini"),
-      "development")
+      "staging")
 except ImportError:
     logger.warn("New Relic not installed. To monitor this server, pip install newrelic")
     pass
