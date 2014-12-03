@@ -24,10 +24,13 @@ try:
     import newrelic.agent
     newrelic.agent.initialize(
       os.path.join(root_dir, "extras/newrelic/troposphere_newrelic.ini"),
-      "staging")
-except ImportError:
-    logger.warn("New Relic not installed. To monitor this server, pip install newrelic")
-    pass
+      "production")
+except ImportError, bad_import:
+    print "[T]Warning: newrelic not installed.."
+    print bad_import
+except Exception, bad_config:
+    print "[T]Warning: newrelic not initialized.."
+    print bad_config
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "troposphere.settings"
 
