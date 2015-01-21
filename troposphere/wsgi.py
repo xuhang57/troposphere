@@ -2,14 +2,13 @@
 WSGI config for troposphere project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
-
+ 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 """
 
 import os
 import sys
-from django.conf import settings
 
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -20,6 +19,9 @@ else:
 
 sys.path.insert(0, virtual_env_path)
 sys.path.insert(1, root_dir)
+
+from django.conf import settings
+os.environ["DJANGO_SETTINGS_MODULE"] = "troposphere.settings"
 
 if hasattr(settings, "NEW_RELIC_ENVIRONMENT"):
   try:
@@ -33,8 +35,6 @@ if hasattr(settings, "NEW_RELIC_ENVIRONMENT"):
   except Exception, bad_config:
       print "[T]Warning: newrelic not initialized.."
       print bad_config
-
-os.environ["DJANGO_SETTINGS_MODULE"] = "troposphere.settings"
 
 from django.core.wsgi import get_wsgi_application
 try:
