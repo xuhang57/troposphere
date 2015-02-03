@@ -26,6 +26,13 @@ INSTALLED_APPS = (
     'django_jenkins'
 )
 
+ADMINS = (
+    ('Atmosphere Admin', 'atmo@iplantcollaborative.org'),
+    ('J. Matt Peterson', 'jmatt@iplantcollaborative.org'),
+    ('Steven Gregory', 'esteve@iplantcollaborative.org'),
+    ('Jason Hansen', 'jchansen@iplantcollaborative.org'),
+)
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

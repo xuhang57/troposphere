@@ -36,8 +36,22 @@ if hasattr(settings, "NEW_RELIC_ENVIRONMENT"):
       print "[T]Warning: newrelic not initialized.."
       print bad_config
 
+#def application(environ, start_response):
+#    status = '200 OK'
+#    output = 'Hello World!\n\n'
+#
+#    response_headers = [('Content-type', 'text/plain'),
+#                        ('Content-Length', str(len(output)))]
+#    start_response(status, response_headers)
+#
+#    return [output]
+#
+#from paste.exceptions.errormiddleware import ErrorMiddleware
+#application = ErrorMiddleware(application, debug=True)
+#
+
 from django.core.wsgi import get_wsgi_application
 try:
     application = get_wsgi_application()
 except Exception, e:
-    raise e
+    raise

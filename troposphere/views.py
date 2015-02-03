@@ -247,8 +247,9 @@ def emulate(request, username):
     except ValueError:
         logger.warn("[EMULATE]The API server returned non-json data(Error) %s" % r.text)
         return redirect('application')
-    new_token = j_data.get('token')
-    emulated_by = j_data.get('emulated_by')
+    if type(j_data) == dict:
+        new_token = j_data.get('token','')
+        emulated_by = j_data.get('emulated_by','')
     if not new_token or not emulated_by:
         logger.warn("[EMULATE]The API server returned data missing the key(s) "
                     "token/emulated_by. Data: %s" % j_data)
