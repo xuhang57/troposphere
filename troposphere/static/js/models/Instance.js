@@ -140,45 +140,45 @@ define(
         }
       },
 
-      destroy: function (options) {
-        // We overwrite the destroy function so that the model doesn't get deleted while the instance is still 'terminating'
+      // destroy: function (options) {
+      //   // We overwrite the destroy function so that the model doesn't get deleted while the instance is still 'terminating'
 
-        options = options ? _.clone(options) : {};
-        var model = this;
-        var success = options.success;
+      //   options = options ? _.clone(options) : {};
+      //   var model = this;
+      //   var success = options.success;
 
-        var self = this;
-        options.success = function (resp) {
-          if (success) {
-            success(model, resp, options);
+      //   var self = this;
+      //   options.success = function (resp) {
+      //     if (success) {
+      //       success(model, resp, options);
 
-            // Get the new state from the data returned by API call
-            self.set('status', resp.status);
-          }
+      //       // Get the new state from the data returned by API call
+      //       self.set('status', resp.status);
+      //     }
 
-          if (!model.isNew())
-            model.trigger('sync', model, resp, options);
-        };
+      //     if (!model.isNew())
+      //       model.trigger('sync', model, resp, options);
+      //   };
 
-        // wrapError function from backbone.js
-        var wrapError = function (model, options) {
-          var error = options.error;
-          options.error = function (resp) {
-            if (error) error(model, resp, options);
-            model.trigger('error', model, resp, options);
-          };
-        };
+      //   // wrapError function from backbone.js
+      //   var wrapError = function (model, options) {
+      //     var error = options.error;
+      //     options.error = function (resp) {
+      //       if (error) error(model, resp, options);
+      //       model.trigger('error', model, resp, options);
+      //     };
+      //   };
 
-        if (this.isNew()) {
-          options.success();
-          return false;
-        }
+      //   if (this.isNew()) {
+      //     options.success();
+      //     return false;
+      //   }
 
-        wrapError(this, options);
+      //   wrapError(this, options);
 
-        var xhr = this.sync('delete', this, options);
-        return xhr;
-      },
+      //   var xhr = this.sync('delete', this, options);
+      //   return xhr;
+      // },
 
       performAction: function (action, options) {
         if (!options) options = {};
