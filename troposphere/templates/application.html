@@ -55,6 +55,10 @@
             var API_V2_ROOT = "{{ API_V2_ROOT }}";
         {% endif %}
 
+        {% if BADGE_HOST %}
+            var BADGE_HOST = "{{ BADGE_HOST }}";
+        {% endif %}
+
         {% if show_troposphere_only %}
             var show_troposphere_only = true;
         {%  else %}
