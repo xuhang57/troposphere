@@ -45,6 +45,7 @@ define(function (require) {
       }, {parse: true});
 
       Utils.dispatch(VolumeConstants.ADD_VOLUME, {volume: volume});
+      actions.BadgeActions.askVolume();
 
       // todo: hook this back up if experience seems to slow...not connected right now
       // Utils.dispatch(ProjectVolumeConstants.ADD_PENDING_VOLUME_TO_PROJECT, {

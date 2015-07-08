@@ -39,10 +39,12 @@ define(function (require) {
         description: description
       });
 
+
       Utils.dispatch(ProjectConstants.ADD_PROJECT, {project: project});
 
       project.save().done(function(){
         //NotificationController.success(null, "Project " + project.get('name') + " created.");
+        actions.BadgeActions.askProject();
         Utils.dispatch(ProjectConstants.UPDATE_PROJECT, {project: project});
       }).fail(function(){
         var message = "Error creating Project " + project.get('name') + ".";
