@@ -30,12 +30,14 @@ define(function (require) {
     // Register which stores the application should use
     var stores = require('stores');
     stores.ApplicationStore        = require('stores/ApplicationStore');
+    stores.BadgeStore              = require('stores/BadgeStore');
     stores.IdentityStore           = require('stores/IdentityStore');
     stores.ImageBookmarkStore      = require('stores/ImageBookmarkStore');
     stores.InstanceHistoryStore    = require('stores/InstanceHistoryStore');
     stores.InstanceStore           = require('stores/InstanceStore');
     stores.InstanceTagStore        = require('stores/InstanceTagStore');
     stores.MaintenanceMessageStore = require('stores/MaintenanceMessageStore');
+    stores.MyBadgeStore            = require('stores/MyBadgeStore');
     stores.ProfileStore            = require('stores/ProfileStore');
     stores.ProjectStore            = require('stores/ProjectStore');
     stores.ProjectInstanceStore    = require('stores/ProjectInstanceStore');
@@ -53,6 +55,7 @@ define(function (require) {
 
     var actions = require('actions');
     actions.ApplicationActions     = require('actions/ApplicationActions');
+    actions.BadgeActions           = require('actions/BadgeActions');
     actions.HelpActions            = require('actions/HelpActions');
     actions.ImageBookmarkActions   = require('actions/ImageBookmarkActions');
     actions.InstanceActions        = require('actions/InstanceActions');
@@ -76,6 +79,7 @@ define(function (require) {
     modals.TagModals               = require('modals/TagModals');
     modals.VersionModals           = require('modals/VersionModals');
     modals.VolumeModals            = require('modals/VolumeModals');
+    modals.BadgeModals             = require('modals/BadgeModals');
 
     return {
       run: function () {
