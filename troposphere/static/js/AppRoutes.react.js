@@ -29,7 +29,9 @@ define(function (require) {
       ProjectVolumePage = require("./components/projects/VolumeDetailsPage.react"),
       QuotaMaster = require('./components/quota/QuotaMaster.react'),
       QuotaRequest = require('./components/quota/QuotaRequest.react'),
-      QuotaAdmin = require('./components/quota/QuotaAdmin.react');
+      QuotaAdmin = require('./components/quota/QuotaAdmin.react'),
+      BadgeMaster = require('./components/badges/BadgeMaster.react'),
+      Badge = require('./components/badges/Badge.react');
 
   var AppRoutes = (
     <Route name="root" path="/application" handler={Master}>
@@ -64,6 +66,7 @@ define(function (require) {
       <Route name="admin" handler={QuotaMaster}>
           <Route name="quota-request" path=":quotaRequestId" handler={QuotaAdmin}/>
       </Route>
+      <Route name="badges" handler={BadgeMaster}/>
 
 
 
