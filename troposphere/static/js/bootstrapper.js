@@ -34,12 +34,14 @@ define(function (require) {
   stores.AllocationStore = require('stores/AllocationStore');
   stores.ApplicationStore = require('stores/ApplicationStore');
   stores.ApplicationVersionStore = require('stores/ApplicationVersionStore');
+  stores.BadgeStore = require('stores/BadgeStore');
   stores.IdentityStore = require('stores/IdentityStore');
   stores.ImageBookmarkStore = require('stores/ImageBookmarkStore');
   stores.InstanceHistoryStore = require('stores/InstanceHistoryStore');
   stores.InstanceStore = require('stores/InstanceStore');
   stores.InstanceTagStore = require('stores/InstanceTagStore');
   stores.MaintenanceMessageStore = require('stores/MaintenanceMessageStore');
+  stores.MyBadgeStore = require('stores/MyBadgeStore');
   stores.ProfileStore = require('stores/ProfileStore');
   stores.ProjectStore = require('stores/ProjectStore');
   stores.ProjectInstanceStore = require('stores/ProjectInstanceStore');
@@ -57,6 +59,7 @@ define(function (require) {
 
   var actions = require('actions');
   actions.ApplicationActions = require('actions/ApplicationActions');
+  actions.BadgeActions = require('actions/BadgeActions');
   actions.HelpActions = require('actions/HelpActions');
   actions.ImageBookmarkActions = require('actions/ImageBookmarkActions');
   actions.InstanceActions = require('actions/InstanceActions');
