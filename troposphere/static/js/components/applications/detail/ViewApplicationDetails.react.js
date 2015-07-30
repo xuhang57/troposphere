@@ -27,11 +27,11 @@ define(
         onEditImageDetails: React.PropTypes.func.isRequired,
       },
 
-      renderEditLink: function(){
+      renderEditLink: function () {
         var profile = stores.ProfileStore.get(),
-            image = this.props.application;
+          image = this.props.application;
 
-        if(profile.id && profile.get('username') === image.get('created_by').username){
+        if (profile.id && profile.get('username') === image.get('created_by').username) {
           return (
             <div className="edit-link-row">
               <a className="edit-link" onClick={this.props.onEditImageDetails}>Edit details</a>
@@ -41,27 +41,27 @@ define(
       },
 
       render: function () {
-        var availabilityView, versionView;
+        var availabilityView, versionView, tagsView;
 
         // Since providers requires authentication, we can't display which providers
         // the image is available on on the public page
-        if(this.props.providers){
+        if (this.props.providers) {
           availabilityView = (
             <AvailabilityView application={this.props.application}
                               providers={this.props.providers}
-            />
+              />
           );
         }
         tagsView = (
-            <TagsView application={this.props.application}
-                      tags={this.props.tags}
+          <TagsView application={this.props.application}
+                    tags={this.props.tags}
             />
-        )
+        );
         // Since identities requires authentication, we can't display the image
         // versions on the public page
-        if(this.props.identities){
+        if (this.props.identities) {
           versionView = (
-            <VersionsView application={this.props.application} />
+            <VersionsView application={this.props.application}/>
           );
         }
 
@@ -73,6 +73,8 @@ define(
               <CreatedView application={this.props.application}/>
               <AuthorView application={this.props.application}/>
               {tagsView}
+              {availabilityView}
+              <DescriptionView application={this.props.application}/>
               {versionView}
             </div>
           </div>

@@ -1,9 +1,10 @@
 define(function (require) {
 
   var React = require('react'),
-      BootstrapModalMixin = require('components/mixins/BootstrapModalMixin.react'),
-      stores = require('stores'),
-      moment = require('moment');
+    BootstrapModalMixin = require('components/mixins/BootstrapModalMixin.react'),
+    stores = require('stores'),
+    moment = require('moment'),
+    globals = require('globals');
 
   return React.createClass({
     mixins: [BootstrapModalMixin],
@@ -12,11 +13,11 @@ define(function (require) {
     // Mounting & State
     // ----------------
     //
-    getInitialState: function(){
+    getInitialState: function () {
       return this.getState.apply(this);
     },
 
-    getState: function(){
+    getState: function () {
       return {
         version: stores.VersionStore.getVersion()
       };
@@ -62,10 +63,14 @@ define(function (require) {
       }.bind(this));
 
       var content;
-      if(this.state.version){
+      if (this.state.version) {
         var client = this.state.version.client;
         var clientVersion = client.get("git_branch") + " " + client.get("git_sha_abbrev");
         var clientLastUpdated = moment(client.get('commit_date')).format("MMM Do YYYY");
+
+        var serverDeploy = this.state.version.deploy;
+        var serverDeployVersion = serverDeploy.get("git_branch") + " " + serverDeploy.get("git_sha_abbrev");
+        var serverDeployLastUpdated = moment(serverDeploy.get('commit_date')).format("MMM Do YYYY");
 
         var server = this.state.version.server;
         var serverVersion = server.get("git_branch") + " " + server.get("git_sha_abbrev");
@@ -85,11 +90,16 @@ define(function (require) {
                 {", " + serverLastUpdated}
                 <p>{serverVersion}</p>
               </div>
+              <div>
+                <label>Deployment (Ansible)</label>
+                {", " + serverDeployLastUpdated}
+                <p>{serverDeployVersion}</p>
+              </div>
             </div>
 
           </div>
         );
-      }else{
+      } else {
         content = (
           <div className="loading"></div>
         );

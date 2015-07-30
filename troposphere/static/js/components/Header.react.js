@@ -1,14 +1,14 @@
-define(function(require) {
+define(function (require) {
 
   var React = require('react'),
-      Backbone = require('backbone'),
-      actions = require('actions'),
-      modals = require('modals'),
-      MaintenanceMessageBanner = require('./MaintenanceMessageBanner.react'),
-      Router = require('react-router'),
+    Backbone = require('backbone'),
+    actions = require('actions'),
+    modals = require('modals'),
+    MaintenanceMessageBanner = require('./MaintenanceMessageBanner.react'),
+    Router = require('react-router'),
 
-      // plugin: required to enable the drop-down, but not used directly
-      bootstrap = require('bootstrap');
+  // plugin: required to enable the drop-down, but not used directly
+    bootstrap = require('bootstrap');
 
   var Link = Router.Link;
 
@@ -81,7 +81,7 @@ define(function(require) {
       username: React.PropTypes.string.isRequired
     },
 
-    onShowVersion: function(e){
+    onShowVersion: function (e) {
       e.preventDefault();
       modals.VersionModals.showVersion();
     },
@@ -95,7 +95,7 @@ define(function(require) {
           </a>
           <ul className="dropdown-menu">
             <li>
-                <Link to="settings">Settings</Link>
+              <Link to="settings">Settings</Link>
             </li>
             <li className="divider"></li>
             <li>
@@ -120,8 +120,8 @@ define(function(require) {
       currentRoute: React.PropTypes.array.isRequired
     },
 
-    renderBetaToggle: function(){
-      if(!window.show_troposphere_only){
+    renderBetaToggle: function () {
+      if (!window.show_troposphere_only) {
         return (
           <li>
             <a className="beta-toggle" href="/application?beta=false">
@@ -142,18 +142,18 @@ define(function(require) {
       var profile = this.props.profile;
       var loginLogoutDropdown = profile ? <LogoutLink username={profile.get('username')}/> : <LoginLink/>;
 
-      if(!profile) {
+      if (!profile) {
         links = links.filter(function (link) {
           return !link.requiresLogin;
         })
-      }else{
+      } else {
         links = links.filter(function (link) {
-          if(link.requiresStaff) return profile.get('is_staff');
+          if (link.requiresStaff) return profile.get('is_staff');
           return true;
         })
       }
 
-      var navLinks = links.map(function(link){
+      var navLinks = links.map(function (link) {
         var isCurrentRoute = (link.name.toLowerCase() === this.props.currentRoute[0]);
         var className = isCurrentRoute ? "active" : null;
         return (
@@ -167,15 +167,16 @@ define(function(require) {
       }.bind(this));
 
       var brandLink;
-      if(profile){
+      if (profile) {
         brandLink = <Link to="dashboard" className="navbar-brand"/>;
-      }else{
+      } else {
         brandLink = <Link to="images" className="navbar-brand"/>;
       }
 
       return (
         <div className="navbar navbar-default navbar-fixed-top" role="navigation">
           <MaintenanceMessageBanner maintenanceMessages={this.props.maintenanceMessages}/>
+
           <div className="container">
 
             <div className="navbar-header">

@@ -2,39 +2,30 @@ define(function (require) {
   "use strict";
 
   var actions = require('actions'),
-      stores = require('stores'),
-      ModalHelpers = require('components/modals/ModalHelpers'),
-      InstanceLaunchModal = require('components/modals/instance/InstanceLaunchModal.react');
+    stores = require('stores'),
+    ModalHelpers = require('components/modals/ModalHelpers'),
+    InstanceLaunchWizardModal = require('components/modals/instance/InstanceLaunchWizardModal.react');
 
   return {
 
-    launch: function(application){
-      var props = {
-        application: application
-      };
+    launch: function (application) {
+      var props = {application: application};
 
-      ModalHelpers.renderModal(InstanceLaunchModal, props, function (identity, machineId, sizeId, instanceName, project) {
-        var size = stores.SizeStore.get(sizeId),
-            machine = application.get('machines').get(machineId);
+      ModalHelpers.renderModal(InstanceLaunchWizardModal, props, function (launchData) {
+        var size = launchData.size,
+          version = launchData.version,
+          identity = launchData.identity,
+          name = launchData.name,
+          project = launchData.project;
 
-        if(typeof project === "string"){
-          actions.InstanceActions.createProjectAndLaunchInstance({
-            projectName: project,
-            instanceName: instanceName,
-            identity: identity,
-            size: size,
-            machine: machine
-          });
-        }else{
-          actions.InstanceActions.launch({
-            project: project,
-            instanceName: instanceName,
-            identity: identity,
-            size: size,
-            machine: machine
-          });
-        }
-      })
+        actions.InstanceActions.launch({
+          project: project,
+          instanceName: name,
+          identity: identity,
+          size: size,
+          version: version
+        });
+      });
     }
   };
 
