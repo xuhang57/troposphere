@@ -76,6 +76,7 @@ define(function (require) {
   actions.VolumeActions = require('actions/VolumeActions');
 
   var modals = require('modals');
+  modals.BadgeModals = require('modals/BadgeModals');
   modals.HelpModals = require('modals/HelpModals');
   modals.InstanceModals = require('modals/InstanceModals');
   modals.InstanceVolumeModals = require('modals/InstanceVolumeModals');
