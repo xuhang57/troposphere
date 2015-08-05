@@ -1,3 +1,4 @@
+from troposphere.settings.default import *
 try:
     from troposphere.settings.local import *
 except ImportError:
