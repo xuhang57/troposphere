@@ -34,6 +34,9 @@ def _handle_public_application_request(request, maintenance_records, disabled_lo
     template_params['UI_VERSION'] = settings.UI_VERSION
     template_params['BADGE_HOST'] = settings.BADGE_HOST
 
+    if hasattr(settings, "BASE_URL"):
+        template_params['BASE_URL'] = settings.BASE_URL
+
     if hasattr(settings, "API_ROOT"):
         template_params['API_ROOT'] = settings.API_ROOT
 
@@ -91,6 +94,9 @@ def _handle_authenticated_application_request(request, maintenance_records):
         template_params['intercom_app_id'] = settings.INTERCOM_APP_ID
         template_params['intercom_company_id'] = settings.INTERCOM_COMPANY_ID
         template_params['intercom_company_name'] = settings.INTERCOM_COMPANY_NAME
+
+    if hasattr(settings, "BASE_URL"):
+        template_params['BASE_URL'] = settings.BASE_URL
 
     if hasattr(settings, "API_ROOT"):
         template_params['API_ROOT'] = settings.API_ROOT

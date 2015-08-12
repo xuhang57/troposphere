@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_URL = ""
 
 DEBUG = False
 
@@ -107,9 +108,8 @@ LOGGING = {
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/assets/'
 STATICFILES_DIRS = (
-        os.path.join(BASE_DIR,'assets/'),
-
-    )
+    os.path.join(BASE_DIR, 'assets/'),
+)
 
 REST_FRAMEWORK = {
     # 'DEFAULT_RENDERER_CLASSES': (

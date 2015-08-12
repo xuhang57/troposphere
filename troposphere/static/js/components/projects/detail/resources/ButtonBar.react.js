@@ -1,10 +1,11 @@
 define(function (require) {
 
-  var React = require('react'),
+  var React = require('react/addons'),
     Backbone = require('backbone'),
     context = require('context'),
     Button = require('./Button.react'),
     RefreshButton = require('./RefreshButton.react'),
+    RequestResourcesButton = require('./RequestResourcesButton.react'),
     ResourceActionButtons = require('./ResourceActionButtons.react');
 
   return React.createClass({
@@ -45,6 +46,7 @@ define(function (require) {
       return (
         <div className="button-bar">
           <RefreshButton/>
+          <RequestResourcesButton />
           <Button
             icon="folder-open"
             tooltip="Move selected resources"

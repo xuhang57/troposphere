@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, include, url
+from troposphere import settings
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 user_match = "[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*"
-
-urlpatterns = patterns('',
+ui_urlpatterns = patterns('',
     url(r'^tropo-admin/', include(admin.site.urls)),
     url(r'^$', 'troposphere.views.root'),
     url(r'^application/emulate$', 'troposphere.views.unemulate',
@@ -24,4 +24,13 @@ urlpatterns = patterns('',
     url(r'^tropo-api/', include('api.urls')),
 )
 
+# NOTE: Have to remove the leading slash on 'BASE_URL'
+base_url = settings.BASE_URL.lstrip("/")
+
+urlpatterns = patterns('',
+    url(r'^%s/' % base_url,
+        include(ui_urlpatterns)),
+    )
+#NOTE: For backward-compatibility... leave the 'non-base-url' endpoints available..
+urlpatterns += ui_urlpatterns
 urlpatterns += staticfiles_urlpatterns()
