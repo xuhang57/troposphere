@@ -19,7 +19,8 @@ define(function (require) {
       VISIBILITY_STEP = 4,
       EXCLUDE_FILES_STEP = 5,
       SCRIPTS_LICENSE_STEP = 6,
-      REVIEW_STEP = 7;
+      RECOMMENDED_REQUIREMENTS_STEP = 7,
+      REVIEW_STEP = 8;
 
   return React.createClass({
     displayName: "InstanceImageWizardModal",
@@ -36,6 +37,9 @@ define(function (require) {
     // ----------------
     //
 
+    // getInitialState: function(){
+    //   step: 1
+    // },
     getInitialState: function () {
       return {
         step: 1,
@@ -58,6 +62,7 @@ define(function (require) {
           {name:"Privacy",step:VISIBILITY_STEP},
           {name:"Exclude Files",step:EXCLUDE_FILES_STEP},
           {name:"Boot Scripts & Licenses",step:SCRIPTS_LICENSE_STEP},
+          {name:"Recommended Requirements", step:RECOMMENDED_REQUIREMENTS_STEP},
           {name:"Review",step:REVIEW_STEP}
         ]
 
@@ -234,6 +239,11 @@ define(function (require) {
               onPrevious={this.onPrevious}
               onNext={this.onNext}
               />
+          );
+
+        case RECOMMENDED_REQUIREMENTS_STEP:
+          return (
+            <div>YO</div>
           );
 
         case REVIEW_STEP:
