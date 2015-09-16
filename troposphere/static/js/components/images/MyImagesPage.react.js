@@ -2,7 +2,7 @@ define(function(require) {
 
   var React = require('react/addons'),
     SecondaryImageNavigation = require('./common/SecondaryImageNavigation.react'),
-    ImageCardList = require('./list/list/ImageCardList.react'),
+    MyImageCardList = require('./list/list/MyImageCardList.react'),
     stores = require('stores');
 
   return React.createClass({
@@ -33,7 +33,7 @@ define(function(require) {
             {"Looking for more information about the imaging process? Check out the "}
             <a href={imagingDocsUrl} target="_blank">documention on imaging</a>.
           </p>
-          <ImageCardList images={images}/>
+          <MyImageCardList images={images}/>
         </div>
       );
     },
