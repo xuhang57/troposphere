@@ -228,6 +228,8 @@ define(function (require) {
     render: function () {
       var imageData = this.props.imageData;
 
+      var identity = stores.IdentityStore.getAll();
+
       return (
         <div>
           <div className="modal-body">
