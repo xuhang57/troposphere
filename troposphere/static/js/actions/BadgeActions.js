@@ -34,7 +34,7 @@ define(function (require) {
     },
 
     checkOrGrant: function(badgeId){
-      if(!stores.MyBadgeStore.get(badgeId)){
+      if(globals.BADGES_ENABLED && !stores.MyBadgeStore.get(badgeId)){
         this.grant({badge: stores.BadgeStore.get(badgeId)});
       }
     },
