@@ -6,16 +6,50 @@ import SelectMenu from 'components/common/ui/SelectMenu.react';
 
 export default React.createClass({
 
-    render: function () {
-        if (!this.props.provider || !this.props.providerSizeList || !this.props.providerSize) {
-            return ( <div className="loading"/>);
+    renderSelectProvider: function() {
+        if (!this.props.provider) {
+            return (<input class="form-control"/>);
         }
 
-        // TODO: functions vs data confusing
-        let providerName = (item) => item.get('name');
-        let sizeName = (item) => `${item.get('name')} (CPU: ${item.get('cpu')}, Mem: ${Math.round(item.get('mem') * 100) / 100}GB)`;
         let defaultProviderId = this.props.provider.id;
+
+        // Here we are defining the callback used by SelectMenu's optionName
+        // item reffers the parameter passed by map
+        let providerName = (item) => item.get('name');
+
+        return (
+            <SelectMenu
+                defaultId={defaultProviderId}
+                list={this.props.providerList}
+                optionName={providerName}
+                onSelectChange={this.props.onProviderChange}
+            />
+        );
+    },
+
+    renderSelectSize: function() {
+        if (!this.props.providerSize) {
+            return (<input class="form-control"/>);
+        }
+
         let sizeId = this.props.providerSize.get('id');
+
+        // Here we are defining the callback used by SelectMenu's optionName 
+        // item reffers the parameter passed by map
+        let sizeName = (item) => `${item.get('name')} (CPU: ${item.get('cpu')}, Mem: ${Math.round(item.get('mem') * 100) / 100}GB)`;
+
+        return (
+            <SelectMenu
+            //TODO Set default Size
+                defaultId={sizeId}
+                list={this.props.providerSizeList}
+                optionName={sizeName}
+                onSelectChange={this.props.onSizeChange}
+            />
+        );
+    },
+
+    render: function () {
 
         return (
             <form>
@@ -23,22 +57,13 @@ export default React.createClass({
                     <label for="instanceName">
                         Provider
                     </label>
-                    <SelectMenu
-                        defaultId={defaultProviderId}
-                        list={this.props.providerList}
-                        optionName={providerName}
-                        onSelectChange={this.props.onProviderChange}/>
+                    {this.renderSelectProvider()}
                 </div>
                 <div className="form-group">
                     <label for="instanceSize">
-                            Instance  Size
+                            Instance Size
                     </label>
-                    <SelectMenu
-                    //TODO Set default Size
-                        defaultId={sizeId}
-                        list={this.props.providerSizeList}
-                        optionName={sizeName}
-                        onSelectChange={this.props.onSizeChange}/>
+                    {this.renderSelectSize()}
                 </div>
                 <div className="form-group">
                     <ResourceGraphs
@@ -48,7 +73,7 @@ export default React.createClass({
                         sizes={this.props.providerSizeList}
                         identityProvider={this.props.identityProvider}
                         onRequestResources={this.props.onRequestResources}
-                        />
+                    />
                 </div>
             </form>
         );

@@ -27,10 +27,10 @@ export default React.createClass({
         //===========================
         // We might have these
         let image = this.props.image ? this.props.image : null;
+        let imageName = image ? image.get("name") : null;
         let project = this.props.project ? this.props.project : null;
         let provider = null;
         let view = image ? "BASIC_VIEW" : "IMAGE_VIEW";
-        let imageName = image ? image.get("name") : null;
         // These need to populate
         let projectList = stores.ProjectStore.getAll() || null;
         let sizes = stores.SizeStore.getAll() || null;
@@ -88,9 +88,7 @@ export default React.createClass({
 
         var providerList, provider;
         if (imageVersion) {
-            providerList = this.state.providerList ?
-                this.state.providerList :
-                new Backbone.Collection(imageVersion.get('machines').map((item) => item.provider));
+            providerList = new Backbone.Collection(imageVersion.get('machines').map((item) => item.provider));
             provider = this.state.provider ?
                 this.state.provider :
                 providerList.first();
@@ -185,8 +183,8 @@ export default React.createClass({
         let providerSizeList;
         if (imageVersion) {
             let providerList = new Backbone.Collection(imageVersion.get('machines').map((item) => item.provider));
-            let provider = providerList.first();
-//                let resourcesUsed = stores.InstanceStore.getTotalResources(provider.id);    // TODO: FIND OUT WHY THIS IS HERE
+            var provider = providerList.first();
+            var resourcesUsed = stores.InstanceStore.getTotalResources(provider.id);    // TODO: FIND OUT WHY THIS IS HERE
             providerSizeList = stores.SizeStore .fetchWhere({
                 provider__id: provider.id
             });
@@ -204,8 +202,10 @@ export default React.createClass({
             imageVersion,
             providerSize,
             imageName,
+            provider,
             providerSize,
             identityProvider,
+            resourcesUsed,
         }, this.viewBasic);
     },
 
@@ -221,8 +221,13 @@ export default React.createClass({
         this.setState({ instanceName: name });
     },
 
-    onVersionChange: function(version) {
-        this.setState({ imageVersion: version });
+    onVersionChange: function(imageVersion) {
+        let providerList = new Backbone.Collection(imageVersion.get('machines').map((item) => item.provider));
+        var provider = providerList.first();
+        this.setState({
+            provider,
+            imageVersion,
+        });
     },
 
     onProjectChange: function(project) {
@@ -370,23 +375,25 @@ export default React.createClass({
             resourcesUsed = stores.InstanceStore.getTotalResources(provider.id);
         }
 
-        return React.createElement(BasicLaunchStep, _.extend({}, this.state, {
-            projectList,
-            providerList,
-            providerSizeList,
-            resourcesUsed,
-            imageVersionList,
-            onNameChange: this.onNameChange,
-            onVersionChange: this.onVersionChange,
-            onProjectChange: this.onProjectChange,
-            onProviderChange: this.onProviderChange,
-            onSizeChange: this.onSizeChange,
-            onRequestResources: this.onRequestResources,
-            viewAdvanced: this.viewAdvanced,
-            onCancel: this.onCancelModal,
-            onSubmitLaunch: this.onSubmitLaunch,
-            onBack: this.onBack,
-        }));
+        return (
+            <BasicLaunchStep {...this.state}
+                projectList={projectList}
+                providerList={providerList}
+                providerSizeList={providerSizeList}
+                resourcesUsed={resourcesUsed}
+                imageVersionList={imageVersionList}
+                onNameChange={this.onNameChange}
+                onVersionChange={this.onVersionChange}
+                onProjectChange={this.onProjectChange}
+                onProviderChange={this.onProviderChange}
+                onSizeChange={this.onSizeChange}
+                onRequestResources={this.onRequestResources}
+                viewAdvanced={this.viewAdvanced}
+                onCancel={this.onCancelModal}
+                onSubmitLaunch={this.onSubmitLaunch}
+                onBack={this.onBack}
+            />
+        );
     },
 
     renderAdvancedOptions: function() {

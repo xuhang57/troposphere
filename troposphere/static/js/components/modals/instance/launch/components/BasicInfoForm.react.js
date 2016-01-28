@@ -17,7 +17,6 @@ export default React.createClass({
         let imageVersionId = this.props.imageVersion.get('id');
         let project = this.props.project;
         let instanceName = this.props.instanceName || this.props.imageName;
-        console.log("BasicInfoForm i img?", this.props.instanceName, this.props.imageName);
 
         return (
             <form>

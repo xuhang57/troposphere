@@ -11,14 +11,6 @@ export default React.createClass({
         optionName: React.PropTypes.func.isRequired
     },
 
-    getInitialState: function(){
-        let defaultId = this.props.defaultId;
-
-        return({
-            value: defaultId
-        })
-    },
-
     onSelectChange: function(e) {
         let val = e.target.value;
         let list = this.props.list
