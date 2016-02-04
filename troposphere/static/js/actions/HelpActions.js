@@ -57,11 +57,8 @@ define(function (require) {
       if (!params.identity) throw new Error("Missing identity");
       if (!params.quota) throw new Error("Missing quota");
       if (!params.reason) throw new Error("Missing reason");
-      
-      if(globals.BADGES_ENABLED){
-        actions.BadgeActions.askSupport();
-      }
 
+      actions.BadgeActions.askSupport();
 
       var user = stores.ProfileStore.get(),
         identity = params.identity,

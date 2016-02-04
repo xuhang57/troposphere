@@ -26,7 +26,7 @@ define(function (require) {
     checkBookmarkBadges: function(){
       var favoritedImageCount = stores.ImageBookmarkStore.getAll().meta.count;
       if(favoritedImageCount >= 1){
-        this.checkOrGrant(Badges.FAVORITE_1_IMAGE_BADGE); 
+        this.checkOrGrant(Badges.FAVORITE_1_IMAGE_BADGE);
       }
       if(favoritedImageCount >= 5){
         this.checkOrGrant(Badges.FAVORITE_5_IMAGES_BADGE);
@@ -34,7 +34,7 @@ define(function (require) {
     },
 
     checkOrGrant: function(badgeId){
-      if(!stores.MyBadgeStore.get(badgeId)){
+      if(globals.BADGES_ENABLED && !stores.MyBadgeStore.get(badgeId)){
         this.grant({badge: stores.BadgeStore.get(badgeId)});
       }
     },
