@@ -13,14 +13,16 @@ export default React.createClass({
     let ProviderCards =  providers.map(function(item) {
         let provider = item.attributes;
         return (
-            <li key={provider.id}>
-                <div className="media card" >
+            <li key={provider.id} style={{marginBottom: "20px"}}>
+                <div className="Media Card" >
                     <Router.Link to = "provider" params = {{id: provider.id}} >
-                        <div className="media__content" >
+                        <div className="Media-content" >
                             <h2 className="title-3" > {provider.name} </h2>
-                        <p className="media__description" > {provider.description} </p>
-                        <hr/>
-                        <Stats provider={provider} />
+                        <p className="Media-description" > {provider.description} </p>
+                        </div>
+                        <div className="Media-footer">
+                            <hr/>
+                            <Stats provider={provider} />
                         </div>
                     </Router.Link>
                 </div>

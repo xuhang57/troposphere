@@ -33,7 +33,7 @@ define(function (require) {
             <span className="stat">{value}</span>
             <span className="sub-text">{subText}</span>
           </div>
-          <div className="more-info">{moreInfo}</div>
+          <div style={{paddingBottom: "10px" }} className="more-info">{moreInfo}</div>
         </div>
       )
     },
