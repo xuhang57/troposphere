@@ -63,7 +63,7 @@ export default React.createClass({
         );
 
         if (!this.state.active) {
-            inactiveClass = "media--disabled";
+            inactiveClass = "Media--disabled";
             if (this.state.showAlert) {
                 alertMessage = () => {
                     return (
@@ -94,21 +94,23 @@ export default React.createClass({
         return (
             <li
                 style={{position: "relative" }}
-                className="media card"
+                className="Media Card"
                 onClick={this.handleClick}
             >
                 <div className={`clearfix ${inactiveClass}`}>
-                    <div className="media__img">
+                    <div className="Media-img">
                         {icon}
                     </div>
-                    <div className="media__content">
+                    <div className="Media-content">
                         <div className="row">
                             <div className="col-md-3 t-wordBreaker">
                                 <h2 className="t-body-1" style={{margin: "0 0 5px"}}>{image.get('name')}</h2>
                                 <hr style={{margin: "0 0 5px" }}/>
-                                <time>{imageCreationDate}</time> by <strong>{image.get('created_by').username}</strong>
+                                <span className="Media-date">
+                                    <time>{imageCreationDate}</time> by <strong>{image.get('created_by').username}</strong>
+                                </span>
                             </div>
-                            <p className="media__description col-md-5">
+                            <p className="Media-description col-md-5">
                                 {renderDescription}
                             </p>
                             <div className="col-md-4">
