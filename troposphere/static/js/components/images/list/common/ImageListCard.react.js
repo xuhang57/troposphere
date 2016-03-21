@@ -50,25 +50,36 @@ define(function (require) {
       }
 
       return (
-        <div className='app-card'>
-          <div>
-            <span className='icon-container'>
-              <Router.Link to="image-details" params={{imageId: image.id}}>
-                {icon}
-              </Router.Link>
-            </span>
-            <span className='app-name'>
-              <h4>
+        <div className='Media Card'>
+
+            <span className='Media-img'>
                 <Router.Link to="image-details" params={{imageId: image.id}}>
-                  {image.get('name')}
+                    {icon}
                 </Router.Link>
-              </h4>
-              <div><time>{imageCreationDate}</time> by <strong>{image.get('created_by').username}</strong></div>
-              <Tags activeTags={imageTags}/>
             </span>
-          </div>
-          <div dangerouslySetInnerHTML={{__html: descriptionHtml}}/>
-          {bookmark}
+
+            <div className="Media-content">
+                <div className="row">
+                    <span className='app-name col-md-4'>
+                    <h4>
+                        <Router.Link to="image-details" params={{imageId: image.id}}>
+                        {image.get('name')}
+                        </Router.Link>
+                    </h4>
+                    <div className="Media-date">
+                        <time>{imageCreationDate}</time> by <strong>{image.get('created_by').username}</strong>
+                    </div>
+                    
+                    </span>
+                    <div className="Media-description col-md-5">
+                        {description}
+                    </div>
+                    <div className="col-md-3">
+                        <Tags activeTags={imageTags}/>
+                    </div>
+                {bookmark}
+                </div>
+            </div>
         </div>
       );
     }
