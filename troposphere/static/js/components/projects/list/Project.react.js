@@ -28,7 +28,7 @@ define(function (require) {
       var project = this.props.project;
       return (
         <li className={"col-md-4" + this.props.className} style={{padding: "15px"}}>
-          <div className="media card">
+          <div className="Media Card">
             <Router.Link to="project-resources" 
               params={{projectId: project.id}}
               style={{color: "inherit"}}
@@ -42,7 +42,7 @@ define(function (require) {
       var project = this.props.project;
       return (
         <li className={"col-md-4" + this.props.className} style={{padding: "15px"}}>
-          <div className="media card">
+          <div className="Media Card">
             {this.renderBody()}
           </div>
         </li>);
@@ -57,7 +57,7 @@ define(function (require) {
       if (!project.id || !projectExternalLinks || !projectInstances || !projectVolumes || !projectImages) {
         return (
         <li className={"col-md-4" + this.props.className} style={{padding: "15px"}}>
-          <div className="media card">
+          <div className="Media Card">
                 <h2 className="t-title">{project.get('name')}</h2>
 
                 <div className="loading" style={{marginTop: "65px"}}/>
@@ -84,17 +84,17 @@ define(function (require) {
 
       return (
         <div style={{"position": "relative"}}>
-          <div className="media__content">
+          <div className="Media-content">
             <h2 className="t-title">{project.get('name')}</h2>
             <hr/>
-            <time className="t-caption" style={{display: "block"}}>{"Created " + projectCreationDate}</time>
-            <p className="description" 
+            <time className="Media-date" style={{display: "block"}}>{"Created " + projectCreationDate}</time>
+            <p className="Media-description" 
               style={{minHeight: "200px"}} 
             >
                 {description}
             </p>
           </div>
-          <div className="media__footer">
+          <div className="Media-footer">
             <ul className="project-resource-list ">
                 <ProjectResource icon={"tasks"}
                                 count={projectInstances.length}
