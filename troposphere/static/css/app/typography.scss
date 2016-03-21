@@ -1,3 +1,11 @@
+// THis is mixin is because we want to use this style on another components. Since we want consistancy in our apps's typography we use a mixin. In the future all of our typography should be maintained on this page as mixins for other components to use. 
+@mixin captionText() {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom:5px;
+    color:$grey--dark;
+}
+
 body {
     font-family:'Roboto' , sans-serif;
 }
@@ -52,10 +60,7 @@ body {
 }
 
 .t-caption { 
-    font-size: 12px;
-    font-weight: 400;
-    margin-bottom:5px;
-    color:$grey--dark;
+    @include captionText();
 }
 
 // This can be used where a long word is expected to break the layout.
