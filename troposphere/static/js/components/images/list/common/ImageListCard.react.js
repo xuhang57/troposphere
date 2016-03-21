@@ -60,17 +60,16 @@ define(function (require) {
 
             <div className="Media-content">
                 <div className="row">
-                    <span className='app-name col-md-4'>
-                    <h4>
-                        <Router.Link to="image-details" params={{imageId: image.id}}>
-                        {image.get('name')}
-                        </Router.Link>
-                    </h4>
-                    <div className="Media-date">
-                        <time>{imageCreationDate}</time> by <strong>{image.get('created_by').username}</strong>
+                    <div className='app-name col-md-4'>
+                        <h4>
+                            <Router.Link to="image-details" params={{imageId: image.id}}>
+                            {image.get('name')}
+                            </Router.Link>
+                        </h4>
+                        <div className="Media-date">
+                            <time>{imageCreationDate}</time> by <strong>{image.get('created_by').username}</strong>
+                        </div>
                     </div>
-                    
-                    </span>
                     <div className="Media-description col-md-5">
                         {description}
                     </div>
