@@ -52,11 +52,11 @@ define(function (require) {
       return (
         <div className='Media Card'>
 
-            <span className='Media-img'>
+            <div className='Media-img'>
                 <Router.Link to="image-details" params={{imageId: image.id}}>
                     {icon}
                 </Router.Link>
-            </span>
+            </div>
 
             <div className="Media-content">
                 <div className="row">

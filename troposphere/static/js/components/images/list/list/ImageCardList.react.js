@@ -21,7 +21,7 @@ define(function (require) {
 
     renderCard: function(image){
       return (
-        <li style={{marginBottom: "20px"}} key={image.id}>
+        <li style={{marginBottom: "10px"}} key={image.id}>
           <ImageListCard image={image}/>
         </li>
       );

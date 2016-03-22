@@ -4,6 +4,7 @@
 // Read about this pattern here: http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
 
 .Media {
+    position: relative;
     overflow:hidden;
     _overflow:visible;
     zoom:1;
@@ -40,6 +41,11 @@
         img {
             display: block;
         }
+    }
+
+    .Media-imgTop {
+        margin:0;
+        float:none;
     }
 }
 
