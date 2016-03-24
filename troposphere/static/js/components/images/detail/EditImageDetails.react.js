@@ -27,6 +27,7 @@ define(function (require) {
       identities: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
       tags: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
       image_memberships: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
+      all_memberships: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
       onSave: React.PropTypes.func.isRequired,
       onCancel: React.PropTypes.func.isRequired
     },
@@ -114,7 +115,7 @@ define(function (require) {
           identities = this.props.identities,
           allTags = this.props.tags,
           imageTags = this.state.tags;
-          allMemberships = this.props.imageMemberships,
+          allMemberships = this.props.all_memberships,
           imageMemberships = this.state.imageMemberships;
 
       // Since providers requires authentication, we can't display which providers
@@ -160,7 +161,7 @@ define(function (require) {
               titleClassName="title col-md-2"
               formClassName="form-group col-md-10"
               className="image-info-segment row"
-              title="privacy:"
+              title={"Privacy"}
               image={image}
               onChange={this.handlePrivacyChange}
             />

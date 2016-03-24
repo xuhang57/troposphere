@@ -33,6 +33,7 @@ define(function (require) {
       }
 
       var image_memberships = stores.ImageMembershipStore.getMembershipsFor(image);
+      var all_memberships = stores.MembershipStore.getAll();
       if (!providers || !identities || image_memberships == null) return (<div className='loading'></div>);
 
       return (
@@ -41,6 +42,7 @@ define(function (require) {
           providers={providers}
           identities={identities}
           tags={tags}
+          all_memberships={all_memberships}
           image_memberships={image_memberships}
           />
       );
