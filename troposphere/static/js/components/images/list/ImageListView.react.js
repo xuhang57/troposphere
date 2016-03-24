@@ -121,10 +121,6 @@ define(function (require) {
       }
     },
 
-    onCardExpand: function(e) {
-        console.log(e);
-    },
-
     // --------------
     // Render methods
     // --------------
