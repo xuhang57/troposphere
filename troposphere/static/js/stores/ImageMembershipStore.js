@@ -22,7 +22,7 @@ define(function (require) {
         _isFetchingFor[imageId] = true;
         var models = new ImageMembershipCollection();
         models.fetch({
-          url: models.url + "?id=" + imageId
+          url: models.url + "?image_id=" + imageId
         }).done(function () {
           _isFetchingFor[imageId] = false;
 

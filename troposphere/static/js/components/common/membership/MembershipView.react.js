@@ -6,39 +6,49 @@ define(function (require) {
   var ENTER_KEY = 13;
 
   return React.createClass({
-    displayName: "EditMembershipView",
+    displayName: 'MembershipView',
 
     propTypes: {
       activeMemberships: React.PropTypes.instanceOf(Backbone.Collection),
-      label: React.PropTypes.string.isRequired
+      label: React.PropTypes.string.isRequired,
+      noMembershipText: React.PropTypes.string,
     },
 
     getDefaultProps: function() {
       return {
         activeMemberships: new Backbone.Collection(),
+        label: 'Membership',
+        noMembershipText: 'No members'
       }
     },
     renderMembershipItem: function(membership) {
         return (
-            <li className="tag">
-              <a href="javascript:void(0)">{membership.get('group').name}</a>
+            <li className='tag' key={membership.id}>
+              <a href='javascript:void(0)'>{membership.get('name')}</a>
             </li>
         );
     },
     render: function () {
-      var query = this.state.query,
-          link,
+      var link,
           membershipView,
-          memberships = this.props.memberships;
-
-        membershipView = memberships.map(this.renderMembershipItem);
-
+          memberships = this.props.activeMemberships.models,
+          membershipList = memberships.map(this.renderMembershipItem);
+      var membershipContent;
+      if (membershipList.length > 0) {
+          membershipContent = (
+            <ul className='tags'>
+              {membershipList}
+            </ul>
+          );
+      } else {
+          membershipContent = this.props.noMembershipText;
+      }
       return (
-        <div className="resource-users">
-          <h4 className='user-title'>{this.props.label}</h4>
-          <ul className="tags">
-            {membershipView}
-          </ul>
+        <div className='image-membership image-info-segment row'>
+          <h4 className='t-title col-md-2'>{this.props.label}</h4>
+          <div className='content col-md-10'>
+            {membershipContent}
+          </div>
         </div>
       );
     }

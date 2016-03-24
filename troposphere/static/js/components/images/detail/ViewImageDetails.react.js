@@ -10,11 +10,12 @@ define(
     './removed/RemovedView.react',
     './author/AuthorView.react',
     './description/DescriptionView.react',
+    './privacy/PrivacyView.react',
     './versions/VersionsView.react',
     'actions',
     'stores'
   ],
-  function (React, HeaderView, TagsView, MembershipView, ImageLaunchCard, NameView, CreatedView, RemovedView, AuthorView, DescriptionView, VersionsView, actions, stores) {
+  function (React, HeaderView, TagsView, MembershipView, ImageLaunchCard, NameView, CreatedView, RemovedView, AuthorView, DescriptionView, PrivacyView, VersionsView, actions, stores) {
 
     return React.createClass({
       displayName: "ViewImageDetails",
@@ -43,7 +44,7 @@ define(
       },
 
       render: function () {
-        var membershipView = (<MembershipView membership={this.props.image_memberships}/>);
+        var membershipView = (<MembershipView activeMemberships={this.props.image_memberships}/>);
         return (
           <div>
             <div>
@@ -53,6 +54,7 @@ define(
               <AuthorView image={this.props.image}/>
               <DescriptionView image={this.props.image}/>
               <TagsView image={this.props.image} tags={this.props.tags}/>
+              <PrivacyView image={this.props.image}/>
               { membershipView }
             </div>
             {this.renderEditLink()}

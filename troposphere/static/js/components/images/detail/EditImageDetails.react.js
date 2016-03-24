@@ -9,6 +9,7 @@ define(function (require) {
     InteractiveDateField = require('components/common/InteractiveDateField.react'),
     CreatedView = require('./created/CreatedView.react'),
     EditRemovedView = require('./removed/EditRemovedView.react'),
+    EditPrivacyView = require('./privacy/EditPrivacyView.react'),
     EditMembershipView = require('components/common/membership/EditMembershipView.react'),
     AuthorView = require('./author/AuthorView.react'),
     actions = require('actions'),
@@ -35,12 +36,14 @@ define(function (require) {
         endDate = image.get('end_date').isValid() ?
              image.get('end_date').tz(globals.TZ_REGION).format("M/DD/YYYY hh:mm a z") : "";
 
-      var imageTags = stores.TagStore.getImageTags(image);
+      var imageTags = stores.TagStore.getImageTags(image),
+          imageMemberships = stores.ImageMembershipStore.getMembershipsFor(image);
       return {
         name: image.get('name'),
         description: image.get('description'),
         endDate: endDate,
-        tags: imageTags
+        tags: imageTags,
+        imageMemberships: imageMemberships
       }
     },
 
@@ -49,7 +52,8 @@ define(function (require) {
         name: this.state.name,
         description: this.state.description,
         end_date: this.state.endDate,
-        tags: this.state.tags
+        tags: this.state.tags,
+        imageMemberships: this.state.imageMemberships
       };
 
       this.props.onSave(updatedAttributes);
@@ -84,6 +88,12 @@ define(function (require) {
       this.setState({description: description});
     },
 
+    handlePrivacyChange: function (e) {
+      var privacy = e.target.value,
+          is_public = (privacy == false);
+      this.setState({is_public: is_public});
+    },
+
     onTagAdded: function(tag){
       tags = this.state.tags
       tags.add(tag)
@@ -102,6 +112,8 @@ define(function (require) {
           identities = this.props.identities,
           allTags = this.props.tags,
           imageTags = this.state.tags;
+          allMemberships = this.props.imageMemberships,
+          imageMemberships = this.state.imageMemberships;
 
       // Since providers requires authentication, we can't display which providers
       // the image is available on on the public page
@@ -142,9 +154,18 @@ define(function (require) {
               onTagAdded={this.onTagAdded}
               onTagRemoved={this.onTagRemoved}
             />
+            <EditPrivacyView
+              titleClassName="title col-md-2"
+              formClassName="form-group col-md-10"
+              className="image-info-segment row"
+              title="privacy:"
+              image={image}
+              value={this.state.privacy}
+              onChange={this.handlePrivacyChange}
+            />
             <EditMembershipView
-              activeMemberships={imageUsers}
-              memberships={allUsers}
+              activeMemberships={imageMemberships}
+              memberships={allMemberships}
               onAdded={this.onMembershipAdded}
               onRemoved={this.onMembershipRemoved}
             />
