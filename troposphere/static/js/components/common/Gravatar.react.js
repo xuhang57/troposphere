@@ -17,7 +17,10 @@ define(function (require) {
     propTypes: {
       hash: React.PropTypes.string,
       type: React.PropTypes.string,
-      size: React.PropTypes.number
+      size: React.PropTypes.oneOfType([
+          React.PropTypes.string,
+          React.PropTypes.number,
+      ]),
     },
 
     getSrc: function (hash, icon_set, size) {
@@ -44,7 +47,7 @@ define(function (require) {
 
       var imgSrc = this.getSrc(this.props.hash, this.props.type, this.props.size);
       return (
-        <img src={imgSrc} width={this.props.size} height={this.props.size}/>
+        <img src={imgSrc} width={this.props.size} />
       );
     }
 
