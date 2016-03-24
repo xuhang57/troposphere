@@ -62,3 +62,18 @@
         margin: 0 -20px -20px;
     }
 }
+
+.CardList {
+    padding:20px;
+    box-shadow: $shadow-2;
+    background: white;
+    margin-bottom: 1px;
+
+    .Media-footer {
+        margin: 0 -20px -20px;
+    }
+}
+
+.CardList--expanded {
+    box-shadow: $shadow-2--focused;
+}

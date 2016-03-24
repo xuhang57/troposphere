@@ -12,5 +12,7 @@ $grey--xxlight: #F7F8F8;
 
 //Shadow Effects
 
-$shadow-1: 0 1px 5px rgba(43,59,93,.29);
+$shadow-1: 0 1px 5px rgba(0,0,0,.29);
+$shadow-2:0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24) ;
+$shadow-2--focused: 0 5px 15px rgba(0,0,0,.5);
 $shadow-1--inset: inset 0px 0px 6px 0px rgba(0,0,0,0.37);
