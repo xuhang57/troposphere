@@ -12,6 +12,13 @@ export default React.createClass({
         ]),
         optionName: React.PropTypes.func.isRequired,
         onSelectChange: React.PropTypes.func.isRequired,
+        selection: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number,
+            React.PropTypes.bool,
+            React.PropTypes.instanceOf(backbone.Model),
+            React.PropTypes.object
+        ]),
         list: React.PropTypes.oneOfType([
             React.PropTypes.instanceOf(backbone.Collection),
             React.PropTypes.array
@@ -38,9 +45,15 @@ export default React.createClass({
     },
 
     renderOption: function (item) {
-
+        // By default, don't set a default selection.
+        // If added as a property, select the matching value from the list
+        // If necessary, we could make 'the comparator' isSelected as passable info
+        var isSelected = false;
+        if (this.props.selected) {
+            isSelected = this.props.selected == item;
+        }
             return (
-                <option key={item.id} value={item.id}>
+                <option key={item.id} value={item.id} selected={isSelected}>
                     {this.props.optionName(item)}
                 </option>
             );
