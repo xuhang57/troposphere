@@ -10,17 +10,20 @@ define(function (require) {
       images: React.PropTypes.instanceOf(Backbone.Collection).isRequired
     },
 
-    style: function() {
-        if (this.props.viewType === "list") {
-            return {
-                listStyle: "none",
-            }
-        }
-
+    getInitialState: function() {
         return {
-            marginBottom: "20px",
-            listStyle: "none",
+            expanded: {},
         }
+    },
+
+    onExpand: function(image) {
+        console.log(image);
+        if (image === this.state.expanded) {
+            image = {}
+        };
+        this.setState({
+            expanded: image
+        })
     },
 
     renderTitle: function () {
@@ -33,12 +36,14 @@ define(function (require) {
     },
 
     renderCard: function(image){
-      let listStyle = (this.props.viewType === "list") ?
-          null : "col-md-3";
+      let isExpanded = (this.state.expanded === image) ? true : false;
 
       return (
-        <li className={listStyle} style={this.style()} key={image.id}>
-          <ImageListCard {...{...this.props, image }}/>
+        <li style={{listStyle: "none"}} key={image.id}>
+          <ImageListCard {...{...this.props, image }}
+            onExpand={this.onExpand.bind(this, image)}
+            isExpanded={isExpanded}
+          />
         </li>
       );
     },
@@ -46,13 +51,11 @@ define(function (require) {
     render: function () {
       var images = this.props.images;
       var imageCards = images.map(this.renderCard);
-      let isRow =  (this.props.viewType !== "list") ?
-          "row" : "";
 
       return (
-        <div className={isRow}>
+        <div>
           {this.renderTitle()}
-          <ul className='app-card-list'>
+          <ul style={{padding: "0"}}>
             {imageCards}
           </ul>
         </div>

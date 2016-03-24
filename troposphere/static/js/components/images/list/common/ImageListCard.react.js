@@ -33,6 +33,7 @@ define(function (require) {
         this.setState({
             isExpanded
         });
+        this.props.onExpand()
     },
 
     render: function () {
@@ -57,7 +58,7 @@ define(function (require) {
             descriptionActive = "No Description Provided."
       }
 
-      if (this.state.isExpanded) {
+      if (this.props.isExpanded) {
           descriptionActive = descriptionFull;
 
       }
@@ -104,7 +105,7 @@ define(function (require) {
       let featured = (<i className="glyphicon glyphicon-thumbs-up"/>);
       return (
             <MediaCard 
-                isExpanded={this.state.isExpanded}
+                isExpanded={this.props.isExpanded}
                 image={icon}
                 title={title}
                 subTitle={date}

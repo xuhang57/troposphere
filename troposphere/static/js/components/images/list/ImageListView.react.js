@@ -121,6 +121,10 @@ define(function (require) {
       }
     },
 
+    onCardExpand: function(e) {
+        console.log(e);
+    },
+
     // --------------
     // Render methods
     // --------------
@@ -133,50 +137,32 @@ define(function (require) {
 
       if (!images || !tags || this.state.query) return;
 
-      if (this.state.viewType === "list") {
         return (
           <ImageCardList
             key="featured"
             title="Featured Images"
             images={images}
             tags={tags}
-            />
+            viewType={this.state.viewType}
+            onExpand={this.onCardExpand}
+          />
         );
-      } else {
-        return (
-          <ImageCardGrid
-            key="featured"
-            title="Featured Images"
-            images={images}
-            tags={tags}
-            />
-        );
-      }
     },
 
     renderImages: function(images) {
       var tags = this.props.tags;
 
       if (images && tags) {
-        if (this.state.viewType === "list") {
           return (
             <ImageCardList
               key="all"
               title="All Images"
               images={images}
               tags={tags}
-              />
+              viewType={this.state.viewType}
+              onExpand={this.onCardExpand.bind(this, images)}
+            />
           );
-        } else {
-          return (
-            <ImageCardGrid
-              key="all"
-              title="All Images"
-              images={images}
-              tags={tags}
-              />
-          );
-        }
       }
 
       return (
@@ -288,7 +274,7 @@ define(function (require) {
               onChange={this.onSearchChange}
               value={this.state.input}
               ref="textField"
-              />
+            />
             <hr/>
           </div>
           {this.renderBody()}
