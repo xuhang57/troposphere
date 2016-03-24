@@ -10,7 +10,7 @@ define(function (require) {
       EditAvailabilityView = require('./availability/EditAvailabilityView.react'),
       EditDescriptionView = require('components/images/detail/description/EditDescriptionView.react'),
       InteractiveDateField = require('components/common/InteractiveDateField.react'),
-      EditMembershipView = require('./membership/EditMembershipView.react'),
+      EditMembershipView = require('components/common/membership/EditMembershipView.react'),
       EditLicensesView = require('./licenses/EditLicensesView.react'),
       EditScriptsView = require('./scripts/EditScriptsView.react'),
       EditMinimumRequirementsView = require('./requirements/EditMinimumRequirementsView.react'),

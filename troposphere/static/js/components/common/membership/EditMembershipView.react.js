@@ -14,7 +14,6 @@ define(function (require) {
       memberships: React.PropTypes.instanceOf(Backbone.Collection),
       onMembershipAdded: React.PropTypes.func.isRequired,
       onMembershipRemoved: React.PropTypes.func.isRequired,
-      onCreateNewMembership: React.PropTypes.func,
       label: React.PropTypes.string.isRequired
     },
 

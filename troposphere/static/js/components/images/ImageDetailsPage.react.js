@@ -19,7 +19,7 @@ define(function (require) {
         providers = userLoggedIn ? stores.ProviderStore.getAll() : null,
         identities = userLoggedIn ? stores.IdentityStore.getAll() : null;
 
-      if(!image || !tags) return <div className='loading'></div>;
+      if(!image || !tags) return (<div className='loading'></div>);
 
       // If the user isn't logged in, display the public view, otherwise
       // wait for providers and instances to be fetched
@@ -32,7 +32,8 @@ define(function (require) {
         );
       }
 
-      if (!providers || !identities) return <div className='loading'></div>;
+      var image_memberships = stores.ImageMembershipStore.getMembershipsFor(image);
+      if (!providers || !identities || image_memberships == null) return (<div className='loading'></div>);
 
       return (
         <ImageDetailsView
@@ -40,6 +41,7 @@ define(function (require) {
           providers={providers}
           identities={identities}
           tags={tags}
+          image_memberships={image_memberships}
           />
       );
     },

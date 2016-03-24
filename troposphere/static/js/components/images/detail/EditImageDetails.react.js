@@ -9,6 +9,7 @@ define(function (require) {
     InteractiveDateField = require('components/common/InteractiveDateField.react'),
     CreatedView = require('./created/CreatedView.react'),
     EditRemovedView = require('./removed/EditRemovedView.react'),
+    EditMembershipView = require('components/common/membership/EditMembershipView.react'),
     AuthorView = require('./author/AuthorView.react'),
     actions = require('actions'),
     globals = require('globals'),
@@ -24,6 +25,7 @@ define(function (require) {
       providers: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
       identities: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
       tags: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
+      image_memberships: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
       onSave: React.PropTypes.func.isRequired,
       onCancel: React.PropTypes.func.isRequired
     },
@@ -61,6 +63,20 @@ define(function (require) {
     handleNameChange: function (e) {
       var name = e.target.value;
       this.setState({name: name});
+    },
+
+    onMembershipAdded: function(membership){
+      actions.ImageMembershipActions.add({
+        image: this.props.image,
+        group: membership
+      });
+    },
+
+    onMembershipRemoved: function(membership){
+      actions.ImageMembershipActions.remove({
+        image: this.props.image,
+        group: membership
+      });
     },
 
     handleDescriptionChange: function (e) {
@@ -125,6 +141,12 @@ define(function (require) {
               value={imageTags}
               onTagAdded={this.onTagAdded}
               onTagRemoved={this.onTagRemoved}
+            />
+            <EditMembershipView
+              activeMemberships={imageUsers}
+              memberships={allUsers}
+              onAdded={this.onMembershipAdded}
+              onRemoved={this.onMembershipRemoved}
             />
           </div>
           <div className="edit-link-row clearfix">

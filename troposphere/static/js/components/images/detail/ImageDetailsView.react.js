@@ -20,7 +20,8 @@ define(
         image: React.PropTypes.instanceOf(Backbone.Model).isRequired,
         providers: React.PropTypes.instanceOf(Backbone.Collection),
         identities: React.PropTypes.instanceOf(Backbone.Collection),
-        tags: React.PropTypes.instanceOf(Backbone.Collection).isRequired
+        tags: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
+        image_memberships: React.PropTypes.instanceOf(Backbone.Collection).isRequired
       },
 
       getInitialState: function () {
@@ -59,6 +60,7 @@ define(
             <EditImageDetails
                 image={this.props.image}
                 tags={this.props.tags}
+                image_memberships={this.props.image_memberships}
                 providers={this.props.providers}
                 identities={this.props.identities}
                 onSave={this.handleSaveImageDetails}
@@ -70,6 +72,7 @@ define(
             <ViewImageDetails
                 image={this.props.image}
                 tags={this.props.tags}
+                image_memberships={this.props.image_memberships}
                 providers={this.props.providers}
                 identities={this.props.identities}
                 onEditImageDetails={this.handleEditImageDetails}

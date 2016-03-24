@@ -3,6 +3,7 @@ define(
     'react',
     './header/HeaderView.react',
     './tags/TagsView.react',
+    'components/common/membership/MembershipView.react',
     './launch/ImageLaunchCard.react',
     './name/NameView.react',
     './created/CreatedView.react',
@@ -13,7 +14,7 @@ define(
     'actions',
     'stores'
   ],
-  function (React, HeaderView, TagsView, ImageLaunchCard, NameView, CreatedView, RemovedView, AuthorView, DescriptionView, VersionsView, actions, stores) {
+  function (React, HeaderView, TagsView, MembershipView, ImageLaunchCard, NameView, CreatedView, RemovedView, AuthorView, DescriptionView, VersionsView, actions, stores) {
 
     return React.createClass({
       displayName: "ViewImageDetails",
@@ -23,6 +24,7 @@ define(
         providers: React.PropTypes.instanceOf(Backbone.Collection),
         identities: React.PropTypes.instanceOf(Backbone.Collection),
         tags: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
+        image_memberships: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
         onEditImageDetails: React.PropTypes.func.isRequired
       },
 
@@ -41,14 +43,7 @@ define(
       },
 
       render: function () {
-        var versionView, tagsView;
-
-        tagsView = (
-            <TagsView image={this.props.image}
-                      tags={this.props.tags}
-            />
-        )
-
+        var membershipView = (<MembershipView membership={this.props.image_memberships}/>);
         return (
           <div>
             <div>
@@ -57,7 +52,8 @@ define(
               <RemovedView image={this.props.image}/>
               <AuthorView image={this.props.image}/>
               <DescriptionView image={this.props.image}/>
-              {tagsView}
+              <TagsView image={this.props.image} tags={this.props.tags}/>
+              { membershipView }
             </div>
             {this.renderEditLink()}
           </div>
