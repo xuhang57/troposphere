@@ -16,8 +16,8 @@ define(function (require) {
           membership = params.group,
           imageMembership = new ImageMembership(),
           data = {
-            image: image.id,
-            group: membership.id
+            image: image.get('uuid'),
+            group: membership.get('uuid')
           };
 
       imageMembership.save(null, {
