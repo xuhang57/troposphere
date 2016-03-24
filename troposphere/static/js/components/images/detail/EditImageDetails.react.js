@@ -33,6 +33,7 @@ define(function (require) {
 
     getInitialState: function(){
       var image = this.props.image,
+        is_public = image.get('is_public'),
         endDate = image.get('end_date').isValid() ?
              image.get('end_date').tz(globals.TZ_REGION).format("M/DD/YYYY hh:mm a z") : "";
 
@@ -43,6 +44,7 @@ define(function (require) {
         description: image.get('description'),
         endDate: endDate,
         tags: imageTags,
+        is_public: is_public,
         imageMemberships: imageMemberships
       }
     },
@@ -160,14 +162,14 @@ define(function (require) {
               className="image-info-segment row"
               title="privacy:"
               image={image}
-              value={this.state.privacy}
               onChange={this.handlePrivacyChange}
             />
             <EditMembershipView
+              label={'Membership'}
               activeMemberships={imageMemberships}
               memberships={allMemberships}
-              onAdded={this.onMembershipAdded}
-              onRemoved={this.onMembershipRemoved}
+              onMembershipAdded={this.onMembershipAdded}
+              onMembershipRemoved={this.onMembershipRemoved}
             />
           </div>
           <div className="edit-link-row clearfix">

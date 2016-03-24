@@ -24,7 +24,7 @@ export default React.createClass({
 
    render: function () {
         let imageVersion = this.props.imageVersion;
-        let imageVersionId;
+        let imageVersionId, projectId;
         let project = this.props.project;
         let projectList = this.props.projectList;
         let instanceName = this.props.instanceName;
@@ -32,6 +32,7 @@ export default React.createClass({
         let errorMessage = null;
 
         if (imageVersion) { imageVersionId = imageVersion.get('id'); }
+        if (project) { projectId = project.id; }
 
         if (this.props.showValidationErr) {
             errorMessage = instanceName == "" ? "This field is rquired" : null;
@@ -59,7 +60,7 @@ export default React.createClass({
                         Base Image Version
                     </label>
                     <SelectMenu
-                        defaultId={imageVersionId}
+                        selection={imageVersionId}
                         list={this.props.imageVersionList}
                         optionName={item => item.get('name')}
                         onSelectChange={this.props.onVersionChange}
@@ -70,7 +71,7 @@ export default React.createClass({
                         Project
                     </label>
                     <SelectMenu
-                        defaultId={project.id}
+                        selection={projectId}
                         list={projectList}
                         optionName={item => item.get('name')}
                         onSelectChange={this.props.onProjectChange}

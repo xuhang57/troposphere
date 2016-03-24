@@ -6,19 +6,13 @@ export default React.createClass({
     displayName: "SelectMenu",
 
     propTypes: {
-        defaultId: React.PropTypes.oneOfType([
-           React.PropTypes.string,
-           React.PropTypes.number
-        ]),
-        optionName: React.PropTypes.func.isRequired,
-        onSelectChange: React.PropTypes.func.isRequired,
         selection: React.PropTypes.oneOfType([
             React.PropTypes.string,
             React.PropTypes.number,
             React.PropTypes.bool,
-            React.PropTypes.instanceOf(backbone.Model),
-            React.PropTypes.object
         ]),
+        optionName: React.PropTypes.func.isRequired,
+        onSelectChange: React.PropTypes.func.isRequired,
         list: React.PropTypes.oneOfType([
             React.PropTypes.instanceOf(backbone.Collection),
             React.PropTypes.array
@@ -44,38 +38,36 @@ export default React.createClass({
         }
     },
 
-    renderOption: function (item) {
+    renderOption: function (item, idx) {
         // By default, don't set a default selection.
         // If added as a property, select the matching value from the list
         // If necessary, we could make 'the comparator' isSelected as passable info
-        var isSelected = false;
-        if (this.props.selected) {
-            isSelected = this.props.selected == item;
-        }
+        var itemId = item.id ? item.id : idx,
+            itemValue = item.id ? item.id : itemValue;
             return (
-                <option key={item.id} value={item.id} selected={isSelected}>
+                <option key={itemId} value={itemValue}>
                     {this.props.optionName(item)}
                 </option>
             );
     },
 
     render: function () {
-        let value = this.props.defaultId;
-        if (this.props.hintText) { value = "hint" }
         if (this.props.list) {
-            let options = this.props.list.map(this.renderOption);
-            
+            let options = this.props.list.length == 0 ? [this.hintText()] : this.props.list.map(this.renderOption),
+                selection = this.props.selection ? this.props.selection : "0";
             return (
-            <select value={value} className='form-control' onChange={this.onSelectChange}>
-                {this.hintText()}
-                {options}
-            </select>
+            <div>
+              <select defaultValue={selection} className='form-control' onChange={this.onSelectChange}>
+                  {options}
+              </select>
+              {this.props.hintText}
+            </div>
             );
         }
 
         return (
-            <select value={this.props.defaultId} className='form-control'>
-                <option key="1" value="1" > Loading... </option>
+            <select value="hint" className='form-control'>
+                <option key="0" value="0" > Loading... </option>
             </select>
         );
     }

@@ -18,7 +18,6 @@ define(
       },
       propTypes: {
         title: React.PropTypes.string,
-        value: React.PropTypes.string.isRequired,
         onChange: React.PropTypes.func.isRequired,
         titleClassName:React.PropTypes.string,
         formClassName:React.PropTypes.string
@@ -27,11 +26,10 @@ define(
           return option;
       },
       render: function () {
-        var hintText = "If True, allows you to set image membership."
-        "If False, the image will be publicly available to all users.",
+        var hintText = "If Private, allows you to set image membership. If Public, the image will be publicly available to all users.",
             privacy = (this.props.image.get('is_public') == false),
             currentSelection = privacy ? 'Private' : 'Public',
-            selectionList = ['Private', 'Public'];
+            selectionList = ['Public', 'Private'];
 
         return (
           <div className={this.props.className}>
@@ -41,7 +39,6 @@ define(
                 selection={currentSelection}
                 optionName={this.renderOptionName}
                 onSelectChange={this.props.onChange}
-                selection={currentSelection}
                 list={selectionList}
                 hintText={hintText} />
             </div>

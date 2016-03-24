@@ -32,7 +32,7 @@ export default React.createClass({
                         Provider
                     </label>
                     <SelectMenu
-                        defaultId={defaultProviderId}
+                        selection={defaultProviderId}
                         list={this.props.providerList}
                         optionName={providerName}
                         onSelectChange={this.props.onProviderChange}
@@ -43,7 +43,7 @@ export default React.createClass({
                         Instance Size
                     </label>
                     <SelectMenu
-                        defaultId={sizeId}
+                        selection={sizeId}
                         list={this.props.providerSizeList}
                         optionName={sizeName}
                         onSelectChange={this.props.onSizeChange}
