@@ -10,6 +10,19 @@ define(function (require) {
       images: React.PropTypes.instanceOf(Backbone.Collection).isRequired
     },
 
+    style: function() {
+        if (this.props.viewType === "list") {
+            return {
+                listStyle: "none",
+            }
+        }
+
+        return {
+            marginBottom: "20px",
+            listStyle: "none",
+        }
+    },
+
     renderTitle: function () {
       var title = this.props.title;
       if (!title) return;
@@ -20,9 +33,12 @@ define(function (require) {
     },
 
     renderCard: function(image){
+      let listStyle = (this.props.viewType === "list") ?
+          null : "col-md-3";
+
       return (
-        <li style={{marginBottom: "10px"}} key={image.id}>
-          <ImageListCard image={image}/>
+        <li className={listStyle} style={this.style()} key={image.id}>
+          <ImageListCard {...{...this.props, image }}/>
         </li>
       );
     },
@@ -30,9 +46,11 @@ define(function (require) {
     render: function () {
       var images = this.props.images;
       var imageCards = images.map(this.renderCard);
+      let isRow =  (this.props.viewType !== "list") ?
+          "row" : "";
 
       return (
-        <div>
+        <div className={isRow}>
           {this.renderTitle()}
           <ul className='app-card-list'>
             {imageCards}
