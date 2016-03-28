@@ -36,14 +36,23 @@ define(function (require) {
         this.props.onExpand()
     },
 
-    render: function () {
-      var image = this.props.image,
-        type = stores.ProfileStore.get().get('icon_set'),
-        imageTags = stores.TagStore.getImageTags(image),
-        imageCreationDate = moment(image.get('start_date'))
-                                .tz(globals.TZ_REGION)
-                                .format("MMM Do YYYY hh:mm a z"),
-        converter = new Showdown.Converter();
+    onBookmark(image) {
+        console.log("bookmark", image);
+    },
+
+    onLaunchImage(image) {
+        console.log("Launch", image);
+    },
+
+    render() {
+      let image = this.props.image;
+      let type = stores.ProfileStore.get().get('icon_set');
+      let imageTags = stores.TagStore.getImageTags(image);
+        
+      let imageCreationDate = moment(image.get('start_date'))
+        .tz(globals.TZ_REGION)
+        .format("MMM Do YYYY hh:mm a z");
+      let converter = new Showdown.Converter();
       let descriptionFull = image.get('description');
       let description;
       let descriptionActive;

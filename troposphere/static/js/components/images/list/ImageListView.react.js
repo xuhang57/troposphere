@@ -176,40 +176,6 @@ define(function (require) {
       }
     },
 
-    renderListButton: function () {
-      var classValues = "btn btn-default",
-        onClick = this.onChangeViewType;
-
-      if (this.state.viewType === "list") {
-        classValues += " active";
-        onClick = function () {
-        };
-      }
-
-      return (
-        <button type="button" className={classValues} onClick={onClick}>
-          <span className="glyphicon glyphicon-align-justify"></span> List
-        </button>
-      );
-    },
-
-    renderGridButton: function () {
-      var classValues = "btn btn-default",
-        onClick = this.onChangeViewType;
-
-      if (this.state.viewType === "grid") {
-        classValues += " active";
-        onClick = function () {
-        };
-      }
-
-      return (
-        <button type="button" className={classValues} onClick={onClick}>
-          <span className="glyphicon glyphicon-th"></span> Grid
-        </button>
-      );
-    },
-
     renderBody: function () {
       var query = this.state.query,
         title = "",
@@ -237,10 +203,6 @@ define(function (require) {
         <div>
           <div className="display-toggles clearfix">
             <h3>{title}</h3>
-            <div className="btn-group pull-right hidden-xs hiddin-sm">
-              {this.renderListButton()}
-              {this.renderGridButton()}
-            </div>
           </div>
           {this.renderFeaturedImages()}
           {this.renderImages(images)}
