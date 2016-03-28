@@ -1,12 +1,15 @@
 import React from 'react';
+import VerticalMenu from 'components/common/ui/VerticalMenu.react';
 
 export default React.createClass({
-    onExpand: function() {
+    onExpand() {
         this.props.onExpand();
-        window.scrollBy(0,50);
+        let scrollAmount = this.props.isExpanded ?
+            -50 : 50;
+        window.scrollBy(0,scrollAmount);
     },
 
-    render: function() {
+    render() {
         let detailWidth = "";
         let titleMarg = "";
         let openStyle = {};
@@ -46,8 +49,8 @@ export default React.createClass({
             <div className={`CardList ${openClass}`}
                 style={{
                     ...openStyle,
+                    position: "relative",
                     transition: "all ease .1s",
-                    
                     cursor: "pointer",
                 }}
                 onClick={this.onExpand}
@@ -55,16 +58,24 @@ export default React.createClass({
                 {header}
                 <div className="t-wordBreaker"
                     style={{
+                        paddingRight: "50px",
                         display: "flex",
                         flexFlow: "row wrap"
                     }}
                 >
-                    <div style={{marginRight: "10px"}}>
+                    <div style={{
+                            marginRight: "10px", 
+                            borderRadius: "50%", 
+                            alignSelf: "flex-start", 
+                            overflow: "hidden",
+                        }}
+                    >
                             {this.props.image}
                     </div>
 
                     <div
-                        style={{flex: "0 300px",
+                        style={{
+                            flex: "0 300px",
                             marginBottom: `${titleMarg}`
                         }}
                     >
@@ -72,12 +83,30 @@ export default React.createClass({
                         <span className="t-caption">
                             {this.props.subTitle}
                         </span>
+                        <div>
+                            {this.props.titleInfo}
+                        </div>
                     </div>
-                    <div style={{flex: `1 0 ${detailWidth}`}}>
+                    <div 
+                        style={{
+                            flex: `1 0 ${detailWidth}`
+                        }}
+                    >
                         {HeaderRule}
                         {this.props.detail}
                     </div>
                 </div>
+                    <div
+                        style={{
+                            position: "absolute",
+                            right: "20px",
+                            top: "20px",
+                        }}
+                    >
+                        <VerticalMenu
+                            menuItemList={this.props.contextualMenu}
+                        />
+                    </div>
             </div>
         )
     }

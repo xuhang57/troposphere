@@ -11,6 +11,7 @@ define(function (require) {
     displayName: "CommonBookmark",
 
     toggleFavorite: function (e) {
+      e.stopPropagation();
       e.preventDefault();
       var image = this.props.image,
         imageBookmark = stores.ImageBookmarkStore.findOne({

@@ -113,14 +113,6 @@ define(function (require) {
       this.handleSearch(input);
     },
 
-    onChangeViewType: function () {
-      if (this.state.viewType === "list") {
-        this.setState({viewType: 'grid'});
-      } else {
-        this.setState({viewType: 'list'});
-      }
-    },
-
     // --------------
     // Render methods
     // --------------
@@ -140,7 +132,6 @@ define(function (require) {
             images={images}
             tags={tags}
             viewType={this.state.viewType}
-            onExpand={this.onCardExpand}
           />
         );
     },
@@ -156,7 +147,6 @@ define(function (require) {
               images={images}
               tags={tags}
               viewType={this.state.viewType}
-              onExpand={this.onCardExpand.bind(this, images)}
             />
           );
       }

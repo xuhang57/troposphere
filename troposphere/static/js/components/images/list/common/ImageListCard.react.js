@@ -17,7 +17,7 @@ define(function (require) {
   return React.createClass({
     displayName: "ImageListCard",
 
-    getInitialState: function() {
+    getInitialState() {
         return {
             isExpanded: false
         }
@@ -27,7 +27,7 @@ define(function (require) {
       image: React.PropTypes.instanceOf(Backbone.Model).isRequired
     },
 
-    onExpand: function() {
+    onExpand() {
         let isExpanded = this.state.isExpanded ?
             false : true;
         this.setState({
@@ -96,13 +96,39 @@ define(function (require) {
       );
 
       // Hide bookmarking on the public page
-      var bookmark;
+      var bookmarkButton;
       if (context.profile) {
-        bookmark = (
+        bookmarkButton = (
           <Bookmark image={image}/>
         );
-      }
-      let featured = (<i className="glyphicon glyphicon-thumbs-up"/>);
+      };
+
+      let isFeatured = imageTags.some(
+              (item) => item.get('name') === "Featured"
+      );
+      let isBookmarked= stores.ImageBookmarkStore.findOne({
+          'image.id': image.id
+      });
+      let Featured = isFeatured ? 
+          (
+           <li style={{listStyle: "none", padding: "0 5px 0 0", display: "inline-block" }}>
+            <i className="glyphicon glyphicon-thumbs-up"/>
+           </li>) :
+          null;
+      let Bookmarked = isBookmarked ?
+          (
+           <li style={{listStyle: "none", padding: "0 5px 0 0", display: "inline-block" }}>
+            <i className="glyphicon glyphicon-star"/>
+           </li>) :
+          null;
+
+      let imageIcons = (
+              <ul style={{padding: "0",color: "grey"}}>
+                {Featured}
+                {Bookmarked}
+              </ul>
+          );
+
       return (
             <MediaCard 
                 isExpanded={this.props.isExpanded}
@@ -110,8 +136,19 @@ define(function (require) {
                 title={title}
                 subTitle={date}
                 detail={detail}
-                header={[bookmark,featured]}
+                header={[bookmarkButton]}
+                titleInfo={imageIcons}
                 onExpand={this.onExpand}
+                contextualMenu={[
+                    {
+                        name: "Add to Bookmarks",
+                        action: this.onBookmark.bind(this, image)
+                    },
+                    {
+                        name: "Launch Instance",
+                        action: this.onLaunchImage.bind(this, image)
+                    }
+                ]}
             />
       );
     }
