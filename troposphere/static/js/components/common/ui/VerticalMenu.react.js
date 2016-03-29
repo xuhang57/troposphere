@@ -51,7 +51,7 @@ export default React.createClass({
                 onMouseLeave={ this.onItemLeave }
                 style={{
                     display: "block",
-                    padding: "15px 14px",
+                    padding: "10px 14px",
                     listStyle: "none",
                     ...isHoveredStyle,
                 }}
@@ -67,8 +67,12 @@ export default React.createClass({
         let showList = this.state.isOpen ?
             "block" : "none";
         let openMenuStyle = this.state.isOpen ?
-            { background: "lightgrey" } :
-            {};
+            {
+                background: "#EFEFEF",
+                color: "black",
+            } :
+            { color: "grey" };
+
         return (
             <div>
             <div
@@ -78,17 +82,16 @@ export default React.createClass({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "20px",
-                    color: "grey",
+                    fontSize: "17px",
                     paddingLeft: "2px",
                     borderRadius: "50%",
                     border: "solid 1px rgba(0,0,0,.1)",
-                    height: "40px",
-                    width: "40px",
+                    height: "35px",
+                    width: "35px",
                 }}
                 onClick={this.onTouch}
             >
-                <i className="glyphicon glyphicon-option-vertical"/>
+                <i style={{top:"0"}} className="glyphicon glyphicon-option-vertical"/>
             </div>
             <ul 
                 style={{
@@ -97,7 +100,7 @@ export default React.createClass({
                     position: "absolute",
                     background: "white",
                     right: "0",
-                    top: "45px",
+                    top: "40px",
                     padding: "6px 0",
                     zIndex: "200",
                     boxShadow: "0 -1px 0 #e5e5e5, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24)",
