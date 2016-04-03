@@ -11,6 +11,7 @@ export default React.createClass({
 
     render() {
         let detailWidth = "";
+        let detailPadding = "0 50px 0 0";
         let titleMarg = "";
         let openStyle = {};
         let openClass = "";
@@ -18,6 +19,7 @@ export default React.createClass({
 
         if (this.props.isExpanded) {
             detailWidth = "100%";
+            detailPadding = "0";
             titleMarg = "20px";
             openStyle = { margin: "50px -20px" };
             openClass = "CardList--expanded";
@@ -36,8 +38,10 @@ export default React.createClass({
             (
                 <div className="clearfix"
                     style={{
-                        margin: "-20px -20px 0",
-                        position: "relative",
+                        position: "absolute",
+                        top: "0",
+                        right: "0",
+                        left: "0",
                         padding: "3px"
                     }}
                 >
@@ -58,19 +62,32 @@ export default React.createClass({
                 {header}
                 <div className="t-wordBreaker"
                     style={{
-                        paddingRight: "50px",
+                        padding: detailPadding,
                         display: "flex",
                         flexFlow: "row wrap"
                     }}
                 >
                     <div style={{
+                            position: "relative",
                             marginRight: "10px", 
-                            borderRadius: "50%", 
                             alignSelf: "flex-start", 
-                            overflow: "hidden",
                         }}
                     >
+                        <div style={{
+                                borderRadius: "50%", 
+                                overflow: "hidden",
+                            }}
+                        >
                             {this.props.image}
+                        </div>
+                        <div style={{
+                                position: "absolute",
+                                top:"0",
+                                right: "0",
+                            }}
+                        >
+                            {this.props.imageBadge}
+                        </div>
                     </div>
 
                     <div
