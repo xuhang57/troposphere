@@ -412,6 +412,10 @@ ul.tags {
 
 /* Bookmarks */
 .bookmark {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
   img {
     height: 15px;
     width: 15px;
