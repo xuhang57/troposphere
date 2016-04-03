@@ -96,7 +96,6 @@ define(
                 {versionView}
               </div>
             </div>
-
           </div>
         );
       }

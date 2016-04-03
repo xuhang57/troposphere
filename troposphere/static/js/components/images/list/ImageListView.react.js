@@ -5,7 +5,6 @@ define(function (require) {
     stores = require('stores'),
     ImageCollection = require('collections/ImageCollection'),
     ImageCardList = require('./list/ImageCardList.react'),
-    ImageCardGrid = require('./grid/ImageCardGrid.react'),
     SecondaryImageNavigation = require('../common/SecondaryImageNavigation.react'),
     Router = require('react-router');
 
@@ -27,7 +26,6 @@ define(function (require) {
         input: this.getQuery().q || "",
         isLoadingMoreResults: false,
         nextUrl: null,
-        viewType: 'list'
       }
     },
 
@@ -131,7 +129,6 @@ define(function (require) {
             title="Featured Images"
             images={images}
             tags={tags}
-            viewType={this.state.viewType}
           />
         );
     },
@@ -146,7 +143,6 @@ define(function (require) {
               title="All Images"
               images={images}
               tags={tags}
-              viewType={this.state.viewType}
             />
           );
       }
