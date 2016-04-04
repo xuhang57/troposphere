@@ -155,12 +155,16 @@ define(function (require) {
           id: modelId
         });
         model.fetch().done(function () {
+          if(!this.models){
+            this.models = new this.collection();
+          }
           this.isFetchingModel[modelId] = false;
           this.models.add(model);
           cb(model);
           this.emitChange();
         }.bind(this));
     },
+
     // Returns the entire local cache, everything in this.models
     getAll: function () {
       if (!this.models) {
