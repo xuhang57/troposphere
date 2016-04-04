@@ -60,13 +60,6 @@ define(function (require) {
       }
 
       var imageRequestRows = requests.map(function (request) {
-        var requestDate = moment(request.get('start_date'));
-        var now = moment();
-
-        if(requestDate.isBefore(now.subtract(7, 'days')) && request.get('status').name != "pending"){
-          return;
-        }
-
         var handleClick = function(){
             this.onResourceClick(request);
         }.bind(this);
@@ -77,7 +70,6 @@ define(function (require) {
             || request.get('old_status').indexOf("Exception") > -1){
             errorStatus = "(ERROR)";
         }
-
         return (
           <li key={request.id} onClick={handleClick}>
             {request.get('new_machine_owner').username} - <strong>{request.get('status').name}{errorStatus}</strong>
