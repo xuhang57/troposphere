@@ -62,6 +62,14 @@
 	width: 69%;
 	border: 2px solid lightgray;
 	padding: 1%;
+
+    .request-actions{
+        clear: both;
+    }
+
+    .basic-info, .detailed-info{
+        width: 50%;
+    }
 }
 
 .request-info{
@@ -71,17 +79,6 @@
 
 	h5{
 		padding-bottom: 2%;
-	}
-
-	.user-info{
-		h4, h5{
-			display: inline-block;
-		}
-
-		.name{
-			width: 25%;
-			display: inline-block;
-		}
 	}
 }
 
