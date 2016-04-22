@@ -26,6 +26,7 @@ ui_urlpatterns = patterns('',
     url(r'^tests$', 'troposphere.views.tests'),
     url(r'^tropo-api/', include('api.urls')),
     url(r'^web_shell$', 'troposphere.views.web_shell'),
+    url(r'^web_desktop$', views.web_desktop)
 )
 
 # NOTE: Have to remove the leading slash on 'BASE_URL'

@@ -1,6 +1,8 @@
-caslib.py==2.2.2
 django==1.8.5
 djangorestframework==3.0.4
+# External/Third Party
+django-sslserver==0.18
+itsdangerous==0.24
 Jinja2==2.8
 psycopg2==2.5.2
 pycrypto==2.6.1

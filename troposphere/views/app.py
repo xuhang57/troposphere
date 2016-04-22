@@ -45,6 +45,9 @@ def _handle_public_application_request(request, maintenance_records, disabled_lo
     if hasattr(settings, "BASE_URL"):
         template_params['BASE_URL'] = settings.BASE_URL
 
+    template_params['WEB_DESKTOP_INCLUDE_LINK'] = \
+        settings.WEB_DESKTOP_INCLUDE_LINK
+
     if hasattr(settings, "API_ROOT"):
         template_params['API_ROOT'] = settings.API_ROOT
 

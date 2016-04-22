@@ -109,6 +109,9 @@
             var show_instance_metrics = false;
         {% endif %}
 
+        {% if WEB_DESKTOP_INCLUDE_LINK %}
+            var WEB_DESKTOP_INCLUDE_LINK = "{{ WEB_DESKTOP_INCLUDE_LINK }}"
+        {% endif %}
     </script>
 
     <!-- Application dependencies -->
