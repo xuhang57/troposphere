@@ -96,7 +96,8 @@ export default React.createClass({
           status = this.props.instance.get('state').get('status'),
           activity = this.props.instance.get('state').get('activity'),
           ip_address = this.props.instance.get('ip_address'),
-          webLinksDisabled = !ip_address || ip_address === "0.0.0.0";
+          webLinksDisabled = !ip_address || ip_address === "0.0.0.0",
+          usesRemoteDesktop = false;
 
       // todo: Add back and implement reboot and resize once it's understood how to
       // I'm hiding from the display for now so as not to show users functionality
