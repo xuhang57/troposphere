@@ -10,6 +10,7 @@
     <!--CSS-->
     <link rel="stylesheet" href="{{ BASE_URL }}/assets/app.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ THEME_URL }}/css/theme.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/>
     <!--
     <link rel="stylesheet" href="{{ BASE_URL }}/{{ THEME_URL }}/theme.css" rel="stylesheet" type="text/css">
     -->
@@ -112,6 +113,8 @@
         {% if WEB_DESKTOP_INCLUDE_LINK %}
             var WEB_DESKTOP_INCLUDE_LINK = "{{ WEB_DESKTOP_INCLUDE_LINK }}"
         {% endif %}
+
+        var MAINTENANCE_BANNER = true;
     </script>
 
     <!-- Application dependencies -->

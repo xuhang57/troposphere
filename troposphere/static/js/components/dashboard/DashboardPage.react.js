@@ -8,6 +8,7 @@ define(function(require) {
     ResourceStatusSummaryPlot = require('./plots/ResourceStatusSummaryPlot.react'),
     ProviderSummaryLinePlot = require('./plots/ProviderSummaryLinePlot.react'),
     CallToAction = require('./CallToAction.react'),
+    NotificationController = require('controllers/NotificationController'),
     modals = require('modals'),
     stores = require('stores');
     // images
@@ -38,7 +39,7 @@ define(function(require) {
     componentWillUnmount: function() {
       stores.SizeStore.removeChangeListener(this.updateState);
     },
-    
+
     render: function() {
 
       var providers = stores.ProviderStore.getAll(),
@@ -52,6 +53,17 @@ define(function(require) {
 
       if ( providers == null || identities == null || projects == null || maintenanceMessages == null || images == null || instances == null || volumes == null || sizes == null ) {
         return <div className='loading'></div>;
+      }
+
+      if (window.MAINTENANCE_BANNER && !this.state.seenMaintenance) {
+        NotificationController.info(
+            "Maintenance Tomorrow",
+            "Jetstream systems will be under maintenance on " +
+            "Tuesday, May 24th from 8:00am to 4:00pm PDT.", {
+                "preventDuplicates": true,
+                "positionClass": "toast-top-center"
+            });
+        window.MAINTENANCE_BANNER = false;
       }
 
       return (
