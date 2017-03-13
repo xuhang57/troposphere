@@ -121,7 +121,7 @@ export default Backbone.Model.extend({
     },
 
     is_active: function() {
-        var states = ["active", "running", "verify_resize"];
+        var states = ["active", "running"];
         return _.contains(states, this.get("status"));
     },
 
@@ -139,10 +139,12 @@ export default Backbone.Model.extend({
             "pending",
             "suspended - resuming",
             "active - suspending",
+            "active - resizing",
             "resize - resize_prep",
             "resize - resize_migrating",
             "resize - resize_migrated",
             "resize - resize_finish",
+            "verify_resize",
             "active - networking",
             "active - deploying",
             "active - initializing",
