@@ -43,6 +43,7 @@ export default Backbone.Model.extend({
             var statusSplit = attrs.status.split(" - ");
             this.set("ip_address", attrs.ip_address);
             this.set("status", attrs.status);
+            this.set("size", attrs.size);
             this.set("state", new InstanceState({
                 status_raw: attrs.status,
                 status: statusSplit[0],
