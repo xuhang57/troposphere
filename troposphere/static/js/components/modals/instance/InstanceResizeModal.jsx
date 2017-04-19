@@ -3,6 +3,7 @@ import BootstrapModalMixin from "components/mixins/BootstrapModalMixin";
 import stores from "stores";
 import ResourceGraphs from "components/modals/instance/launch/components/ResourceGraphs";
 import SelectMenu from "components/common/ui/SelectMenu";
+import Glyphicon from "components/common/Glyphicon";
 import globals from "globals";
 
 export default React.createClass({
@@ -142,8 +143,6 @@ export default React.createClass({
 
         return `${ name } (CPU: ${ cpu }, Mem: ${ memory } GB, ${ diskStr })`;
     },
-
-
     renderBody: function() {
         if(this.props.type == 'confirm') {
             return this.renderConfirmResizeBody();
@@ -206,6 +205,12 @@ export default React.createClass({
         return (
         <form>
             <div className="form-group">
+                <p className="alert alert-danger">
+                    <Glyphicon name="warning-sign" />
+                    {" "}
+                    <strong>WARNING</strong>
+                    {" Do not resize your instance to a smaller size, as this can cause unexpected instance failure!"}
+                </p>
                 <label htmlFor="instanceSize">
                     Instance Size
                 </label>
