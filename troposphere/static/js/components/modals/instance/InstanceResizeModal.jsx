@@ -35,7 +35,9 @@ export default React.createClass({
     //
 
     propTypes: {
-        project: React.PropTypes.instanceOf(Backbone.Model),
+        instance: React.PropTypes.instanceOf(Backbone.Model),
+        size: React.PropTypes.instanceOf(Backbone.Model),
+        type: React.PropTypes.string.isRequired,
         onConfirm: React.PropTypes.func.isRequired,
     },
 
@@ -143,6 +145,45 @@ export default React.createClass({
 
 
     renderBody: function() {
+        if(this.props.type == 'confirm') {
+            return this.renderConfirmResizeBody();
+        } else if (this.props.type == "revert") {
+            return this.renderRevertResizeBody();
+        } else {
+            return this.renderStartResizeBody();
+        }
+    },
+    renderOkText: function() {
+        if(this.props.type == "confirm") {
+            return "Confirm Resize"
+        } else if (this.props.type == "revert") {
+            return "Revert Resize"
+        } else {
+            return "Resize"
+        }
+    },
+    renderRevertResizeBody: function() {
+        return (
+        <div>
+            <p>
+                {"Would you like to revert this instance to its original size?"}
+            </p>
+        </div>);
+    },
+
+    renderConfirmResizeBody: function() {
+        return (
+        <div>
+            <p>
+                {"Would you like to confirm this instance to its original size?"}
+            </p>
+            <p>
+                {"NOTE: This operation cannot be undone! Be sure that your instance works as expected prior to confirming the resize."}
+            </p>
+        </div>);
+    },
+
+    renderStartResizeBody: function() {
         let provider = this.state.provider;
         let providerSize = this.state.providerSize;
 
@@ -183,7 +224,6 @@ export default React.createClass({
         </form>
         );
     },
-
     render: function() {
         return (
         <div className="modal fade">
@@ -201,7 +241,7 @@ export default React.createClass({
                             Cancel
                         </button>
                         <button type="button" className="btn btn-primary" onClick={this.confirmResize}>
-                            Resize
+                            { this.renderOkText() }
                         </button>
                     </div>
                 </div>

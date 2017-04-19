@@ -64,6 +64,18 @@ export default React.createClass({
                 onClick: this.onReboot
             },
             {
+                key: "Confirm Resize",
+                label: "Confirm Resize",
+                icon: "resize-full",
+                onClick: this.onConfirmResize
+            },
+            {
+                key: "Revert Resize",
+                label: "Revert Resize",
+                icon: "resize-full",
+                onClick: this.onRevertResize
+            },
+            {
                 key: "Resize",
                 label: "Resize",
                 icon: "resize-full",
@@ -115,8 +127,16 @@ export default React.createClass({
         modals.InstanceModals.start(this.props.instance);
     },
 
+    onConfirmResize: function() {
+        modals.InstanceModals.resize(this.props.instance, 'confirm');
+    },
+
+    onRevertResize: function() {
+        modals.InstanceModals.resize(this.props.instance, 'revert');
+    },
+
     onResize: function() {
-        modals.InstanceModals.resize(this.props.instance);
+        modals.InstanceModals.resize(this.props.instance, 'resize');
     },
 
     onSuspend: function() {
