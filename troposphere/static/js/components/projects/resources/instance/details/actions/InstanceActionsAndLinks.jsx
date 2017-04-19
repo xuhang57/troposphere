@@ -64,6 +64,12 @@ export default React.createClass({
                 onClick: this.onReboot
             },
             {
+                key: "Resize",
+                label: "Resize",
+                icon: "resize-full",
+                onClick: this.onResize
+            },
+            {
                 key: "Redeploy",
                 label: "Redeploy",
                 icon: "repeat",
@@ -206,15 +212,15 @@ export default React.createClass({
         ];
 
         if (webDesktopCapable && featureFlags.WEB_DESKTOP) {
-            linksArray.push({
+            links.push({
                 label: "Open Web Desktop",
                 icon: "sound-stereo",
                 onClick: this.onWebDesktop.bind(
                     this,
-                    ip_address,
+                    ipAddress,
                     this.props.instance),
                 openInNewWindow: true,
-                isDisabled: webLinksDisabled
+                isDisabled: disableWebLinks
             });
         }
 
