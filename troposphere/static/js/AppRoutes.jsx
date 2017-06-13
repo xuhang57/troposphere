@@ -15,6 +15,7 @@ import UnearnedBadges from "./components/badges/UnearnedBadges";
 import RequestHistory from "./components/requests/ResourceHistoryMaster";
 import RequestMaster from "./components/requests/RequestMaster";
 import DashboardPage from "./components/dashboard/DashboardPage";
+import MarketplacePage from "./components/marketplace/MarketplacePage";
 import ProjectListPage from "./components/projects/ProjectListPage";
 import ImageListPage from "./components/images/ImageListPage";
 import ImageDetailsPage from "./components/images/ImageDetailsPage";
@@ -60,6 +61,7 @@ function AppRoutes(props) {
 
     return (
         <Route path="/" component={Master}>
+            <Route path="marketplace" component={MarketplacePage} />
             <Route path="dashboard" component={DashboardPage} />
             <Route path="projects" component={ProjectsMaster}>
                 <Route path=":projectId" component={ProjectDetailsMaster}>
