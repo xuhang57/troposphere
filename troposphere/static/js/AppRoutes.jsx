@@ -43,6 +43,12 @@ import ImageRequest from "./components/admin/ImageRequest";
 import IdentityMembershipMaster from "./components/admin/IdentityMembershipMaster";
 import NotFoundPage from "./components/NotFoundPage";
 
+import OpenshiftPage from "./components/openshift/OpenshiftPage";
+import BMIPage from "./components/bmi/BMIPage";
+import HILPage from "./components/hil/HILPage";
+import NetexPage from "./components/netex/NetexPage";
+import MixmatchPage from "./components/mixmatch/MixmatchPage";
+
 const providersRoute = (
 <Route path="providers" component={ProvidersMaster}>
     <IndexRoute component={ProviderListSection} />
@@ -85,6 +91,11 @@ function AppRoutes(props) {
              ? null
              : providersRoute}
             <Route path="help" component={HelpPage} />
+            <Route path="openshift" component={OpenshiftPage} />
+            <Route path="bmi" component={BMIPage} />
+            <Route path="hil" component={HILPage} />
+            <Route path="netex" component={NetexPage} />
+            <Route path="mixmatch" component={MixmatchPage} />
             <Route path="settings" component={SettingsPage} />
             <Route
                 path="admin"
