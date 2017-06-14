@@ -43,6 +43,10 @@ import ImageRequest from "./components/admin/ImageRequest";
 import IdentityMembershipMaster from "./components/admin/IdentityMembershipMaster";
 import NotFoundPage from "./components/NotFoundPage";
 
+import DataversePage from "./components/dataverse/DataversePage";
+import JobPage from "./components/dataverse/JobPage";
+import PluginPage from "./components/dataverse/PluginPage";
+
 const providersRoute = (
 <Route path="providers" component={ProvidersMaster}>
     <IndexRoute component={ProviderListSection} />
@@ -85,6 +89,11 @@ function AppRoutes(props) {
              ? null
              : providersRoute}
             <Route path="help" component={HelpPage} />
+            <Route path="dataverse" component={DataversePage}>
+                <IndexRedirect to="jobs" />
+                <Route path="jobs" component={JobPage} />
+                <Route path="plugins" component={PluginPage} />
+            </Route>
             <Route path="settings" component={SettingsPage} />
             <Route
                 path="admin"
