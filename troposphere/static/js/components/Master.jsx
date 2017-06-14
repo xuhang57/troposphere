@@ -4,6 +4,7 @@ import Backbone from "backbone";
 import context from "context";
 import globals from "globals";
 import Header from "./Header";
+import MOCHeader from "./MOCHeader";
 import Footer from "./Footer";
 import actions from "actions";
 import modals from "modals";
@@ -146,7 +147,7 @@ export default React.createClass({
 
         return (
         <div>
-            <Header profile={ context.profile }
+            <MOCHeader profile={ context.profile }
                     currentRoute={ ['projects'] }
                     maintenanceMessages={ maintenanceMessages } />
             <div id="main" style={ { 'marginTop': marginTop } }>
