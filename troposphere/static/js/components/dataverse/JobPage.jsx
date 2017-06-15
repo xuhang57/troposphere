@@ -82,7 +82,6 @@ export default React.createClass({
     render: function() {
         var jobs = this.state.jobs;
         var clusters = this.state.clusters;
-        console.log(clusters);
         var locationSearch = window.location.search;
         var containerName = locationSearch.toString().split("=")[1];
 
