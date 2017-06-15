@@ -104,7 +104,6 @@ let LogoutLink = React.createClass({
     },
 
     render: function() {
-        let statusPageEl;
         let username = this.props.username;
 
         if (!username && window.show_public_site) {
