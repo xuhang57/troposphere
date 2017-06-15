@@ -23,7 +23,6 @@ let JobStore = BaseStore.extend({
                     if (model.get(key) !== params[key])
                         matchesCriteria = false;
                 } else {
-                    var lookup = model.get(tokens[0])
                     matchesCriteria = false;
                 }
             });
