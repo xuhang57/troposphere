@@ -84,6 +84,8 @@ stores.UserStore = require("stores/UserStore");
 stores.VersionStore = require("stores/VersionStore");
 stores.VolumeStore = require("stores/VolumeStore");
 stores.AllocationSourceStore = require("stores/AllocationSourceStore");
+stores.JobStore = require("stores/JobStore");
+stores.ClusterStore = require("stores/ClusterStore");
 
 import actions from "actions";
 
@@ -117,6 +119,8 @@ actions.ResourceActions = require("actions/ResourceActions");
 actions.TagActions = require("actions/TagActions");
 actions.UserActions = require("actions/UserActions");
 actions.VolumeActions = require("actions/VolumeActions");
+actions.ClusterActions = require("actions/ClusterActions");
+actions.JobActions = require("actions/JobActions");
 
 import modals from "modals";
 
@@ -134,6 +138,8 @@ modals.TagModals = require("modals/TagModals");
 modals.VersionModals = require("modals/VersionModals");
 modals.VolumeModals = require("modals/VolumeModals");
 modals.UnsupportedModal = require("modals/UnsupportedModal");
+modals.ClusterModals = require("modals/ClusterModals");
+modals.JobModals = require("modals/JobModals");
 
 export default {
     run: function() {
