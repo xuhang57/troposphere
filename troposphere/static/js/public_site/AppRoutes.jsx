@@ -23,7 +23,7 @@ let AppRoutes = (
             <Route path=":imageId" component={ImageDetailsPage} />
         </Route>
         <Route path="help" component={HelpPage} />
-        <IndexRedirect to="images" />
+        <IndexRedirect to="about" />
         <Route path="*" component={NotFoundPage} />
     </Route>
 );
