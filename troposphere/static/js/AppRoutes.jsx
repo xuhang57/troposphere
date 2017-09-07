@@ -141,8 +141,8 @@ function AppRoutes(props) {
                 <Route path="images" component={MyImageRequestsPage} />
             </Route>
             <Route path="instances/:id" component={NewInstanceDetail} />
-            <IndexRoute component={DashboardPage} />
-            <IndexRedirect to="MarketplacePage" />
+            <IndexRoute component={MarketplacePage} />
+            <IndexRedirect to="marketplace" />
         </Route>
     )
 }
