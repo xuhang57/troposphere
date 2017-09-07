@@ -6,6 +6,7 @@ import { Route,
 import globals from "globals";
 
 import Master from "./components/Master";
+import AboutPage from "./components/about/AboutPage";
 import BadgeMaster from "./components/badges/BadgeMaster";
 import MyBadges from "./components/badges/MyBadges";
 import AllBadges from "./components/badges/AllBadges";
@@ -70,6 +71,7 @@ function AppRoutes(props) {
 
     return (
         <Route path="/" component={Master}>
+            <Route path="about" component={AboutPage} />
             <Route path="dashboard" component={DashboardPage} />
             <Route path="projects" component={ProjectsMaster}>
                 <Route path=":projectId" component={ProjectDetailsMaster}>
