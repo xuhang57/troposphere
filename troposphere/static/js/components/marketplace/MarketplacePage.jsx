@@ -5,7 +5,6 @@ import modals from "modals";
 import stores from "stores";
 
 import CallToAction from "./CallToAction";
-import { trackAction } from "../../utilities/userActivity";
 
 // images
 import openstack from "themeImages/openstack.png";
