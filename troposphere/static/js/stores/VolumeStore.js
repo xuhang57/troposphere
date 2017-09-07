@@ -1,5 +1,6 @@
 import Dispatcher from "dispatchers/Dispatcher";
 import BaseStore from "stores/BaseStore";
+import context from "context";
 import Utils from "actions/Utils";
 import VolumeCollection from "collections/VolumeCollection";
 import VolumeConstants from "constants/VolumeConstants";
@@ -20,6 +21,16 @@ let VolumeStore = BaseStore.extend({
     //
     // Custom functions
     //
+    getVolumesForIdentity: function(identity) {
+        if (!this.models) return this.fetchModels();
+
+        var volumes = this.models.filter(function(volume) {
+            return volume.get("identity").uuid === identity.get('uuid');
+        });
+
+        return new VolumeCollection(volumes);
+    },
+
 
     getVolumesAttachedToInstance: function(instance) {
         if (!this.models) return this.fetchModels();
@@ -51,8 +62,10 @@ let VolumeStore = BaseStore.extend({
 
     getVolumesNotInAProject: function() {
         if (!this.models) return this.fetchModels();
+        let profile = context.profile,
+            username =  profile.get('username');
         var volumes = this.models.filter(function(volume) {
-            return volume.get("projects").length === 0
+            return (volume.get("project") == null && volume.get('user').username == username);
         });
 
         return new VolumeCollection(volumes);
@@ -78,7 +91,7 @@ let VolumeStore = BaseStore.extend({
                 volume.set({
                     state: new VolumeState({
                         status_raw: "detaching"
-                    }),
+                    })
                 });
             }
             Utils.dispatch(VolumeConstants.UPDATE_VOLUME, {
@@ -87,7 +100,7 @@ let VolumeStore = BaseStore.extend({
 
             return keepPolling;
         }.bind(this));
-    },
+    }
 
 });
 
