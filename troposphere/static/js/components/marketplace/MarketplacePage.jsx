@@ -1,8 +1,11 @@
 import React from "react";
 
+import context from "context";
 import modals from "modals";
 import stores from "stores";
+
 import CallToAction from "./CallToAction";
+import { trackAction } from "../../utilities/userActivity";
 
 // images
 import openstack from "themeImages/openstack.png";
@@ -48,7 +51,8 @@ export default React.createClass({
 
     render: function() {
         let providers = stores.ProviderStore.getAll(),
-            identities = stores.IdentityStore.getAll(),
+            current_user = context.profile.get('username'),
+            identities = stores.IdentityStore.ownedIdentities(current_user),
             projects = stores.ProjectStore.getAll(),
             maintenanceMessages = stores.MaintenanceMessageStore.getAll(),
             images = stores.ImageStore.getAll(),
@@ -73,7 +77,6 @@ export default React.createClass({
         if (!resourcesLoaded) {
             return <div className="loading"></div>;
         }
-
 
         return (
             <div id="dashboard-view">
