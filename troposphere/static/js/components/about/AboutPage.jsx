@@ -28,15 +28,15 @@ export default React.createClass({
                     <div className="row calls-to-action">
                         <div className="col-md-4 col-sm-12 center-block text-center">
                             <img src={openstack} />
-			    <p>{"OpenStack is a set of software tools for building and managing cloud computing platforms for public and private clouds."}</p>
+                            <p>{"OpenStack is a set of software tools for building and managing cloud computing platforms for public and private clouds."}</p>
                         </div>
                         <div className="col-md-4 col-sm-12 center-block text-center">
                             <img src={dataverse} />
-			    <p>{"The main focus of the Cloud Dataverse Project is to provide a platform for computing on datasets that are stored in OpenStack Swift Storage."}</p>
+                            <p>{"The main focus of the Cloud Dataverse Project is to provide a platform for computing on datasets that are stored in OpenStack Swift Storage."}</p>
                         </div>
                         <div className="col-md-4 col-sm-12 center-block text-center">
                             <img src={openshift} />
-			    <p>{"OpenShift is RedHat's cloud development Platform as a Service (PaaS). The free and open source cloud-based platform allows developers to create, test and run their applications and deploy them to the cloud."}</p>
+                            <p>{"OpenShift is RedHat's cloud development Platform as a Service (PaaS). The free and open source cloud-based platform allows developers to create, test and run their applications and deploy them to the cloud."}</p>
                         </div>
                     </div>
                 </div>
