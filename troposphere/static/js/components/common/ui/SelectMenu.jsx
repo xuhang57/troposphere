@@ -16,6 +16,12 @@ The select menu may also support placeholder text, when current is null.
        placeholder={ Text to display if current is null }
        ...  \>
 
+The select menu may also render disabled.
+
+    <SelectMenu
+       disabled=true
+       ...  \>
+
 */
 export default React.createClass({
     displayName: "SelectMenu",
@@ -27,8 +33,17 @@ export default React.createClass({
             React.PropTypes.instanceOf(Backbone.Collection),
             React.PropTypes.array
         ]),
+        disabled: React.PropTypes.bool,
         current: React.PropTypes.object,
         placeholder: React.PropTypes.string,
+    },
+
+    getDefaultProps() {
+        return {
+            disabled: false,
+            current: null,
+            placeholder: null
+        }
     },
 
     getInitialState() {
@@ -46,7 +61,9 @@ export default React.createClass({
         if (list instanceof Backbone.Collection) {
             list = list.toArray();
         } else if (list) {
-            list = list.slice()
+            list = list.slice();
+        } else {
+            list = [];
         }
 
         return {
@@ -123,14 +140,20 @@ export default React.createClass({
 
             index = list.indexOf(current);
             if (current != null && index == -1) {
+                let missingName = this.props.optionName(current);
                 console.warn(
-                    "The element to display doesn't exist in the list of available elements"
+                    `SelectMenu: The element to display: "${missingName}" doesn't`,
+                    "exist in the list of available elements"
                 );
             }
         }
 
         return (
-        <select value={index} className="form-control" onChange={this.onSelect}>
+        <select
+            disabled={this.props.disabled}
+            value={index}
+            className="form-control"
+            onChange={this.onSelect}>
             {options}
         </select>
         );

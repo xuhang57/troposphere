@@ -1,6 +1,5 @@
 import React from "react";
-import { Router,
-         Route,
+import { Route,
          IndexRedirect,
          IndexRoute } from "react-router";
 
@@ -12,6 +11,7 @@ import ImageDetailsPage from "components/images/ImageDetailsPage";
 import ImageTagsPage from "components/images/ImageTagsPage";
 import ImagesMaster from "components/images/ImagesMaster";
 import NotFoundPage from "components/NotFoundPage";
+
 
 let AppRoutes = (
     <Route path="/" component={Master}>

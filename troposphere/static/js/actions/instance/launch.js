@@ -7,13 +7,11 @@ import Utils from "../Utils";
 //
 import InstanceConstants from "constants/InstanceConstants";
 import ProjectInstanceConstants from "constants/ProjectInstanceConstants";
-import ProjectConstants from "constants/ProjectConstants";
 
 //
 // Models
 //
 import Instance from "models/Instance";
-import Project from "models/Project";
 import ProjectInstance from "models/ProjectInstance";
 
 import globals from "globals";
@@ -41,12 +39,14 @@ function launch(params) {
     if (!params.machine)
         throw new Error("Missing machine");
 
-    let project = params.project,
-        instanceName = params.instanceName,
-        identity = params.identity,
-        size = params.size,
-        machine = params.machine,
-        scripts = params.scripts;
+    let { project,
+          instanceName,
+          identity,
+          size,
+          machine,
+          scripts,
+          onSuccess,
+          onFail } = params;
 
     let instance = new Instance({
         name: instanceName,
@@ -59,11 +59,11 @@ function launch(params) {
             id: identity.get("provider").id,
             uuid: identity.get("provider").uuid
         },
-        projects: [project.id],
+        project: project.id,
         identity: {
             id: identity.id,
             uuid: identity.get("uuid")
-        },
+        }
     }, {
         parse: true
     });
@@ -87,27 +87,23 @@ function launch(params) {
     let payload = {
         name: instanceName,
         size_alias: size.get("alias"),
-        machine_alias: machine.uuid,
+        source_alias: machine.uuid,
         scripts: scripts,
+        project: project
     }
 
     if (globals.USE_ALLOCATION_SOURCES) {
-        payload.allocation_source_uuid = params.allocation_source_uuid;
+        payload.allocation_source_id = params.allocation_source_uuid;
     }
 
-    instance.createOnV1Endpoint(payload)
+    // Create Instance using the v2 API endpoint
+    instance.create(payload)
         .done(function(attrs, status, response) {
             instance.set("id", attrs.id);
             instance.set("uuid", attrs.alias);
 
             // Get the instance from the cloud, ignore our local copy
             instance.fetch().then(function() {
-                // NOTE: we have to set this here, because our instance above never gets saved
-                instance.set("projects", [project.id]);
-
-                Utils.dispatch(InstanceConstants.UPDATE_INSTANCE, {
-                    instance: instance
-                });
                 Utils.dispatch(InstanceConstants.POLL_INSTANCE, {
                     instance: instance
                 });
@@ -122,13 +118,10 @@ function launch(params) {
                 });
             });
 
-            // Save projectInstance to db
-            projectInstance.save(null, {
-                attrs: {
-                    project: project.id,
-                    instance: instance.id
-                }
-            });
+            onSuccess();
+
+            // only change _context_ if we have succeeded in launching
+            appBrowserHistory.push(`/projects/${project.id}/resources`);
 
         }).fail(function(response) {
             // Remove instance from stores
@@ -142,56 +135,11 @@ function launch(params) {
                 title: "Instance could not be launched",
                 response: response
             });
-    });
 
-    // Since this is triggered from the images page, navigate off
-    // that page and back to the instance list so the user can see
-    // their instance being created
-    appBrowserHistory.push(`/projects/${project.id}/resources`);
+            onFail();
+        });
 }
 
 export default {
-
-    createProjectAndLaunchInstance: function(params) {
-        if (!params.projectName)
-            throw new Error("Missing projectName");
-
-        var projectName = params.projectName,
-            project = new Project({
-                name: projectName,
-                description: projectName,
-                instances: [],
-                volumes: []
-            });
-
-        Utils.dispatch(ProjectConstants.ADD_PROJECT, {
-            project: project
-        });
-
-        project.save().done(function() {
-            Utils.dispatch(ProjectConstants.UPDATE_PROJECT, {
-                project: project
-            });
-
-            // launch the instance into the project
-            params.project = project;
-            delete params["projectName"];
-            launch(params);
-
-            // Since this is triggered from the images page, navigate off
-            // that page and back to the instance list so the user can see
-            // their instance being created
-            appBrowserHistory.push(`/projects/${project.id}/resources`);
-        }).fail(function(response) {
-            Utils.dispatch(ProjectConstants.REMOVE_PROJECT, {
-                project: project
-            });
-            Utils.displayError({
-                title: "Project could not be created",
-                response: response
-            });
-        });
-    },
-
-    launch: launch
+    launch
 };
