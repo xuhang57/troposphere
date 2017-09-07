@@ -98,6 +98,12 @@ export default React.createClass({
                                           description="Quickly develop, host, and scale applications in a cloud environment."
                                           linksTo="openshift" />
                         </div>
+                        <div className="col-md-4 col-sm-12">
+                            <CallToAction title="HIL"
+                                          image={comming}
+                                          description="Bare metal isolation service that automates allocation and management of isolated pools of non-virtualized compute resources to users."
+                                          linksTo="hil" />
+                        </div>
                     </div>
                     <h2 className="t-headline">GIJI Enablements</h2>
                     <div className="row calls-to-action">
@@ -119,15 +125,10 @@ export default React.createClass({
                                           description="Provisions numerous nodes quickly while preserving support for multitenancy using HIL introduces the image management techniques."
                                           linksTo="bmi" />
                         </div>
-                        <div className="col-xs-6 col-sm-3">
-                            <CallToAction title="HIL"
-                                          image={comming}
-                                          description="Bare metal isolation service that automates allocation and management of isolated pools of non-virtualized compute resources to users."
-                                          linksTo="hil" />
-                        </div>
                     </div>
                 </div>
             </div>
         );
     }
 });
+
