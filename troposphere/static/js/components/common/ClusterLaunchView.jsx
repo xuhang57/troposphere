@@ -2,7 +2,7 @@ import React from "react";
 import stores from "stores";
 import RaisedButton from "material-ui/RaisedButton";
 import SelectMenu from "components/common/ui/SelectMenu";
-
+import Backbone from "backbone";
 
 
 export default React.createClass({

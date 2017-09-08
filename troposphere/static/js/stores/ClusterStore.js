@@ -29,7 +29,7 @@ let ClusterStore = BaseStore.extend({
             }
 
             models.fetch({
-                url: _.result(models, "url") + queryString
+                url: models.url + queryString
             }).done(function() {
                 this.isFetching = false;
                 this.models = models;
@@ -74,8 +74,6 @@ let ClusterStore = BaseStore.extend({
                 });
                 return false;
             }
-
-            var status = cluster.get("clusterStatus");
 
             cluster.set({
                 clusterStatus: "Deleting"

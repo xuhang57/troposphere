@@ -2,7 +2,6 @@ import React from "react";
 import RaisedButton from 'material-ui/RaisedButton';
 import modals from "modals";
 import stores from "stores";
-import { Link } from "react-router";
 import StatusLight from "components/projects/common/StatusLight";
 import StatusBar from "./common/StatusBar";
 import actions from "actions";
@@ -19,10 +18,6 @@ export default React.createClass({
             sizes: sizes,
             plugins: plugins
         };
-    },
-
-    updateState: function() {
-        this.setState(this.getInitialState());
     },
 
     updateState: function() {
