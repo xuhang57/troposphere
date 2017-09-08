@@ -3,7 +3,6 @@ import { Link } from "react-router";
 
 import Glyphicon from "components/common/Glyphicon";
 import context from "context";
-import stores from "stores";
 
 export default React.createClass({
     displayName: "SecondaryDataverseNavigation",

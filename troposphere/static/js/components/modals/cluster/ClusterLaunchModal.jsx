@@ -10,7 +10,7 @@ export default React.createClass({
 
     getInitialState: function() {
         var identities = stores.IdentityStore.getAll();
-        var sizes = stores.SizeStore.getAll();
+
         return {
             identity: identities ? identities.first().id : null,
             clusterSize: "",
@@ -136,6 +136,7 @@ export default React.createClass({
         if (!identities) return <div className="loading" />;
 
         var sizes = stores.SizeStore.getAll();
+
         return (
             <div role="form">
                 <div className="form-group">

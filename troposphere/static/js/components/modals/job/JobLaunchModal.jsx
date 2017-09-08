@@ -10,7 +10,6 @@ export default React.createClass({
 
     getInitialState: function() {
         var identities = stores.IdentityStore.getAll();
-        var clusters = stores.ClusterStore.getAll();
         return {
             identity: identities ? identities.first().id : null,
             clusterName: "",
