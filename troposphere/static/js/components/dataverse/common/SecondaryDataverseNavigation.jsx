@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import Glyphicon from "components/common/Glyphicon";
 import context from "context";
+import stores from "stores";
 
 export default React.createClass({
     displayName: "SecondaryDataverseNavigation",
@@ -34,7 +35,7 @@ export default React.createClass({
         } else {
             routes = [
                 this.renderRoute("Plugins", "plugins", "wrench", true),
-                this.renderRoute("Jobs", "jobs", "film", true),
+                this.renderRoute("Big Data Analytics", "big-data-analytics", "film", true),
 
             ];
         }
@@ -52,3 +53,4 @@ export default React.createClass({
         );
     }
 });
+
