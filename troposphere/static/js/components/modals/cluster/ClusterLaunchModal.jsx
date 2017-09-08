@@ -1,7 +1,7 @@
 import React from "react";
 import BootstrapModalMixin from "components/mixins/BootstrapModalMixin";
 import ClusterLaunchView from "components/common/ClusterLaunchView";
-
+import Backbone from "backbone";
 
 export default React.createClass({
     displayName: "ClusterLaunchModal",
