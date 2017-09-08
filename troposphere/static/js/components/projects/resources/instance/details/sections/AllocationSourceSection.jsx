@@ -1,15 +1,17 @@
 import React from "react";
 import Backbone from "backbone";
 
-import SelectMenu from "./SelectMenu2";
+import modals from "modals";
+import SelectMenu from "components/common/ui/SelectMenu";
 import AllocationSourceGraph from "components/common/AllocationSourceGraph";
+import actions from 'actions';
 
 export default React.createClass({
 
     propTypes: {
-        onSourceChange: React.PropTypes.func.isRequired,
+        disabled: React.PropTypes.bool.isRequired,
         allocationSources: React.PropTypes.instanceOf(Backbone.Collection).isRequired,
-        instance: React.PropTypes.instanceOf(Backbone.Model).isRequired,
+        instance: React.PropTypes.instanceOf(Backbone.Model).isRequired
     },
 
     getInitialState() {
@@ -21,60 +23,55 @@ export default React.createClass({
     },
 
     getStateFromProps(props) {
-        let { allocationSources, instance } = this.props;
+        let { instance } = props;
 
-        // This may look strange ========v
-        // This method gets called from  v
-        // getInitialState, when state   v
-        // doesn't exist!                v
-        let { current } = this.state || {};
-
-        if (!current) {
-            // TODO: re-review this post-q-q-js
-            let allocSrc = instance.get("allocation_source");
-            if (!(allocSrc instanceof Backbone.Model)) {
-                current = allocationSources.findWhere({
-                    name: allocSrc.name
-                });
-            } else {
-                // we've got a Backbone.Model
-                current = allocSrc;
-            }
-        }
+        let source = instance.get("allocation_source");
+        let allocationId =
+            source instanceof Backbone.Model
+            ? source.get("uuid")
+            : source.uuid
 
         return {
-            current,
+            allocationId,
         }
     },
 
-    onSourceChange: function(source) {
+    onSourceChange: function(allocationSource) {
+        let { instance } = this.props;
         this.setState({
-            current: source
+            allocationId: allocationSource.get("uuid")
         });
-        this.props.onSourceChange(source);
+        actions.InstanceActions.updateAllocationSource({
+            instance,
+            allocationSource
+        });
+    },
+
+    onRequestResources: function() {
+        let instance = this.props.instance;
+        let identity = Number(instance.get('identity').id)
+        modals.HelpModals.requestMoreResources({ identity });
     },
 
     render() {
-        let { allocationSources, instance } = this.props;
-        let current = this.state.current;
-        // temp - could make this a `|| default` maybe
-        if (instance.get("allocation_source")) {
-            let src = instance.get("allocation_source");
-            current = src instanceof Backbone.Model ? src
-                : new Backbone.Model(instance.get("allocation_source"));
-        }
+        let { allocationSources, disabled } = this.props;
+        let { allocationId } = this.state;
+
+        let current = allocationSources.find(
+            el => el.get("uuid") == allocationId
+        )
 
         return (
         <div style={{ paddingTop: "20px" }}>
             <h2 className="t-title">Allocation Source</h2>
             <div style={{ marginBottom: "20px" }}>
                 <SelectMenu current={current}
+                    disabled={disabled}
                     optionName={item => item.get("name")}
-                    findIndex={(el, idx, arr) => el.get("uuid") == current.get("uuid")}
                     list={allocationSources}
                     onSelect={this.onSourceChange} />
             </div>
-            <AllocationSourceGraph allocationSource={current} />
+            <AllocationSourceGraph onRequestResources={this.onRequestResources} allocationSource={current} />
         </div>
         );
     }

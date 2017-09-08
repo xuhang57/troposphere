@@ -221,7 +221,7 @@ export default React.createClass({
         return this.renderProgressBar(message, currentlyUsedPercent, projectedPercent, overQuotaMessage);
     },
 
-    renderNoSizesAvailable: function(minRequirements) {
+    renderNoSizesAvailable: function() {
         var minRequirements = (
         <div className="col-sm-9 control-label pull -left">
             Minimum requirements:
@@ -321,7 +321,7 @@ export default React.createClass({
                         {minRequirements}
                     </div>
                     <div className="modal-section">
-                        <h4 classNames="t-body-2">Projected Resource Usage</h4>
+                        <h4 className="t-body-2">Projected Resource Usage</h4>
                         <div className="form-group">
                             {this.renderCpuConsumption(selectedIdentity, size, sizes, instances)}
                             {this.renderMemoryConsumption(selectedIdentity, size, sizes, instances)}

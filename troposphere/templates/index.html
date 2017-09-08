@@ -1,6 +1,4 @@
-{% if DYNAMIC_ASSET_LOADING %}
 {% load render_bundle from webpack_loader %}
-{% endif %}
 
 <!DOCTYPE html>
 {% include 'comment.html' %}
@@ -12,11 +10,7 @@
     <link rel="shortcut icon" href="{{ BASE_URL }}/assets/bundles/theme/images/favicon.ico" />
 
     <!--CSS-->
-{% if DYNAMIC_ASSET_LOADING %}
     {% render_bundle 'app' 'css' %}
-{% else %}
-    <link href="{{ BASE_URL }}/assets/bundles/app.css" rel="stylesheet" type="text/css">
-{% endif %}
 
     <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -127,8 +121,12 @@
     var STATUS_PAGE_LINK = "{{ STATUS_PAGE_LINK }}";
 {% endif %}
 
-{% if WEB_DESKTOP_INCLUDE_LINK %}
-    var WEB_DESKTOP_INCLUDE_LINK = "{{ WEB_DESKTOP_INCLUDE_LINK }}";
+{% if WEB_DESKTOP_ENABLED %}
+    var WEB_DESKTOP_ENABLED = "{{ WEB_DESKTOP_ENABLED }}";
+{% endif %}
+
+{% if GUACAMOLE_ENABLED %}
+    var GUACAMOLE_ENABLED = "{{ GUACAMOLE_ENABLED }}";
 {% endif %}
 
 {% if show_public_site %}
@@ -161,6 +159,15 @@
     var USE_ALLOCATION_SOURCES = false;
 {% endif %}
 
+{% if EXTERNAL_ALLOCATION %}
+    var EXTERNAL_ALLOCATION = true;
+{%  else %}
+    var EXTERNAL_ALLOCATION = false;
+{% endif %}
+
+var ALLOCATION_UNIT_NAME = "{{ ALLOCATION_UNIT_NAME }}";
+var ALLOCATION_UNIT_ABBREV = "{{ ALLOCATION_UNIT_ABBREV }}";
+
 {% if notice %}
     var maint_notice = {
          title: "{{notice.title}}",
@@ -177,37 +184,26 @@ var SENTRY_TAGS = {{ sentry_tags_dict|safe }};
 var SENTRY_ENABLED = false;
 {% endif %}
 
+{% if PROJECT_SHARING %}
+var PROJECT_SHARING = true;
+{% endif %}
+
 {% if USER_PORTAL %}
     var user_portal = {{USER_PORTAL | safe}};
 {% endif %}
     </script>
 
-{% if DYNAMIC_ASSET_LOADING %}
-    <!-- Application dependencies -->
-    {% render_bundle 'manifest' 'js' %}
-    {% render_bundle 'vendor' 'js' %}
+{% render_bundle 'manifest' 'js' %}
+{% render_bundle 'vendor' 'js' %}
 
-    {% if show_public_site %}
-    {% render_bundle 'public' 'js' %}
-    {% else %}
-    {% render_bundle 'app' 'js' %}
-    {% endif %}
-    {% if collect_analytics %}
-    <!-- Google Analytics -->
-    {% render_bundle 'analytics' 'js' %}
-    {% endif %}
+{% if show_public_site %}
+{% render_bundle 'public' 'js' %}
 {% else %}
-    <script src="{{ BASE_URL }}/assets/bundles/manifest.js"></script>
-    <script src="{{ BASE_URL }}/assets/bundles/vendor.js"></script>
-    {% if show_public_site %}
-    <script src="{{ BASE_URL }}/assets/bundles/public.js"></script>
-    {% else %}
-    <script src="{{ BASE_URL }}/assets/bundles/app.js"></script>
-    {% endif %}
-    {% if collect_analytics %}
-    <!-- Google Analytics -->
-    <script src="{{ BASE_URL }}/assets/bundles/analytics.js"></script>
-    {% endif %}
+{% render_bundle 'app' 'js' %}
+{% endif %}
+{% if collect_analytics %}
+<!-- Google Analytics -->
+{% render_bundle 'analytics' 'js' %}
 {% endif %}
 </body>
 </html>
