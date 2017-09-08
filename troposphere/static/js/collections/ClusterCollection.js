@@ -5,7 +5,7 @@ import globals from "globals";
 export default Backbone.Collection.extend({
     model: Cluster,
 
-    url: globals.API_V2_ROOT + "/sahara_cluster",
+    url: globals.API_V2_ROOT + "/sahara_clusters",
 
     parse: function(data) {
         return data;
