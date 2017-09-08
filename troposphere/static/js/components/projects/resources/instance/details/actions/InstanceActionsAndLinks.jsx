@@ -5,6 +5,7 @@ import Backbone from "backbone";
 
 import Glyphicon from "components/common/Glyphicon";
 import InstanceActionNames from "constants/InstanceActionNames";
+import context from "context";
 
 import featureFlags from "utilities/featureFlags";
 import { findCookie } from "utilities/cookieHelpers";
@@ -185,10 +186,10 @@ export default React.createClass({
         modals.InstanceModals.unshelve(this.props.instance);
     },
 
-    onWebDesktop: function(instance) {
-        // TODO:
-        //      move this into a utilities file
+    onWebDesktop: function(instance, client, protocol) {
         var CSRFToken = findCookie("tropo_csrftoken");
+
+        trackAction(`activated-${client}-${protocol}`);
 
         // build a form to POST to web_desktop
         var form = $("<form>")
@@ -198,8 +199,18 @@ export default React.createClass({
 
         form.append($("<input>")
             .attr("type", "hidden")
-            .attr("name", "instanceId")
+            .attr("name", "instance_id")
             .attr("value", instance.get('uuid')));
+
+        form.append($("<input>")
+            .attr("type", "hidden")
+            .attr("name", "protocol")
+            .attr("value", protocol));
+
+        form.append($("<input>")
+            .attr("type", "hidden")
+            .attr("name", "client")
+            .attr("value", client));
 
         form.append($("<input>")
             .attr("type", "hidden")
@@ -209,6 +220,10 @@ export default React.createClass({
 
         $("body").append(form);
         form[0].submit();
+    },
+
+    onWebShell: function() {
+        trackAction('activated-web_shell-ssh');
     },
 
     getIntegrationLinks() {
@@ -223,6 +238,7 @@ export default React.createClass({
                 label: "Open Web Shell",
                 icon: "console",
                 href: webShellUrl,
+                onClick: this.onWebShell,
                 openInNewWindow: true,
                 isDisabled: disableWebLinks
             }
@@ -232,12 +248,30 @@ export default React.createClass({
             links.push({
                 label: "Open Web Desktop",
                 icon: "sound-stereo",
-                onClick: this.onWebDesktop.bind(
-                    this,
-                    this.props.instance),
+                onClick: this.onWebDesktop.bind(this, this.props.instance, "web_desktop", "vnc"),
                 openInNewWindow: true,
                 isDisabled: disableWebLinks
             });
+        }
+
+        if (featureFlags.GUACAMOLE) {
+          links.push({
+              label: "Open New Web Shell (beta)",
+              icon: "text-background",
+              onClick: this.onWebDesktop.bind(this, this.props.instance, "guacamole", "ssh"),
+              openInNewWindow: true,
+              isDisabled: disableWebLinks
+          });
+
+          if (webDesktopCapable) {
+            links.push({
+              label: "Open New Web Desktop (beta)",
+              icon: "sound-dolby",
+              onClick: this.onWebDesktop.bind(this, this.props.instance, "guacamole", "vnc"),
+              openInNewWindow: true,
+              isDisabled: disableWebLinks
+            });
+          }
         }
 
         return links;
@@ -315,16 +349,8 @@ export default React.createClass({
             </li>
         );
     },
-
-    render: function() {
-        let { actions, actionElements } = this.state;
-
-        stores.InstanceActionStore.getActionsFor(this.props.instance);
-
-        if (!actions) {
-            return (<div className="loading" />);
-        }
-
+    getLinkElements: function() {
+        let { actionElements } = this.state;
         let linkElements = [
                 {
                     label: "Actions",
@@ -337,12 +363,38 @@ export default React.createClass({
                 }
             ];
 
+        let instance_owner = this.props.instance.get('user'),
+            project_leaders = this.props.project.get('leaders'),
+            current_username = context.profile.get('username');
+        let is_leader = project_leaders.find(function(project) { return project.username == current_username }),
+            is_leader_or_owner = (current_username == instance_owner.username || is_leader != null);
+
+
+        if (!is_leader_or_owner) {
+            actionElements = [
+            {
+                label: "Shared Instance - No Actions Available",
+                icon: null
+            }];
+        }
         linkElements = linkElements.concat(actionElements);
         linkElements.push({
             label: "Links",
             icon: null
         });
         linkElements = linkElements.concat(this.getIntegrationLinks());
+        return linkElements;
+    },
+    render: function() {
+        let linkElements;
+        let { actions } = this.state;
+
+        stores.InstanceActionStore.getActionsFor(this.props.instance);
+
+        if (!actions) {
+            return (<div className="loading" />);
+        }
+        linkElements = this.getLinkElements();
 
         return (
         <div className="resource-actions">

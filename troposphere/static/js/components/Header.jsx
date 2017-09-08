@@ -35,20 +35,19 @@ const links = [
         href: "/application/images",
         icon: "floppy-disk",
         requiresLogin: false
+    },
+    /* TODO: make this enabled/disabled based on `featureFlags.showIdentityView()`
+    {
+        name: "Identities",
+        linksTo: "identities",
+        href: "/application/identities",
+        icon: "cloud",
+        requiresLogin: true
     }
+    */
 // This is a little ugly, but we conditionally include an element in a
 // list
-].concat(
-    globals.USE_ALLOCATION_SOURCES
-        ? []
-        : [{
-            name: "Providers",
-            linksTo: "providers",
-            href: "/application/providers",
-            icon: "cloud",
-            requiresLogin: true
-        }]
-).concat([
+].concat([
     {
         name: "Help",
         linksTo: "help",
@@ -84,8 +83,6 @@ let LoginLink = React.createClass({
 
     },
     render: function() {
-        let redirect_path = window.location.pathname;
-
         return (
         <li className="dropdown">
             {this.renderLink()}
@@ -300,7 +297,7 @@ let Header = React.createClass({
             : <LoginLink/>;
 
         let homeTarget = loggedIn ? "dashboard" : "images";
-        
+
         return (
         <div className="navbar navbar-default navbar-fixed-top" role="navigation">
             <MaintenanceMessageBanner maintenanceMessages={this.props.maintenanceMessages} />
