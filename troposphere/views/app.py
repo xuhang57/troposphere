@@ -1,4 +1,5 @@
 import json
+import os
 import logging
 
 from datetime import timedelta
@@ -141,6 +142,7 @@ def _populate_template_params(request, maintenance_records, notice_t, disabled_l
             settings.NEW_RELIC_BROWSER_SNIPPET
 
     enable_sentry = getattr(settings, 'SENTRY_DSN',"") != ""
+    enable_project_sharing = getattr(settings, 'ENABLE_PROJECT_SHARING',False)
     server_prefix = urlparse(settings.SERVER_URL).netloc.split('.')[0]
     sentry_tags = {'server_name': server_prefix}
     if emulator:
@@ -154,9 +156,15 @@ def _populate_template_params(request, maintenance_records, notice_t, disabled_l
     template_params['USE_MOCK_DATA'] = getattr(settings, "USE_MOCK_DATA", False)
     template_params['USE_ALLOCATION_SOURCES'] = getattr(settings,
             "USE_ALLOCATION_SOURCES", False)
+    template_params['EXTERNAL_ALLOCATION'] = getattr(settings,
+            "EXTERNAL_ALLOCATION", False)
+    template_params['ALLOCATION_UNIT_NAME'] = getattr(settings,
+            "ALLOCATION_UNIT_NAME", None)
+    template_params['ALLOCATION_UNIT_ABBREV'] = getattr(settings,
+            "ALLOCATION_UNIT_ABBREV", None)
     template_params['ORG_NAME'] = settings.ORG_NAME
-    template_params['DYNAMIC_ASSET_LOADING'] = settings.DYNAMIC_ASSET_LOADING
     template_params['SENTRY_ENABLED'] = enable_sentry
+    template_params['PROJECT_SHARING'] = enable_project_sharing
     template_params['sentry_tags_dict'] = sentry_tags
     template_params['collect_analytics'] = getattr(settings,
             "COLLECT_ANALYTICS", False)
@@ -168,8 +176,11 @@ def _populate_template_params(request, maintenance_records, notice_t, disabled_l
     metadata = get_site_metadata()
 
     template_params['DISPLAY_STATUS_PAGE'] = False
-    template_params['WEB_DESKTOP_INCLUDE_LINK'] = \
-        settings.WEB_DESKTOP_INCLUDE_LINK
+    template_params['WEB_DESKTOP_ENABLED'] = \
+        settings.WEB_DESKTOP_ENABLED
+
+    template_params['GUACAMOLE_ENABLED'] = \
+        settings.GUACAMOLE_ENABLED
 
     if metadata:
         template_params['DISPLAY_STATUS_PAGE'] = \
@@ -204,17 +215,46 @@ def _handle_public_application_request(request, maintenance_records, disabled_lo
     """
     template_params = _populate_template_params(request, maintenance_records,
                                                 None, disabled_login, True)
-
     if 'new_relic_enabled' in template_params:
         logger.info("New Relic enabled? %s" % template_params['new_relic_enabled'])
     else:
         logger.info("New Relic key missing from `template_params`")
 
+    try:
+        response = render_to_response(
+            'index.html',
+            template_params,
+        )
+        return response
+    except Exception as exc:
+        return handle_template_error(template_params, exc)
+
+
+def handle_template_error(template_params, exception=None):
+    template_params['exception'] = exception
+    template_params['exception_message'] = str(exception)
+    template_params['exception_type'] = type(exception)
+    # Read theme by hand:
+    json_data = {}
+    theme_path = os.path.join(settings.BASE_DIR, "static/theme/theme.json")
+    if os.path.exists(theme_path):
+        with open(theme_path,'r') as the_file:
+            text = the_file.read()
+            json_data = json.loads(text)
+    theme_images_suffix = json_data.get('images',{}).get('imagesDir')
+    if theme_images_suffix:
+        theme_images_url = "/assets"+theme_images_suffix
+    else:
+        theme_images_url = "/assets/theme/themeImagesDefault"
+    template_params['theme_images_url'] = theme_images_url
+
+    if 'WebpackLoaderBadStatsError' in str(template_params['exception_type']):
+        template_params['exception_message'] = "Webpack bundle has not been built/completed."
+
     response = render_to_response(
-        'index.html',
+        'error.html',
         template_params,
     )
-
     return response
 
 
@@ -246,10 +286,13 @@ def _handle_authenticated_application_request(request, maintenance_records,
     else:
         logger.info("New Relic key missing from `template_params`")
 
-    response = render_to_response(
-        'index.html',
-        template_params,
-    )
+    try:
+        response = render_to_response(
+            'index.html',
+            template_params,
+        )
+    except Exception as exc:
+        return handle_template_error(template_params, exc)
 
     # Delete cookie after exchange
     if 'auth_token' in request.COOKIES:

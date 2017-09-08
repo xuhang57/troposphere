@@ -1,4 +1,3 @@
-import _ from "underscore";
 import Dispatcher from "dispatchers/Dispatcher";
 import BaseStore from "stores/BaseStore";
 import ProjectInstanceCollection from "collections/ProjectInstanceCollection";
@@ -58,8 +57,11 @@ let ProjectInstanceStore = BaseStore.extend({
         if (!_modelsFor[project.id]) return this.fetchModelsFor(project.id);
 
         // Filter instances belonging to the project
+        // FIXME: Verify that project ID/UUID are matching here.
         var instances = allInstances.filter(function(i) {
-            return _.contains(i.get("projects"), project.id);
+            let compare_project = i.get("project");
+            return (compare_project &&
+                compare_project.id == project.id);
         });
 
         return new InstanceCollection(instances);
@@ -67,10 +69,10 @@ let ProjectInstanceStore = BaseStore.extend({
 
     getInstancesForProjectOnProvider: function(project, provider) {
         // get instances in project
-        var instances = this.getInstancesFor(project);
+        let projectInstances = this.getInstancesFor(project);
 
         // filter out instances not on provider
-        var instances = instances.filter(function(i) {
+        let instances = projectInstances.filter(function(i) {
             return i.get("provider").id === provider.id;
         });
 

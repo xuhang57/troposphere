@@ -46,7 +46,6 @@ export default React.createClass({
     },
 
     getInitialState: function() {
-
         // We might have these
         let image = this.props.image ? this.props.image : null;
         let instanceName = image ? image.get("name") : null;
@@ -80,7 +79,8 @@ export default React.createClass({
             providerSize: null,
             identityProvider: null,
             attachedScripts: [],
-            allocationSource: null
+            allocationSource: null,
+            waitingOnLaunch: false
         }
     },
 
@@ -92,8 +92,8 @@ export default React.createClass({
     // set the project to the first returned from the cloud. It primes our
     // stores, so that render can just call get and eventually get data.
     updateState: function() {
-        let allocationSourceList = stores.AllocationSourceStore.getAll();
-        let view = this.props.initialView;
+        let allocationSourceList = stores.AllocationSourceStore.getAll(),
+            view = this.props.initialView;
 
         // Check if the user has any projects, if not then set view to "PROJECT_VIEW"
         // to create a new one
@@ -132,25 +132,25 @@ export default React.createClass({
             provider = provider || providerList.shuffle()[0];
         }
 
-        let identityProvider,
-            providerSizeList;
+        let identityProvider, providerSizeList;
         if (provider) {
             identityProvider = stores.IdentityStore.findOne({
                 "provider.id": provider.id
             });
-
             providerSizeList = stores.SizeStore.fetchWhere({
                 provider__id: provider.id
             });
         }
 
-        let providerSize;
-        if (providerSizeList) {
-            providerSize = this.state.providerSize ?
-                this.state.providerSize :
-                providerSizeList.first();
+        if (provider && providerSizeList && imageVersion) {
+            providerSizeList =
+                this.filterSizeList(provider, providerSizeList, imageVersion);
         }
-        ;
+
+        let providerSize = this.state.providerSize;
+        if (providerSizeList) {
+            providerSize = providerSize || providerSizeList.first();
+        }
 
         let allocationSource;
         if (allocationSourceList) {
@@ -166,7 +166,7 @@ export default React.createClass({
             provider,
             providerSize,
             identityProvider,
-            allocationSource,
+            allocationSource
         });
     },
 
@@ -251,34 +251,36 @@ export default React.createClass({
             imageVersionList = imageVersionList.cfilter(filterEndDate);
             imageVersion = imageVersionList.first();
         }
-        ;
 
         let providerList;
         if (imageVersion) {
             providerList = stores.ProviderStore.getProvidersForVersion(imageVersion);
         }
-        ;
 
-        let provider,
-            providerSizeList,
-            identityProvider;
+        let provider;
         if (providerList) {
             provider = providerList.first();
-            providerSizeList = stores.SizeStore.fetchWhere({
-                provider__id: provider.id
-            });
+        }
 
+        let identityProvider, providerSizeList;
+        if (provider) {
             identityProvider = stores.IdentityStore.findOne({
                 "provider.id": provider.id
             });
+            providerSizeList = stores.SizeStore.fetchWhere({
+                provider__id: provider.id
+            });
         }
-        ;
+
+        if (provider && providerSizeList && imageVersion) {
+            providerSizeList =
+                this.filterSizeList(provider, providerSizeList, imageVersion);
+        }
 
         let providerSize;
         if (providerSizeList) {
             providerSize = providerSizeList.first();
         }
-        ;
 
         this.setState({
             image,
@@ -286,7 +288,7 @@ export default React.createClass({
             provider,
             imageVersion,
             providerSize,
-            identityProvider,
+            identityProvider
         }, this.viewBasic);
     },
 
@@ -309,24 +311,30 @@ export default React.createClass({
 
     onVersionChange: function(imageVersion) {
         let providerList = stores.ProviderStore.getProvidersForVersion(imageVersion);
-        let providerSizeList;
-        let providerSize;
+
         let provider;
-        let identityProvider;
         if (providerList) {
             provider = providerList.first();
-            providerSizeList = stores.SizeStore.fetchWhere({
-                provider__id: provider.id
-            });
+        }
 
+        let identityProvider, providerSizeList;
+        if (provider) {
             identityProvider = stores.IdentityStore.findOne({
                 "provider.id": provider.id
             });
+            providerSizeList = stores.SizeStore.fetchWhere({
+                provider__id: provider.id
+            });
+        }
 
-            if (providerSizeList) {
-                providerSize = providerSizeList.first();
-            }
-            ;
+        if (provider && providerSizeList && imageVersion) {
+            providerSizeList =
+                this.filterSizeList(provider, providerSizeList, imageVersion);
+        }
+
+        let providerSize;
+        if (providerSizeList) {
+            providerSize = providerSizeList.first();
         }
 
         this.setState({
@@ -345,7 +353,7 @@ export default React.createClass({
 
     onAllocationSourceChange: function(source) {
         this.setState({
-            allocationSource: source,
+            allocationSource: source
         });
     },
 
@@ -354,7 +362,16 @@ export default React.createClass({
             provider__id: provider.id
         });
 
+        let imageVersion = this.state.imageVersion;
+        if (provider && providerSizeList && imageVersion) {
+            providerSizeList =
+                this.filterSizeList(provider, providerSizeList, imageVersion);
+        }
+
         let providerSize;
+        if (providerSizeList) {
+            providerSize = providerSizeList.first();
+        }
 
         let identityProvider = stores.IdentityStore.findOne({
             "provider.id": provider.id
@@ -363,7 +380,6 @@ export default React.createClass({
         if (providerSizeList) {
             providerSize = providerSizeList.first();
         }
-        ;
 
         this.setState({
             provider,
@@ -421,6 +437,35 @@ export default React.createClass({
         });
     },
 
+    onLaunchFailed: function() {
+        this.setState({
+            waitingOnLaunch: false
+        });
+    },
+
+    onLaunchSuccess: function() {
+        let modalEl = document.getElementById("modal");
+        // hide if there is a modal visible (present in DOM)
+        if (modalEl && modalEl.childElementCount > 0) {
+            this.hide();
+        }
+    },
+
+    filterSizeList(provider, sizes, imageVersion) {
+        let selectedMachine =
+            imageVersion.get('machines')
+                        .find(m => m.provider.id == provider.id);
+
+        let largeEnough = size =>
+            // Disk size of 0 specially treated in Openstack, the size will be
+            // the size of the image
+            size.get('disk') === 0 ||
+            size.get('disk') >= selectedMachine.size_gb;
+
+        // Return provider sizes that have enough disk space
+        return sizes.cfilter(largeEnough);
+    },
+
     //============================
     // Final Submit event handler
     //============================
@@ -439,7 +484,9 @@ export default React.createClass({
                 identity: this.state.identityProvider,
                 size: this.state.providerSize,
                 version: this.state.imageVersion,
-                scripts: this.state.attachedScripts
+                scripts: this.state.attachedScripts,
+                onSuccess: () => { this.onLaunchSuccess(); },
+                onFail: () => { this.onLaunchFailed(); }
             };
 
             if (globals.USE_ALLOCATION_SOURCES) {
@@ -447,10 +494,18 @@ export default React.createClass({
             }
 
             actions.InstanceActions.launch(launchData);
-            this.hide();
+
+            // enter into a "waiting" state to determine
+            // result of launch operation
+            this.setState({
+                waitingOnLaunch: true
+            });
+
             return
         }
 
+        // if we cannot launch, we are in a world of hurt
+        // - show some indication of that
         this.setState({
             showValidationErr: true
         })
@@ -593,12 +648,12 @@ export default React.createClass({
     },
 
     renderBasicOptions: function() {
-
         let provider = this.state.provider;
         let providerSize = this.state.providerSize;
         let project = this.state.project;
         let image = this.state.image;
         let imageVersion = this.state.imageVersion;
+        let waitingOnLaunch = this.state.waitingOnLaunch;
 
         let projectList = stores.ProjectStore.getAll() || null;
 
@@ -628,6 +683,11 @@ export default React.createClass({
             });
         }
 
+        if (provider && providerSizeList && imageVersion) {
+            providerSizeList =
+                this.filterSizeList(provider, providerSizeList, imageVersion);
+        }
+
         let allocationSourceList;
         if (globals.USE_ALLOCATION_SOURCES) {
             allocationSourceList = stores.AllocationSourceStore.getAll();
@@ -639,7 +699,7 @@ export default React.createClass({
             onBack: this.onBack, onCancel: this.hide, onNameChange: this.onNameChange, onNameBlur: this.onNameBlur, onProjectChange: this.onProjectChange, onAllocationSourceChange:
             this.onAllocationSourceChange, onProviderChange: this.onProviderChange, onRequestResources: this.onRequestResources, onSizeChange: this.onSizeChange, onSubmitLaunch:
             this.onSubmitLaunch, onVersionChange: this.onVersionChange, project, projectList, provider, providerList, providerSize, providerSizeList, resourcesUsed, viewAdvanced:
-            this.viewAdvanced, hasAdvancedOptions: this.hasAdvancedOptions(), allocationSource: this.state.allocationSource, allocationSourceList, }} />
+            this.viewAdvanced, hasAdvancedOptions: this.hasAdvancedOptions(), allocationSource: this.state.allocationSource, allocationSourceList, waitingOnLaunch }} />
         )
     },
 

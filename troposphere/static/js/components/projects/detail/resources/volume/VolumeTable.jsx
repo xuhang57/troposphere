@@ -3,6 +3,9 @@ import Backbone from "backbone";
 import VolumeRow from "./VolumeRow";
 import SelectableTable from "../SelectableTable";
 
+import featureFlags from "utilities/featureFlags";
+
+
 export default React.createClass({
     displayName: "VolumeTable",
 
@@ -32,8 +35,9 @@ export default React.createClass({
             selectedResources = this.props.selectedResources;
 
         return volumes.map(function(volume) {
-            var isPreviewed = (previewedResource === volume),
-                isChecked = selectedResources.get(volume) ? true : false;
+            let uuid = volume.get("uuid"),
+                isPreviewed = (previewedResource === volume),
+                isChecked = selectedResources.findWhere({uuid}) ? true : false;
 
             return (
             <VolumeRow key={volume.id || volume.cid}
@@ -67,7 +71,7 @@ export default React.createClass({
                 Size
             </th>
             <th className="sm-header">
-                Provider
+                {featureFlags.hasProjectSharing() ? "Identity" : "Provider"}
             </th>
         </SelectableTable>
         )
