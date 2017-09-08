@@ -3,7 +3,6 @@ import stores from "stores";
 import Backbone from "backbone";
 import context from "context";
 import globals from "globals";
-import Header from "./Header";
 import MOCHeader from "./MOCHeader";
 import Footer from "./Footer";
 import actions from "actions";

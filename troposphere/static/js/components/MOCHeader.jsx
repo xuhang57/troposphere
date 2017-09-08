@@ -76,8 +76,6 @@ let LoginLink = React.createClass({
 
     },
     render: function() {
-        let redirect_path = window.location.pathname;
-
         return (
             <li className="dropdown">
                 {this.renderLink()}
