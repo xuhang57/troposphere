@@ -6,6 +6,7 @@ import { Route,
 import globals from "globals";
 
 import Master from "./components/Master";
+import MarketplacePage from "./components/marketplace/MarketplacePage";
 import AboutPage from "./components/about/AboutPage";
 import BadgeMaster from "./components/badges/BadgeMaster";
 import MyBadges from "./components/badges/MyBadges";
@@ -71,6 +72,7 @@ function AppRoutes(props) {
 
     return (
         <Route path="/" component={Master}>
+            <Route path="marketplace" component={MarketplacePage} />
             <Route path="about" component={AboutPage} />
             <Route path="dashboard" component={DashboardPage} />
             <Route path="projects" component={ProjectsMaster}>
@@ -139,8 +141,8 @@ function AppRoutes(props) {
                 <Route path="images" component={MyImageRequestsPage} />
             </Route>
             <Route path="instances/:id" component={NewInstanceDetail} />
-            <IndexRoute component={DashboardPage} />
-            <IndexRedirect to="dashboard" />
+            <IndexRoute component={MarketplacePage} />
+            <IndexRedirect to="marketplace" />
         </Route>
     )
 }
