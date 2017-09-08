@@ -387,6 +387,7 @@ _.extend(Store.prototype, Backbone.Events, {
                 url: models.url + queryString
             }).done(function() {
                 this.isFetching = false;
+                this.models = models;
                 this.isFetchingQuery[queryString] = false;
                 this.queryModels[queryString] = models;
                 this.emitChange();

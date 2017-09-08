@@ -1,5 +1,6 @@
-import ClusterLaunchModal from "./cluster/clusterLaunch";
+import ClusterLaunchModal from "./cluster/launch";
 
 export default {
-    clusterLaunch: ClusterLaunchModal.clusterLaunch
+    launch: ClusterLaunchModal.launch,
 };
+

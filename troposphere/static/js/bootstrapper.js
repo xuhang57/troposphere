@@ -85,6 +85,7 @@ stores.UserStore = require("stores/UserStore");
 stores.VersionStore = require("stores/VersionStore");
 stores.VolumeStore = require("stores/VolumeStore");
 stores.AllocationSourceStore = require("stores/AllocationSourceStore");
+stores.SaharaPluginStore = require("stores/SaharaPluginStore");
 stores.JobStore = require("stores/JobStore");
 stores.ClusterStore = require("stores/ClusterStore");
 
