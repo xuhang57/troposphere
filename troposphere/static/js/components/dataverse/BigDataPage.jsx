@@ -94,7 +94,7 @@ export default React.createClass({
         let resourcesLoaded =
         [  clusters
              , plugins
-             ].every(obj => obj)
+             ].every(obj => obj);
 
         if (!resourcesLoaded) {
             return <div className="loading"></div>
