@@ -6,11 +6,8 @@ import Backbone from "backbone";
 import ReactDOM from "react-dom";
 import NotificationController from "controllers/NotificationController";
 import SplashScreen from "components/SplashScreen";
-import SelectMenu from "components/common/ui/SelectMenu";
 import { setCookie } from "utilities/cookieHelpers";
-import PasswordLoginForm from "./PasswordLoginForm";
 import OpenstackLoginForm from "./OpenstackLoginForm";
-import OAuthLoginForm from "./OAuthLoginForm";
 
 export default React.createClass({
     displayName: "LoginScreen",
