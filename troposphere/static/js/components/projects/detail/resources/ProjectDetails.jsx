@@ -193,12 +193,14 @@ export default React.createClass({
                         onPreviewResource={this.onPreviewResource}
                         previewedResource={previewedResource}
                         selectedResources={selectedResources} />
+                    {/*
                     <VolumeList volumes={projectVolumes}
                         onResourceSelected={this.onResourceSelected}
                         onResourceDeselected={this.onResourceDeselected}
                         onPreviewResource={this.onPreviewResource}
                         previewedResource={previewedResource}
                         selectedResources={selectedResources} />
+                    */}
                     <ImageList images={projectImages}
                         onResourceSelected={this.onResourceSelected}
                         onResourceDeselected={this.onResourceDeselected}
