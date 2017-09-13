@@ -4,7 +4,7 @@ import ButtonBar from "./ButtonBar";
 import ExternalLinkList from "./link/ExternalLinkList";
 import ImageList from "./image/ImageList";
 import InstanceList from "./instance/InstanceList";
-import VolumeList from "./volume/VolumeList";
+//import VolumeList from "./volume/VolumeList";
 import modals from "modals";
 import stores from "stores";
 import actions from "actions";
