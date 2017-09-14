@@ -103,7 +103,7 @@ export default React.createClass({
                 var errorMessage,
                     response_error = (response.responseJSON != null) ? response.responseJSON.detail : response.responseText;
                 if (response.status >= 500) {
-                    errorMessage = `Your login failed due to an unexpected error in the Atmosphere Auth Server. If you continue to see this message please email <a href='mailto:${globals.SUPPORT_EMAIL}'>${globals.SUPPORT_EMAIL}</a>.`;
+                    errorMessage = `Your login failed due to an unexpected error in the GIJI Auth Server. If you continue to see this message please email <a href='mailto:${globals.SUPPORT_EMAIL}'>${globals.SUPPORT_EMAIL}</a>.`;
                 } else {
                     errorMessage = `There was an error saving new user token: ${response_error}`;
                 }
