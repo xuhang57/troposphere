@@ -11,7 +11,7 @@ export default React.createClass({
 
     getInitialState: function() {
         var sizes = stores.SizeStore.getAll();
-        var clusters = stores.ClusterStore.fetchWhere();
+        var clusters = stores.ClusterStore.fetchClusterWhere();
         var plugins = stores.SaharaPluginStore.getAll();
         return {
             clusters: clusters,

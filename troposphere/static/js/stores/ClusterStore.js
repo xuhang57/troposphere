@@ -51,6 +51,30 @@ let ClusterStore = BaseStore.extend({
         }
     },
 
+    fetchClusterWhere: function(queryParams) {
+        queryParams = queryParams || {};
+
+        // Build the query string
+        var queryString = this.buildQueryStringFromQueryParams(queryParams);
+
+        if (this.queryModels[queryString]) return this.queryModels[queryString];
+
+        if (!this.isFetchingQuery[queryString]) {
+            this.isFetchingQuery[queryString] = true;
+            this.isFetching = true;
+            var models = new this.collection();
+            models.fetch({
+                url: models.url + queryString
+            }).done(function() {
+                this.isFetching = false;
+                this.models = models;
+                this.isFetchingQuery[queryString] = false;
+                this.queryModels[queryString] = models;
+                this.emitChange();
+            }.bind(this));
+        }
+    },
+
     isInFinalState: function(cluster) {
         Utils.dispatch(ClusterConstants.UPDATE_CLUSTER, {
             cluster: cluster
