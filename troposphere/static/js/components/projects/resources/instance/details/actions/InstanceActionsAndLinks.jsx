@@ -36,7 +36,7 @@ export default React.createClass({
                 icon: "camera",
                 onClick: this.onImageRequest
             },
-            */}
+            */},
             {
                 key: InstanceActionNames.START,
                 label: "Start",
@@ -137,7 +137,7 @@ export default React.createClass({
         modals.InstanceModals.resume(this.props.instance);
     },
 
-    {/*
+    
     onReport: function() {
         // This needs to be flagged to handle the case where
         // Intercom platform is used, but Respond is *not*
@@ -151,7 +151,6 @@ export default React.createClass({
             });
         }
     },
-    */}
 
     onImageRequest: function() {
         modals.InstanceModals.requestImage({
@@ -397,7 +396,7 @@ export default React.createClass({
             label: "Links",
             icon: null
         });
-        */{
+        */}
         linkElements = linkElements.concat(this.getIntegrationLinks());
         return linkElements;
     },
