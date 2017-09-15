@@ -92,8 +92,14 @@ let LogoutLink = React.createClass({
 
     onLogout: function(e) {
         e.preventDefault();
-        deleteCookie('auth_token');
-        window.location = '/logout?force=true&airport_ui=false';
+        var api_logout_url = globals.API_V2_ROOT.replace("/api/v2","/api-auth/logout/");
+        $.ajax(api_logout_url, {
+            contentType: "application/json",
+            success: function() {
+                deleteCookie('auth_token');
+                window.location = '/logout?force=true';
+            }
+        });
     },
 
     onExpiredPassword: function(e) {
