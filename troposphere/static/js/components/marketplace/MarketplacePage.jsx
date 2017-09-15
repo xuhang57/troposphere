@@ -85,7 +85,7 @@ export default React.createClass({
                             <CallToAction title="MOC OpenStack Service"
                                           image={openstack}
                                           description="Launch an instance, view projects, or view current resources."
-                                          linksTo="images" />
+                                          linksTo="openstack" />
                         </div>
                         <div className="col-xs-6 col-sm-3">
                             <CallToAction title="MOC Cloud Dataverse"
