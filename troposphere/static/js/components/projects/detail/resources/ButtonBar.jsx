@@ -60,11 +60,13 @@ export default React.createClass({
             >
                 <SubMenu { ...this.props }/>
                 <RefreshButton/>
+                {/*
                 <RequestResourcesButton />
                 <Button icon="folder-open"
                     tooltip="Move selected resources"
                     onClick={this.props.onMoveSelectedResources}
                     isVisible={this.props.isVisible} />
+                */}
                 <Button icon="export"
                     tooltip="Remove selected resources (admin only)"
                     onClick={this.props.onRemoveSelectedResources}
