@@ -56,8 +56,8 @@ export default React.createClass({
 
         // Check if the user has any projects, if not then set view to "PROJECT_VIEW"
         // to create a new one
-        let projectList = stores.ProjectStore.getAll();
         {/*
+        let projectList = stores.ProjectStore.getAll();
         if (projectList) {
             if (view != "IMAGE_VIEW" && projectList.length === 0) {
                 view = "PROJECT_VIEW";
