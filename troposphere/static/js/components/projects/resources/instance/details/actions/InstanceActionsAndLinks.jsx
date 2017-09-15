@@ -29,12 +29,14 @@ export default React.createClass({
     actionSpecs: function() {
         // For now, order *matters*
         let specs = [
+            {/*
             {
                 key: InstanceActionNames.IMAGE,
                 label: "Image",
                 icon: "camera",
                 onClick: this.onImageRequest
             },
+            */}
             {
                 key: InstanceActionNames.START,
                 label: "Start",
