@@ -185,7 +185,7 @@ export default React.createClass({
                                 list={ providerList }
                                 onSelect={ this.onProviderChange } />
                 </div>
-                <div className="login-screen-footer modal-footer">
+                <div className="login-screen-footer modal-login-footer">
                     <span className="help-block">{errorMessage}</span>
                     {this.renderLoginOrLoading()}
                 </div>
