@@ -135,6 +135,7 @@ export default React.createClass({
         modals.InstanceModals.resume(this.props.instance);
     },
 
+    {/*
     onReport: function() {
         // This needs to be flagged to handle the case where
         // Intercom platform is used, but Respond is *not*
@@ -148,6 +149,7 @@ export default React.createClass({
             });
         }
     },
+    */}
 
     onImageRequest: function() {
         modals.InstanceModals.requestImage({
@@ -233,6 +235,7 @@ export default React.createClass({
             ipAddress = instance.get("ip_address"),
             disableWebLinks = !ipAddress || ipAddress === "0.0.0.0";
 
+        {/*
         let links = [
             {
                 label: "Open Web Shell",
@@ -243,6 +246,7 @@ export default React.createClass({
                 isDisabled: disableWebLinks
             }
         ];
+        */}
 
         if (webDesktopCapable && featureFlags.WEB_DESKTOP) {
             links.push({
@@ -355,6 +359,13 @@ export default React.createClass({
                 {
                     label: "Actions",
                     icon: null
+                }
+            ];
+       {/*
+       let linkElements = [
+                {
+                    label: "Actions",
+                    icon: null
                 },
                 {
                     label: "Report",
@@ -362,6 +373,7 @@ export default React.createClass({
                     onClick: this.onReport
                 }
             ];
+        */}
 
         let instance_owner = this.props.instance.get('user'),
             project_leaders = this.props.project.get('leaders'),
@@ -378,10 +390,12 @@ export default React.createClass({
             }];
         }
         linkElements = linkElements.concat(actionElements);
+        {/*
         linkElements.push({
             label: "Links",
             icon: null
         });
+        */{
         linkElements = linkElements.concat(this.getIntegrationLinks());
         return linkElements;
     },
