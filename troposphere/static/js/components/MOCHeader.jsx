@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Backbone from 'backbone';
 import toastr from 'toastr';
+import $ from "jquery";
 
 import MaintenanceMessageBanner from './MaintenanceMessageBanner';
 import Glyphicon from 'components/common/Glyphicon';
