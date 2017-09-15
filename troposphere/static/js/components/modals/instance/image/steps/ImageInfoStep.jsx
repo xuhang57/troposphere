@@ -2,12 +2,15 @@ import $ from "jquery";
 import React from "react";
 import RaisedButton from "material-ui/RaisedButton";
 import Backbone from "backbone";
+
 import Name from "../components/Name";
 import CreateUpdateFlag from "../components/CreateUpdateFlag";
 import Description from "../components/Description";
 import Tags from "../components/Tags";
 import TagCollection from "collections/TagCollection";
-import Tag from "models/Tag";
+
+import { captureMessage } from "utilities/capture";
+
 import actions from "actions";
 import stores from "stores";
 
@@ -133,6 +136,19 @@ export default React.createClass({
         );
     },
     renderBody: function(instance) {
+        let { helpLink } = this.props,
+            link;
+
+        if (helpLink) {
+            link = helpLink.get("href");
+        } else {
+            link = "#";
+            // NOTE: not truly an exception, just unexpected
+            captureMessage("HelpLink unavailable on render", {
+                component: this.displayName
+            });
+        }
+
         return (
         <div>
             <div className="alert alert-danger">
@@ -140,7 +156,7 @@ export default React.createClass({
             </div>
             <p className="alert alert-info">
                 {"Please read the "}
-                <a href={this.props.helpLink.get("href")} target="_blank">wiki page about requesting an image of your instance</a>
+                <a href={link} target="_blank">wiki page about requesting an image of your instance</a>
                 {" before completing the form below."}
             </p>
             <p>

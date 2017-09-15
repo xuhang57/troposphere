@@ -152,6 +152,7 @@ def _populate_template_params(request, maintenance_records, notice_t, disabled_l
             settings.NEW_RELIC_BROWSER_SNIPPET
 
     enable_sentry = getattr(settings, 'SENTRY_DSN',"") != ""
+    enable_project_sharing = getattr(settings, 'ENABLE_PROJECT_SHARING',False)
     server_prefix = urlparse(settings.SERVER_URL).netloc.split('.')[0]
     sentry_tags = {'server_name': server_prefix}
     if emulator:
@@ -165,9 +166,15 @@ def _populate_template_params(request, maintenance_records, notice_t, disabled_l
     template_params['USE_MOCK_DATA'] = getattr(settings, "USE_MOCK_DATA", False)
     template_params['USE_ALLOCATION_SOURCES'] = getattr(settings,
             "USE_ALLOCATION_SOURCES", False)
+    template_params['EXTERNAL_ALLOCATION'] = getattr(settings,
+            "EXTERNAL_ALLOCATION", False)
+    template_params['ALLOCATION_UNIT_NAME'] = getattr(settings,
+            "ALLOCATION_UNIT_NAME", None)
+    template_params['ALLOCATION_UNIT_ABBREV'] = getattr(settings,
+            "ALLOCATION_UNIT_ABBREV", None)
     template_params['ORG_NAME'] = settings.ORG_NAME
-    template_params['DYNAMIC_ASSET_LOADING'] = settings.DYNAMIC_ASSET_LOADING
     template_params['SENTRY_ENABLED'] = enable_sentry
+    template_params['PROJECT_SHARING'] = enable_project_sharing
     template_params['sentry_tags_dict'] = sentry_tags
     template_params['collect_analytics'] = getattr(settings,
             "COLLECT_ANALYTICS", False)
@@ -179,8 +186,11 @@ def _populate_template_params(request, maintenance_records, notice_t, disabled_l
     metadata = get_site_metadata()
 
     template_params['DISPLAY_STATUS_PAGE'] = False
-    template_params['WEB_DESKTOP_INCLUDE_LINK'] = \
-        settings.WEB_DESKTOP_INCLUDE_LINK
+    template_params['WEB_DESKTOP_ENABLED'] = \
+        settings.WEB_DESKTOP_ENABLED
+
+    template_params['GUACAMOLE_ENABLED'] = \
+        settings.GUACAMOLE_ENABLED
 
     if metadata:
         template_params['DISPLAY_STATUS_PAGE'] = \

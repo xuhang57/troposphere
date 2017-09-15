@@ -1,7 +1,39 @@
 {
+
+    // We can use these as starting points for more strict linting
+    //
+    // "extends": [
+    //     "eslint:recommended",
+    //     "plugin:react/recommended",
+    // ],
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended",
-        "./.eslintrc.travis"
-    ]
+    ],
+
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "no-unused-vars": [
+            "error",
+            {"args": "none"}
+        ],
+        "no-console": "warn",
+        "comma-dangle": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error"
+    }
 }

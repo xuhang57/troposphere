@@ -3,6 +3,9 @@ import Backbone from "backbone";
 import InstanceRow from "./InstanceRow";
 import SelectableTable from "../SelectableTable";
 
+import featureFlags from "utilities/featureFlags";
+
+
 export default React.createClass({
     displayName: "InstanceTable",
 
@@ -19,8 +22,9 @@ export default React.createClass({
             selectedResources = this.props.selectedResources;
 
         return instances.map(function(instance) {
-            var isPreviewed = (previewedResource === instance);
-            var isChecked = selectedResources.get(instance) ? true : false;
+            let uuid = instance.get("uuid"),
+                isPreviewed = (previewedResource === instance),
+                isChecked = selectedResources.findWhere({uuid}) ? true : false;
 
             return (
             <InstanceRow key={instance.id || instance.cid}
@@ -60,7 +64,7 @@ export default React.createClass({
                 Size
             </th>
             <th className="sm-header">
-                Provider
+                {featureFlags.hasProjectSharing() ? "Identity" : "Provider"}
             </th>
         </SelectableTable>
         )

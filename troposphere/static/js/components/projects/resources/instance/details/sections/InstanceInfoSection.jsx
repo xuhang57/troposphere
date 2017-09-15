@@ -33,8 +33,7 @@ export default React.createClass({
     },
 
     isValid: function(text) {
-        let regex = /\.(\d)+$/gm;
-        return !Boolean(text.match(regex));
+        return !/\.(\d)+$/gm.test(text);
     },
 
     onDoneEditing: function(text) {

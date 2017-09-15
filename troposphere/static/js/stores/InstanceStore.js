@@ -3,12 +3,11 @@ import _ from "underscore";
 import Dispatcher from "dispatchers/Dispatcher";
 import BaseStore from "stores/BaseStore";
 import InstanceCollection from "collections/InstanceCollection";
+import context from "context";
 import Utils from "actions/Utils";
 import InstanceConstants from "constants/InstanceConstants";
 import ProjectInstanceConstants from "constants/ProjectInstanceConstants";
 import InstanceState from "models/InstanceState";
-import EventConstants from "constants/EventConstants";
-
 
 var InstanceStore = BaseStore.extend({
     collection: InstanceCollection,
@@ -57,12 +56,23 @@ var InstanceStore = BaseStore.extend({
             }.bind(this));
         }
     },
+    getInstancesForIdentity: function(identity) {
+        if (!this.models) return this.fetchModels();
+
+        var instances = this.models.filter(function(instance) {
+            return instance.get("identity").uuid === identity.get('uuid');
+        });
+
+        return new InstanceCollection(instances);
+    },
 
     getInstancesNotInAProject: function(provider) {
         if (!this.models) return this.fetchModels();
 
+        let profile = context.profile,
+            username =  profile.get('username');
         var instances = this.models.filter(function(instance) {
-            return instance.get("projects").length === 0
+            return (instance.get("project") == null && instance.get('user').username == username);
         });
 
         return new InstanceCollection(instances);
@@ -131,7 +141,7 @@ var InstanceStore = BaseStore.extend({
                     status_raw: status + " - deleting",
                     status: "active",
                     activity: "deleting"
-                }),
+                })
             });
 
             Utils.dispatch(InstanceConstants.UPDATE_INSTANCE, {
@@ -142,7 +152,7 @@ var InstanceStore = BaseStore.extend({
             return response.status == "200";
 
         }.bind(this));
-    },
+    }
 
 });
 
@@ -160,10 +170,6 @@ Dispatcher.register(function(dispatch) {
             break;
 
         case InstanceConstants.UPDATE_INSTANCE:
-            store.update(payload.instance);
-            break;
-
-        case EventConstants.ALLOCATION_SOURCE_CHANGE:
             store.update(payload.instance);
             break;
 

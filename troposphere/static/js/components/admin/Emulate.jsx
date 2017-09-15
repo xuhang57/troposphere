@@ -1,10 +1,7 @@
-import $ from "jquery";
 import React from "react";
-import ReactDOM from "react-dom";
 import Tooltip from "react-tooltip";
 
-import Glyphicon from 'components/common/Glyphicon';
-
+import { appBrowserHistory } from "utilities/historyFunctions";
 
 export default React.createClass({
     displayName: "Emulate",
@@ -17,7 +14,7 @@ export default React.createClass({
         let { username } = this.props;
 
         return (
-        <a href={`emulate/${username}`}>
+        <a href={appBrowserHistory.createHref(`emulate/${username}`)}>
             <i className={"glyphicon glyphicon-user"}
                data-for={username}
                data-tip="Emulate"

@@ -79,6 +79,9 @@ _.extend(Store.prototype, Backbone.Events, {
     // --------------
 
     add: function(payload) {
+        if (!this.models) {
+            this.models = new this.collection();
+        }
         if ("at" in payload) {
             this.models.add(payload.data, {
                 at: payload.at
@@ -100,18 +103,22 @@ _.extend(Store.prototype, Backbone.Events, {
                 merge: true
             });
         } else {
+            /* eslint-disable no-console */
             console.error("Model doesn't exist: " + model.id || model.cid);
+            /* eslint-enable no-console */
         }
     },
 
     remove: function(model) {
-        this.models.remove(model);
+        // Only remove models if we have models in the cache
+        if (this.models) {
+            this.models.remove(model);
+        }
 
         // If already polling, Remove model from polling dictionary
         if (this.pollingModels[model.cid]) {
             delete this.pollingModels[model.cid];
         }
-        return;
     },
 
     // --------------
@@ -207,8 +214,8 @@ _.extend(Store.prototype, Backbone.Events, {
     // same as fetchFirstPage, but with URL query params
     fetchFirstPageWhere: function(queryParams, options, cb) {
         if (options && options.clearQueryCache) {
-            var queryString = this.buildQueryStringFromQueryParams(queryParams);
-            delete this.queryModels[queryString];
+            let clearQS = this.buildQueryStringFromQueryParams(queryParams);
+            delete this.queryModels[clearQS];
         }
 
         if (!this.isFetching) {
@@ -335,16 +342,11 @@ _.extend(Store.prototype, Backbone.Events, {
         return this.queryModels[queryString];
     },
 
-    // Fetches the first page of data for the given set of queryParams
-    // Example: params = {page_size: 1000, search: 'featured'}
-    // will be convereted to ?page_size=1000&search=featured
     fetchWhereNoCache: function(queryParams) {
         queryParams = queryParams || {};
 
         // Build the query string
         var queryString = this.buildQueryStringFromQueryParams(queryParams);
-
-        if (this.queryModels[queryString]) return this.queryModels[queryString];
 
         if (!this.isFetchingQuery[queryString]) {
             this.isFetchingQuery[queryString] = true;
@@ -358,6 +360,7 @@ _.extend(Store.prototype, Backbone.Events, {
             }.bind(this));
         }
     },
+
     appendModels: function(moreModels) {
         if (!this.models) {
             this.models = moreModels;
@@ -416,6 +419,35 @@ _.extend(Store.prototype, Backbone.Events, {
                 this.emitChange();
             }.bind(this));
         }
+    },
+
+    // Fetch a single piece of data, using a known key/modelId
+    //  and allowing optional queryParams to be set.
+    fetchOne: function(modelId, queryParams) {
+        // Build the query string
+        queryParams = queryParams || {};
+        var queryString = this.buildQueryStringFromQueryParams(queryParams);
+        var queryKey = modelId + queryString;
+        var model = null;
+
+        if (this.queryModels[queryKey]) {
+            model = this.queryModels[queryKey];
+            return model;
+        } else if (!this.isFetchingQuery[queryKey]) {
+            this.isFetchingQuery[queryKey] = true;
+            this.isFetching = true;
+            model = new this.collection.prototype.model({
+                id: modelId
+            });
+            model.fetch({
+               url: this.collection.prototype.url + "/" + modelId + queryString
+            }).done(function() {
+                this.isFetchingModel[queryKey] = false;
+                this.queryModels[queryKey] = model;
+                this.emitChange();
+            }.bind(this));
+        }
+        return null;
     },
 
     // -----------------
@@ -481,7 +513,7 @@ _.extend(Store.prototype, Backbone.Events, {
             pollingDelay = this.pollingFrequency;
         }
         setTimeout(this.pollNowUntilBuildIsFinished.bind(this, model), pollingDelay);
-    },
+    }
 });
 
 Store.extend = Backbone.Model.extend;
