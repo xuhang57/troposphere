@@ -61,6 +61,8 @@ import HILPage from "./components/hil/HILPage";
 import NetexPage from "./components/netex/NetexPage";
 import MixmatchPage from "./components/mixmatch/MixmatchPage";
 
+import OpenStackPage from "./components/openstack/OpenStackPage";
+
 const providersRoute = (
 <Route path="providers" component={ProvidersMaster}>
     <IndexRoute component={ProviderListSection} />
@@ -119,6 +121,7 @@ function AppRoutes(props) {
              ? null
              : providersRoute}
             <Route path="help" component={HelpPage} />
+            <Route path="openstack" component={OpenStackPage} />
             <Route path="openshift" component={OpenshiftPage} />
             <Route path="bmi" component={BMIPage} />
             <Route path="hil" component={HILPage} />
