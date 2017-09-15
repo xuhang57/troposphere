@@ -72,7 +72,7 @@ export default React.createClass({
                     <h3 className="t-title">Allocation</h3>
                     <div>
                         <p>
-                            If you need a temporary or permanent boost in your allocation (more CPUs, etc.) you may <a href="#" onClick={this.handleRequestMoreResources}>request more resources.</a>
+                            If you need a temporary or permanent boost in your allocation (more CPUs, etc.) you may send an email to <a href="mailto:giji@lists.massopen.cloud">giji@lists.massopen.cloud</a> 
                         </p>
                     </div>
                 </div>
