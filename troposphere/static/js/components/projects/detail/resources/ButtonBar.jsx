@@ -4,7 +4,7 @@ import context from "context";
 import Button from "./Button";
 import SubMenu from "./SubMenu";
 import RefreshButton from "./RefreshButton";
-import RequestResourcesButton from "./RequestResourcesButton";
+// import RequestResourcesButton from "./RequestResourcesButton";
 import ResourceActionButtons from "./ResourceActionButtons";
 
 export default React.createClass({
