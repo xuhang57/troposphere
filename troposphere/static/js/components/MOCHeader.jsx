@@ -11,51 +11,44 @@ import globals from 'globals';
 import modals from 'modals';
 import logoPath from 'themeImages/mini_logo.png';
 
-import { trackAction } from 'utilities/userActivity';
 import { hasLoggedInUser } from 'utilities/profilePredicate';
 import { deleteCookie } from "utilities/cookieHelpers";
 
 const links = [
     {
-        name: "Dashboard",
-        linksTo: "dashboard",
-        href: "/application/dashboard",
-        icon: "stats",
-        requiresLogin: true,
+        name: "About",
+        linksTo: "about",
+        href: "/application/about",
+        icon: "home",
+        requiresLogin: false,
     },
     {
-        name: "Projects",
-        linksTo: "projects",
-        href: "/application/projects",
-        icon: "folder-open",
+        name: "Marketplace",
+        linksTo: "marketplace",
+        href: "/application/marketplace",
+        icon: "th",
         requiresLogin: true
     },
     {
-        name: "Images",
-        linksTo: "images",
-        href: "/application/images",
-        icon: "floppy-disk",
-        requiresLogin: false
-    },
-    /* TODO: make this enabled/disabled based on `featureFlags.showIdentityView()`
-    {
-        name: "Identities",
-        linksTo: "identities",
-        href: "/application/identities",
-        icon: "cloud",
+        name: "Settings",
+        linksTo: "settings",
+        href: "/application/settings",
+        icon: "cog",
         requiresLogin: true
     }
-    */
 // This is a little ugly, but we conditionally include an element in a
 // list
-].concat([
-    {
-        name: "Help",
-        linksTo: "help",
-        href: "/application/help",
-        icon: "question-sign",
-        requiresLogin: false
-    },
+].concat(
+    globals.USE_ALLOCATION_SOURCES
+        ? []
+        : [{
+            name: "Providers",
+            linksTo: "providers",
+            href: "/application/providers",
+            icon: "cloud",
+            requiresLogin: true
+        }]
+).concat([
     {
         name: "Admin",
         linksTo: "admin",
@@ -85,9 +78,9 @@ let LoginLink = React.createClass({
     },
     render: function() {
         return (
-        <li className="dropdown">
-            {this.renderLink()}
-        </li>
+            <li className="dropdown">
+                {this.renderLink()}
+            </li>
         );
     }
 });
@@ -96,11 +89,6 @@ let LogoutLink = React.createClass({
 
     propTypes: {
         username: React.PropTypes.string.isRequired
-    },
-
-    onShowVersion: function(e) {
-        e.preventDefault();
-        modals.VersionModals.showVersion();
     },
 
     onLogout: function(e) {
@@ -118,31 +106,14 @@ let LogoutLink = React.createClass({
     onExpiredPassword: function(e) {
         e.preventDefault();
         modals.ExpiredPasswordModals.show();
-        trackAction("shown-expired-password-info", {});
     },
 
     render: function() {
-        let statusPageEl;
         let username = this.props.username;
 
         if (!username && window.show_public_site) {
             username = "AnonymousUser"
         }
-        if (globals.STATUS_PAGE_LINK) {
-            statusPageEl = (
-                <li>
-                    <a href={globals.STATUS_PAGE_LINK} target="_blank">Status</a>
-                </li>
-            );
-        }
-
-        let trackSettings = () => {
-            trackAction("viewed-settings", {});
-        };
-
-        let trackRequests = () => {
-            trackAction("viewed-requests", {});
-        };
 
         if (!username && window.show_public_site) {
             username = "AnonymousUser"
@@ -176,36 +147,22 @@ let LogoutLink = React.createClass({
         }
 
         return (
-        <li className="dropdown">
-            <a className="dropdown-toggle" href="#" data-toggle="dropdown">
-                {expiredBadge}{username} <b className="caret"></b></a>
-            <ul className="dropdown-menu">
-                {expiredMenuItem}
-                <li>
-                    <Link to="settings"
-                          onClick={trackSettings}> Settings
-                    </Link>
-                </li>
-                <li>
-                    <Link to="my-requests/resources"
-                          onClick={trackRequests}> My requests
-                    </Link>
-                </li>
-                <li>
-                    <a id="version_link" href="#" onClick={this.onShowVersion}>Version</a>
-                </li>
-                {statusPageEl}
-                <li>
-                    <a id="logout_link" href="#" onClick={this.onLogout}>Sign out</a>
-                </li>
-            </ul>
-        </li>
+            <li className="dropdown">
+                <a className="dropdown-toggle" href="#" data-toggle="dropdown">
+                    {expiredBadge}{username} <b className="caret"></b></a>
+                <ul className="dropdown-menu">
+                    {expiredMenuItem}
+                    <li>
+                        <a id="logout_link" href="#" onClick={this.onLogout}>Sign out</a>
+                    </li>
+                </ul>
+            </li>
         );
     }
 });
 
-let Header = React.createClass({
-    displayName: "Header",
+let MOCHeader = React.createClass({
+    displayName: "MOCHeader",
 
     propTypes: {
         profile: React.PropTypes.instanceOf(Backbone.Model),
@@ -276,21 +233,21 @@ let Header = React.createClass({
             //We need to only trigger the toggle menu on small screen sizes to avoid buggy behavior when selecting menu items on larger screens
             var smScreen = (this.state.windowWidth < 768);
             var toggleMenu = smScreen ? {
-                toggle: "collapse",
-                target: ".navbar-collapse"
-            } : {
-                toggle: null,
-                target: null
-            };
+                    toggle: "collapse",
+                    target: ".navbar-collapse"
+                } : {
+                    toggle: null,
+                    target: null
+                };
 
             return (
-            <li key={link.name} data-toggle={toggleMenu.toggle} data-target={toggleMenu.target}>
-                <Link to={link.linksTo}
-                      activeClassName="active">
-                    <i className={"glyphicon glyphicon-" + link.icon}></i>
-                    {link.name}
-                </Link>
-            </li>
+                <li key={link.name} data-toggle={toggleMenu.toggle} data-target={toggleMenu.target}>
+                    <Link to={link.linksTo}
+                          activeClassName="active">
+                        <i className={"glyphicon glyphicon-" + link.icon}></i>
+                        {link.name}
+                    </Link>
+                </li>
             );
         });
     },
@@ -306,47 +263,47 @@ let Header = React.createClass({
         let homeTarget = loggedIn ? "dashboard" : "images";
 
         return (
-        <div className="navbar navbar-default navbar-fixed-top" role="navigation">
-            <MaintenanceMessageBanner maintenanceMessages={this.props.maintenanceMessages} />
-            <div className="container">
-                <div className="navbar-header">
-                    <button type="button"
-                        className="navbar-toggle"
-                        data-toggle="collapse"
-                        data-target=".navbar-collapse">
-                        <span className="sr-only">Toggle navigation</span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                    </button>
-                    <Link
-                        style={{
-                            maxWidth: "130px",
-                            maxHeight: "51px",
-                            marginRight: "50px",
-                            float: "left",
-                            padding: "9px 0"
-                        }}
-                        to={ homeTarget }>
-                        <img
-                            src={ logoPath }
-                            width="100%"
-                        />
-                    </Link>
-                </div>
-                <div className="navbar-collapse collapse">
-                    <ul className="nav navbar-nav">
-                        {this.renderNavLinks()}
-                    </ul>
-                    <ul className="nav navbar-nav navbar-right">
-                        {loginLogoutDropdown}
-                    </ul>
+            <div className="navbar navbar-default navbar-fixed-top" role="navigation">
+                <MaintenanceMessageBanner maintenanceMessages={this.props.maintenanceMessages} />
+                <div className="container">
+                    <div className="navbar-header">
+                        <button type="button"
+                                className="navbar-toggle"
+                                data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+                        <Link
+                            style={{
+                                maxWidth: "130px",
+                                maxHeight: "51px",
+                                marginRight: "50px",
+                                float: "left",
+                                padding: "9px 0"
+                            }}
+                            to={ homeTarget }>
+                            <img
+                                src={ logoPath }
+                                width="100%"
+                            />
+                        </Link>
+                    </div>
+                    <div className="navbar-collapse collapse">
+                        <ul className="nav navbar-nav">
+                            {this.renderNavLinks()}
+                        </ul>
+                        <ul className="nav navbar-nav navbar-right">
+                            {loginLogoutDropdown}
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
         );
 
     }
 });
 
-export default Header;
+export default MOCHeader;
