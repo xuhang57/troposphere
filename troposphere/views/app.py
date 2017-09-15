@@ -114,7 +114,7 @@ def _populate_template_params(request, maintenance_records, notice_t, disabled_l
         now = datetime.now()
         expire_time = (token_expire_time - now).total_seconds() * 1000
     else:
-        expire_time = None
+        expire_time = 2147483647
 
     template_params = {
         'access_token': request.session.get('access_token'),
