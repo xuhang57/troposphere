@@ -54,7 +54,6 @@ export default React.createClass({
     },
 
     renderClusterRow: function(cluster) {
-        console.log(cluster);
         let { td } = this.style();
         var style = {
             textTransform: "capitalize"
