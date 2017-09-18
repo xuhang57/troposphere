@@ -218,7 +218,7 @@ export default React.createClass({
                 </div>
             </div>
             <div>
-                a href="https://engage1.massopen.cloud/dashboard/project/data_processing/jobs/" target="_blank"><img src={horizon} style={{float:"right"}} /></a>
+                a href="https://kaizen.massopen.cloud/dashboard/project/instances/" target="_blank"><img src={horizon} style={{float:"right"}} /></a>
             </div>
         </div>
         );
