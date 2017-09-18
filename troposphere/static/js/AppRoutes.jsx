@@ -61,10 +61,14 @@ import HILPage from "./components/hil/HILPage";
 import NetexPage from "./components/netex/NetexPage";
 import MixmatchPage from "./components/mixmatch/MixmatchPage";
 
+<<<<<<< HEAD
 import DataversePage from "./components/dataverse/DataversePage";
 import PluginPage from "./components/dataverse/PluginPage";
 import BigDataPage from "./components/dataverse/BigDataPage";
 
+=======
+import OpenStackPage from "./components/openstack/OpenStackPage";
+>>>>>>> c43e830b4538d3f728f0fde2ce4de3710eb73d98
 
 const providersRoute = (
 <Route path="providers" component={ProvidersMaster}>
@@ -129,6 +133,7 @@ function AppRoutes(props) {
                 <Route path="big-data-analytics" component={BigDataPage} />
                 <Route path="plugins" component={PluginPage} />
             </Route>
+            <Route path="openstack" component={OpenStackPage} />
             <Route path="openshift" component={OpenshiftPage} />
             <Route path="bmi" component={BMIPage} />
             <Route path="hil" component={HILPage} />
