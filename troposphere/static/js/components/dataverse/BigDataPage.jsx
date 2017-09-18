@@ -6,6 +6,8 @@ import StatusLight from "components/projects/common/StatusLight";
 import StatusBar from "./common/StatusBar";
 import actions from "actions";
 
+import horizon from "themeImages/horizon.jpg";
+
 export default React.createClass({
     displayName: "BigDataPage",
 
@@ -130,7 +132,7 @@ export default React.createClass({
                     </table>
                 </div>
                 <div>
-                     <a href="https://kaizen.massopen.cloud/dashboard/project/data_processing/jobs/" target="_blank"><img src="https://massopen.cloud/wp-content/uploads/2016/01/OpenStack_Project_Horizon_horizontal.jpg" style={{float:"right"}} /></a>
+                     <a href="https://kaizen.massopen.cloud/dashboard/project/data_processing/jobs/" target="_blank"><img src={horiozn} style={{float:"right"}} /></a>
                 </div>
             </div>
         );
