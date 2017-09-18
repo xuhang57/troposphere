@@ -130,7 +130,7 @@ export default React.createClass({
                     </table>
                 </div>
                 <div>
-                     <a href="https://engage1.massopen.cloud/dashboard/project/data_processing/jobs/" target="_blank"><img src="https://massopen.cloud/wp-content/uploads/2016/01/OpenStack_Project_Horizon_horizontal.jpg" style={{float:"right"}} /></a>
+                     <a href="https://kaizen.massopen.cloud/dashboard/project/data_processing/jobs/" target="_blank"><img src="https://massopen.cloud/wp-content/uploads/2016/01/OpenStack_Project_Horizon_horizontal.jpg" style={{float:"right"}} /></a>
                 </div>
             </div>
         );
