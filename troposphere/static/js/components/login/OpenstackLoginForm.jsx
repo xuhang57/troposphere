@@ -164,7 +164,7 @@ export default React.createClass({
                 </div>
                 <div className={projectNameClasses}>
                     <label htmlFor="projectName">
-                        projectName
+                        Project Name
                     </label>
                     <input required
                         type="text"
