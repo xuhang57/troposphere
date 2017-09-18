@@ -120,7 +120,7 @@ export default React.createClass({
                     primary
                     onTouchTap={this.attemptLogin}
                     disabled={!this.isSubmittable()}
-                    label="Click to Login with Openstack"
+                    label="Log in"
                 />
             );
         }

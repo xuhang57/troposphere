@@ -96,12 +96,14 @@ export default React.createClass({
         return (
         <div className="modal-footer">
             {this.renderBack()}
+            {/*
             <a className="pull-left btn"
                disabled={advancedIsDisabled || waitingOnLaunch}
                onClick={this.onAdvancedClick}>
                 {this.advancedIcon()}
                 {" Advanced Options"}
             </a>
+            */}
             { !waitingOnLaunch ?
               <RaisedButton
                   primary
