@@ -132,7 +132,7 @@ export default React.createClass({
                     </table>
                 </div>
                 <div>
-                     <a href="https://kaizen.massopen.cloud/dashboard/project/data_processing/jobs/" target="_blank"><img src={horiozn} style={{float:"right"}} /></a>
+                     <a href="https://kaizen.massopen.cloud/dashboard/project/data_processing/jobs/" target="_blank"><img src={horizon} style={{float:"right"}} /></a>
                 </div>
             </div>
         );
