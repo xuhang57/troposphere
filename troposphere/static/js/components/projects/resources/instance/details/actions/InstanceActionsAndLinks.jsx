@@ -231,11 +231,15 @@ export default React.createClass({
 
     getIntegrationLinks() {
         let { instance } = this.props,
-            webShellUrl = instance.shell_url(),
+            // webShellUrl = instance.shell_url(),
             webDesktopCapable = !!(instance && instance.get("web_desktop")),
             ipAddress = instance.get("ip_address"),
             disableWebLinks = !ipAddress || ipAddress === "0.0.0.0";
 
+        let links = [
+            {
+            }
+        ];
         {/*
         let links = [
             {
