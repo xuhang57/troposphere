@@ -82,7 +82,7 @@ export default React.createClass({
                     <h2 className="t-headline">Available MOC Services</h2>
                     <div className="row calls-to-action">
                         <div className="col-xs-6 col-sm-3">
-                            <CallToAction title="MOC OpenStack Service"
+                            <CallToAction title="MOC OpenStack"
                                           image={openstack}
                                           description="Launch an instance, view projects, or view current resources."
                                           linksTo="openstack" />
@@ -94,13 +94,13 @@ export default React.createClass({
                                           linksTo="dataverse" />
                         </div>
                         <div className="col-xs-6 col-sm-3">
-                            <CallToAction title="MOC RedHat OpenShift"
+                            <CallToAction title="MOC OpenShift"
                                           image={openshift}
                                           description="Quickly develop, host, and scale applications in a cloud environment."
                                           linksTo="openshift" />
                         </div>
                         <div className="col-xs-6 col-sm-3">
-                            <CallToAction title="HIL"
+                            <CallToAction title="Hardware Isolation Layer"
                                           image={comming}
                                           description="Allow for reserving physical machines and connecting them via isolated networks."
                                           linksTo="hil" />
