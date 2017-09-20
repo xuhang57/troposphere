@@ -36,13 +36,10 @@ let ClusterStore = BaseStore.extend({
                 let self = this;
                 if (this.pollingEnabled) {
                     this.models.each(function(cluster) {
-                        console.log(cluster);
                         let cluster_status = cluster.get("clusterStatus");
-
                         if(cluster_status === "Active") {
                             return;
                         }
-
                         self.pollNowUntilBuildIsFinished(cluster);
                     });
                 }
@@ -70,6 +67,15 @@ let ClusterStore = BaseStore.extend({
                 this.models = models;
                 this.isFetchingQuery[queryString] = false;
                 this.queryModels[queryString] = models;
+                if (this.pollingEnabled) {
+                    this.models.each(function(cluster) {
+                        let cluster_status = cluster.get("clusterStatus");
+                        if(cluster_status === "Active") {
+                            return;
+                        }
+                        self.pollNowUntilBuildIsFinished(cluster);
+                    });
+                }
                 this.emitChange();
             }.bind(this));
         }
