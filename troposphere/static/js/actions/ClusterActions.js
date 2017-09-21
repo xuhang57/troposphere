@@ -8,9 +8,9 @@ export default {
 
     destroy: function(params) {
         var cluster = params.cluster;
-        var clusterID = cluster.get("id");
+        var stackID = cluster.get("stackID");
 
-        var url = globals.API_V2_ROOT + "/sahara_clusters/" + clusterID;
+        var url = globals.API_V2_ROOT + "/sahara_clusters/" + stackID;
 
         var originalState = cluster.get("clusterStatus");
 
@@ -70,6 +70,7 @@ export default {
         cluster.save().done(function(attrs, status, response) {
             NotificationController.success(null, "Cluster " + cluster.get('clusterName') + " is building");
             cluster.set({id: attrs[0].id});
+            cluster.set({stackID: attrs[0].stackID});
             cluster.set({pluginName: attrs[0].pluginName});
             console.log(cluster);
             cluster.fetch().then(function() {
