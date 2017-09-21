@@ -8,12 +8,19 @@ export default React.createClass({
 
     return (
         <div style={{paddingTop: "50px"}} className="container">
-            <h1 className="t-display-1">MOC GIJI Tutorials</h1>
+            <h1 className="t-display-1">Tutorials</h1>
             <div>
+                <h3>How to launch an instance</h3>
                 <p>
-                    Please view this for instructions of launching instances
+                    Video is comming soon
                 </p>
             </div>
+            <div>
+                <h3>How to manage your SSH public key</h3>
+                <p>
+                    Video is comming soon
+                </p>
+            </div> 
         </div>
         );
     }
