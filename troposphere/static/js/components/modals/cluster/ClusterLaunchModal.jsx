@@ -16,9 +16,9 @@ export default React.createClass({
         this.hide();
     },
 
-    confirm: function(identity, pluginName, clusterName, clusterSize, clusterStatus) {
+    confirm: function(identity, pluginName, clusterName, clusterSize, workerNum, clusterStatus) {
         this.hide();
-        this.props.onConfirm(identity, pluginName, clusterName, clusterSize, clusterStatus);
+        this.props.onConfirm(identity, pluginName, clusterName, clusterSize, workerNum, clusterStatus);
     },
 
     render: function() {

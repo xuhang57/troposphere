@@ -22,6 +22,7 @@ export default React.createClass({
             plugins: plugins,
             pluginName: plugins.first(),
             clusterName: "",
+            workerNum: "1",
             clusterStatus: "Building"
         };
     },
@@ -62,7 +63,7 @@ export default React.createClass({
 
     confirm: function() {
         if (this.isSubmittable()) {
-            this.props.onConfirm(this.state.identity, this.state.pluginName.get("name"), this.state.clusterName.trim(), this.state.clusterSize, this.state.clusterStatus);
+            this.props.onConfirm(this.state.identity, this.state.pluginName.get("name"), this.state.clusterName.trim(), this.state.clusterSize, this.state.workerNum, this.state.clusterStatus);
         }
         this.setState({
             showValidation: true
@@ -85,6 +86,12 @@ export default React.createClass({
     onSizeNameChange: function(clusterSize) {
         this.setState({
             clusterSize: clusterSize
+        });
+    },
+
+    onWorkerNumChange: function(e) {
+        this.setState({
+            workerNum: e.target.value
         });
     },
 
@@ -138,7 +145,18 @@ export default React.createClass({
                                 optionName={size => size.get("name")}
                                 list={this.props.sizes}
                                 onSelect={this.onSizeNameChange} />
-                    <span className="help-block">{nameErrorMessage}</span>
+                </div>
+                <div className={nameClassNames}>
+                    <label htmlFor="worker-number">
+                        Worker Amount
+                    </label>
+                    <input type="text"
+                           name="worker-number"
+                           id="worker-number"
+                           className="form-control"
+                           placeholder="1"
+                           value={this.state.workerNum}
+                           onChange={this.onWorkerNumChange} />
                 </div>
             </div>
         );
@@ -173,3 +191,4 @@ export default React.createClass({
         );
     }
 });
+

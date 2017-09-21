@@ -52,6 +52,7 @@ export default {
             pluginName = params.pluginName,
             clusterName = params.clusterName,
             clusterSize = params.clusterSize,
+            workerNum = params.workerNum,
             clusterStatus = params.clusterStatus;
 
         let cluster = new Cluster({
@@ -59,9 +60,9 @@ export default {
             pluginName: pluginName,
             clusterName: clusterName,
             clusterSize: clusterSize,
+            workerNum: workerNum,
             clusterStatus: clusterStatus
         });
-        console.log(cluster);
 
         Utils.dispatch(ClusterConstants.ADD_CLUSTER, {
             cluster: cluster
@@ -72,9 +73,7 @@ export default {
             cluster.set({id: attrs[0].id});
             cluster.set({stackID: attrs[0].stackID});
             cluster.set({pluginName: attrs[0].pluginName});
-            console.log(cluster);
             cluster.fetch().then(function() {
-                console.log(cluster);
                 Utils.dispatch(ClusterConstants.UPDATE_CLUSTER, {
                     cluster: cluster
                 });

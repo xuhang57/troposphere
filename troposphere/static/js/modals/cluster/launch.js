@@ -9,12 +9,13 @@ export default {
             sizes: sizes
         };
 
-        ModalHelpers.renderModal(ClusterLaunchModal, props, function(identity, pluginName, clusterName, clusterSize, clusterStatus) {
+        ModalHelpers.renderModal(ClusterLaunchModal, props, function(identity, pluginName, clusterName, clusterSize, workerNum, clusterStatus) {
             actions.ClusterActions.launch({
                 identity,
                 pluginName,
                 clusterName,
                 clusterSize,
+                workerNum,
                 clusterStatus
             });
         });
