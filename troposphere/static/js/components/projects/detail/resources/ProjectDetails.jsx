@@ -11,6 +11,8 @@ import actions from "actions";
 
 import { trackAction } from 'utilities/userActivity';
 
+import horizon from "themeImages/horizon.jpg";
+
 
 export default React.createClass({
     displayName: "ProjectDetails",
@@ -214,6 +216,9 @@ export default React.createClass({
                         previewedResource={previewedResource}
                         selectedResources={selectedResources} />
                 </div>
+            </div>
+            <div>
+                <a href="https://kaizen.massopen.cloud/dashboard/project/instances/" target="_blank"><img src={horizon} style={{float:"right"}} /></a>
             </div>
         </div>
         );

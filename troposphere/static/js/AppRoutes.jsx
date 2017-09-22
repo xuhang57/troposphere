@@ -61,6 +61,7 @@ import BMIPage from "./components/bmi/BMIPage";
 import HILPage from "./components/hil/HILPage";
 import NetexPage from "./components/netex/NetexPage";
 import MixmatchPage from "./components/mixmatch/MixmatchPage";
+import TutorialPage from "./components/tutorial/TutorialPage";
 
 import OpenStackPage from "./components/openstack/OpenStackPage";
 
@@ -132,6 +133,8 @@ function AppRoutes(props) {
                 <IndexRedirect to="openstack-settings" />
                 <Route path="openstack-settings" component={OpenStackSettingsPage} />
             </Route>
+            <Route path="tutorials" component={TutorialPage} />
+            <Route path="settings" component={SettingsPage} />
             <Route
                 path="admin"
                 component={staffOnly(
