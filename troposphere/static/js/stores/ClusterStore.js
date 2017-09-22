@@ -59,6 +59,7 @@ let ClusterStore = BaseStore.extend({
         if (!this.isFetchingQuery[queryString]) {
             this.isFetchingQuery[queryString] = true;
             this.isFetching = true;
+            let self = this;
             var models = new this.collection();
             models.fetch({
                 url: models.url + queryString
