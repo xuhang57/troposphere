@@ -60,6 +60,7 @@ import BMIPage from "./components/bmi/BMIPage";
 import HILPage from "./components/hil/HILPage";
 import NetexPage from "./components/netex/NetexPage";
 import MixmatchPage from "./components/mixmatch/MixmatchPage";
+import TutorialPage from "./components/tutorial/TutorialPage";
 
 import DataversePage from "./components/dataverse/DataversePage";
 import PluginPage from "./components/dataverse/PluginPage";
@@ -136,6 +137,7 @@ function AppRoutes(props) {
             <Route path="hil" component={HILPage} />
             <Route path="netex" component={NetexPage} />
             <Route path="mixmatch" component={MixmatchPage} />
+            <Route path="tutorials" component={TutorialPage} />
             <Route path="settings" component={SettingsPage} />
             <Route
                 path="admin"

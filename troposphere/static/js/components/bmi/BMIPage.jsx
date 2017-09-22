@@ -11,8 +11,9 @@ export default React.createClass({
             <h1 className="t-display-1">MOC Bare Metal Imaging</h1>
             <div>
                 <p>
-                {"Comming soon! For now, please go to"}<a href={"https://info.massopencloud.org/blog/bare-metal-imaging/"} target="_blank"> {"MOC webside"}</a>{" for more details"}
+                    {"Comming soon! For now, please go to"}<a href={"https://massopen.cloud/blog/bare-metal-imaging"} target="_blank"> {"MOC webside"}</a> {"and"} <a href={"https://github.com/CCI-MOC/ims"} target="_blank"> {"Github"}</a> {"for more details"}
                 </p>
+
             </div>
         </div>
         );
