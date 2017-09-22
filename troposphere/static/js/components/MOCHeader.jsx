@@ -30,6 +30,13 @@ const links = [
         requiresLogin: true
     },
     {
+        name: "Tutorials",
+        linksTo: "tutorials",
+        href: "/application/tutorials",
+        icon: "file",
+        requiresLogin: true
+    },
+    {
         name: "Settings",
         linksTo: "settings",
         href: "/application/settings",
