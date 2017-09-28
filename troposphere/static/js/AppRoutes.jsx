@@ -63,6 +63,10 @@ import NetexPage from "./components/netex/NetexPage";
 import MixmatchPage from "./components/mixmatch/MixmatchPage";
 import TutorialPage from "./components/tutorial/TutorialPage";
 
+import DataversePage from "./components/dataverse/DataversePage";
+import PluginPage from "./components/dataverse/PluginPage";
+import BigDataPage from "./components/dataverse/BigDataPage";
+
 import OpenStackPage from "./components/openstack/OpenStackPage";
 
 const providersRoute = (
@@ -123,6 +127,11 @@ function AppRoutes(props) {
              ? null
              : providersRoute}
             <Route path="help" component={HelpPage} />
+            <Route path="dataverse" component={DataversePage}>
+                <IndexRedirect to="big-data-analytics" />
+                <Route path="big-data-analytics" component={BigDataPage} />
+                <Route path="plugins" component={PluginPage} />
+            </Route>
             <Route path="openstack" component={OpenStackPage} />
             <Route path="openshift" component={OpenshiftPage} />
             <Route path="bmi" component={BMIPage} />
