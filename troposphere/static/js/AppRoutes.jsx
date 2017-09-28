@@ -33,6 +33,7 @@ import ImageTagsPage from "./components/images/ImageTagsPage";
 import ImagesMaster from "./components/images/ImagesMaster";
 import NewInstanceDetail from "./components/common/InstanceDetail";
 import SettingsPage from "./components/settings/SettingsPage";
+import OpenStackSettingsPage from "./components/settings/OpenStackSettingsPage";
 import ProjectInstancePage from "./components/projects/InstanceDetailsPage";
 import ProjectVolumePage from "./components/projects/VolumeDetailsPage";
 import ProjectLinkPage from "./components/projects/ExternalLinkDetailsPage";
@@ -137,6 +138,10 @@ function AppRoutes(props) {
             <Route path="hil" component={HILPage} />
             <Route path="netex" component={NetexPage} />
             <Route path="mixmatch" component={MixmatchPage} />
+            <Route path="settings" component={SettingsPage}>
+                <IndexRedirect to="openstack-settings" />
+                <Route path="openstack-settings" component={OpenStackSettingsPage} />
+            </Route>
             <Route path="tutorials" component={TutorialPage} />
             <Route path="settings" component={SettingsPage} />
             <Route
