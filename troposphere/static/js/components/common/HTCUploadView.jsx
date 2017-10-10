@@ -16,10 +16,9 @@ export default React.createClass({
     },
 
     confirm: function() {
-        if (true) {
-            this.props.onConfirm(this.state.identity,
-                this.state.file);
-        }
+        this.props.onConfirm(this.state.identity,
+            this.state.file);
+        
         this.setState({
             showValidation: true
         });

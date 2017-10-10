@@ -8,8 +8,7 @@ export default {
         if (!params.file)
             throw new Error("Missing files");
 
-        var identity = params.identity,
-            file = params.file;
+        var file = params.file;
 
         var formdata = new FormData();
         formdata.append('file', file[0]);
