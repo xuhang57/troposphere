@@ -238,6 +238,12 @@ export default React.createClass({
 
         let links = [
             {
+            }
+        ];
+
+        {/*
+        let links = [
+            {
                 label: "Open Old Web Shell",
                 icon: "console",
                 href: webShellUrl,
@@ -246,7 +252,7 @@ export default React.createClass({
                 isDisabled: disableWebLinks
             }
         ];
-
+        */}
         if (webDesktopCapable && featureFlags.WEB_DESKTOP) {
             links.push({
                 label: "Open Old Web Desktop",
