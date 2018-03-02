@@ -40,6 +40,8 @@ export default React.createClass({
     },
 
     handleRefresh: function() {
+        window.location.reload();
+        {/*
         var instances = stores.InstanceStore.getAll(),
             volumes = stores.VolumeStore.getAll(),
             refreshTime = randomIntFromInterval(5, 7);
@@ -69,6 +71,7 @@ export default React.createClass({
 
         // Fixes a bug in FireFox where the tooltip doesn't go away when button is clicked
         this.hideTooltip();
+        */}
     },
 
     render: function() {
