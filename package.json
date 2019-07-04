@@ -28,7 +28,9 @@
     "lint-pre-commit": "eslint --stdin",
     "format": "prettier --config .prettierrc --write $(git ls-files troposphere/static/js*js)",
     "dev": "npm run build:dev",
-    "build": "npm run build:prod"
+    "build": "npm run build:prod",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -57,7 +59,8 @@
     "showdown": "^1.2.1",
     "tinycolor2": "^1.4.1",
     "toastr": "^2.1.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
@@ -99,5 +102,6 @@
   },
   "engines": {
     "npm": "3.*"
-  }
+  },
+  "snyk": true
 }
